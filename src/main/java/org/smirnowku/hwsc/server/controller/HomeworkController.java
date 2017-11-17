@@ -22,9 +22,15 @@ public class HomeworkController {
         return new ResponseEntity<>(homeworkService.getHomeworkSolution(userId, homeworkId), HttpStatus.OK);
     }
 
+    @PutMapping("/{homeworkId}/submit")
+    public ResponseEntity submitHomework(@PathVariable long userId, @PathVariable long homeworkId) {
+        homeworkService.submitHomework(userId, homeworkId);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity createHomework(@RequestParam long classroomId, @RequestBody HomeworkDto homeworkDto) {
-        homeworkService.createHomework(classroomId, homeworkDto.name, homeworkDto.deadline);
+        homeworkService.createHomework(classroomId, homeworkDto.name, homeworkDto.deadline, homeworkDto.subgroupSize);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

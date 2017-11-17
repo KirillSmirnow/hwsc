@@ -40,6 +40,14 @@ public class Progress extends BaseEntity {
         return homeworkSolution;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setResult(Integer result) {
+        this.result = result;
+    }
+
     public User getStudent() {
         return student;
     }

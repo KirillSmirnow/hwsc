@@ -45,4 +45,12 @@ public class ClassroomController {
         classroomService.createClassroom(teacherId, classroomDto.name);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+    @PutMapping("/{classroomId}/add")
+    public ResponseEntity addMembers(@PathVariable long classroomId,
+                                     @RequestParam(required = false) long[] studentsIds,
+                                     @RequestParam(required = false) long[] teachersIds) {
+        classroomService.addMembers(classroomId, studentsIds, teachersIds);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }

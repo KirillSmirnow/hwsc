@@ -13,13 +13,15 @@ public class Homework extends BaseEntity {
 
     private String name;
     private Date deadline;
+    private Integer subgroupSize;
 
     public Homework() {
     }
 
-    public Homework(String name, Date deadline) {
+    public Homework(String name, Date deadline, Integer subgroupSize) {
         this.name = name;
         this.deadline = deadline;
+        this.subgroupSize = subgroupSize;
     }
 
     public String getName() {
@@ -28,5 +30,9 @@ public class Homework extends BaseEntity {
 
     public Date getDeadline() {
         return deadline;
+    }
+
+    public Integer getSubgroupSize() {
+        return subgroupSize;
     }
 }

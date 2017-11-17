@@ -6,4 +6,5 @@ public class HomeworkDto {
 
     public String name;
     public Date deadline;
+    public Integer subgroupSize;
 }
