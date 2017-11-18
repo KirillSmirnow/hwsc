@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface CheckRepository extends JpaRepository<Check, Long> {
 
-    Check findByHomeworkToCheck(Assignment homeworkToCheck);
+    Check findByAssignment(Assignment assignment);
 
     List<Check> findAllByCheckerAndStatusIn(User checker, Check.Status... statuses);
 }

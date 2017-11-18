@@ -3,7 +3,9 @@ package org.smirnowku.hwsc.server.service;
 import org.smirnowku.hwsc.server.model.Classroom;
 import org.smirnowku.hwsc.server.model.Homework;
 import org.smirnowku.hwsc.server.model.User;
+import org.smirnowku.hwsc.server.model.dto.ClassroomDto;
 import org.smirnowku.hwsc.server.repository.ClassroomRepository;
+import org.smirnowku.hwsc.server.repository.HomeworkRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -19,20 +21,17 @@ public class ClassroomService {
     @Resource
     private ClassroomRepository classroomRepository;
 
+    @Resource
+    private HomeworkRepository homeworkRepository;
+
+    public void createClassroom(long teacherId, ClassroomDto dto) {
+        User teacher = userService.getUser(teacherId);
+        Classroom classroom = new Classroom(teacher, dto.name, dto.description);
+        classroomRepository.save(classroom);
+    }
+
     public Classroom getClassroom(long id) {
         return classroomRepository.findOne(id);
-    }
-
-    public List<User> getTeachers(long id) {
-        return getClassroom(id).teachers();
-    }
-
-    public List<User> getStudents(long id) {
-        return getClassroom(id).students();
-    }
-
-    public List<Homework> getHomeworks(long id) {
-        return getClassroom(id).homeworks();
     }
 
     public List<Classroom> getClassroomsAsTeacher(long teacherId) {
@@ -45,10 +44,9 @@ public class ClassroomService {
         return classroomRepository.findAllByStudents(student);
     }
 
-    public void createClassroom(long teacherId, String name) {
-        User teacher = userService.getUser(teacherId);
-        Classroom classroom = new Classroom(teacher, name);
-        classroomRepository.save(classroom);
+    public List<Homework> getHomeworks(long id) {
+        Classroom classroom = getClassroom(id);
+        return homeworkRepository.findAllByClassroom(classroom);
     }
 
     public void addMembers(long classroomId, long[] studentsIds, long[] teachersIds) {
@@ -73,12 +71,12 @@ public class ClassroomService {
     }
 
     private void addStudentToClassroom(Classroom classroom, User student) {
-        if (!classroom.students().contains(student))
-            classroom.students().add(student);
+        if (!classroom.getStudents().contains(student))
+            classroom.getStudents().add(student);
     }
 
     private void addTeacherToClassroom(Classroom classroom, User teacher) {
-        if (!classroom.teachers().contains(teacher))
-            classroom.teachers().add(teacher);
+        if (!classroom.getTeachers().contains(teacher))
+            classroom.getTeachers().add(teacher);
     }
 }

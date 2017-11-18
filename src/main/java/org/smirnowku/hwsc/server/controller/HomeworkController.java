@@ -1,6 +1,6 @@
 package org.smirnowku.hwsc.server.controller;
 
-import org.smirnowku.hwsc.server.model.HomeworkSolution;
+import org.smirnowku.hwsc.server.model.dto.HomeworkDto;
 import org.smirnowku.hwsc.server.service.HomeworkService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,22 +14,12 @@ import javax.annotation.Resource;
 public class HomeworkController {
 
     @Resource
-    private HomeworkService homeworkService;
-
-    @GetMapping("/{homeworkId}")
-    public ResponseEntity<HomeworkSolution> getHomeworkSolution(@PathVariable long userId, @PathVariable long homeworkId) {
-        return new ResponseEntity<>(homeworkService.getHomeworkSolution(userId, homeworkId), HttpStatus.OK);
-    }
-
-    @PutMapping("/{homeworkId}/submit")
-    public ResponseEntity submitHomework(@PathVariable long userId, @PathVariable long homeworkId) {
-        homeworkService.submitHomework(userId, homeworkId);
-        return new ResponseEntity(HttpStatus.OK);
-    }
+    private HomeworkService service;
 
     @PostMapping
-    public ResponseEntity createHomework(@RequestParam long classroomId, @RequestBody HomeworkDto homeworkDto) {
-        homeworkService.createHomework(classroomId, homeworkDto.name, homeworkDto.deadline, homeworkDto.subgroupSize);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity assignHomework(@PathVariable long userId, @RequestParam long classroomId,
+                                         @RequestBody HomeworkDto dto) {
+        //
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 }

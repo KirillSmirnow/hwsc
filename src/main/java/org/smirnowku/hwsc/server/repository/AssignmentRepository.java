@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ProgressRepository extends JpaRepository<Assignment, Long> {
+public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
-    Assignment findByStudentAndHomeworkSolution_Homework(User student, Homework homework);
+    Assignment findByStudentAndHomework(User student, Homework homework);
 
     List<Assignment> findAllByStudentAndStatusIn(User student, Assignment.Status... statuses);
 }

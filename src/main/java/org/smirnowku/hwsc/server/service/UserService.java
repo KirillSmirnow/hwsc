@@ -1,6 +1,7 @@
 package org.smirnowku.hwsc.server.service;
 
 import org.smirnowku.hwsc.server.model.User;
+import org.smirnowku.hwsc.server.model.dto.UserDto;
 import org.smirnowku.hwsc.server.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +17,8 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    public void signUp() {
-        User user = new User();
+    public void signUp(UserDto dto) {
+        User user = new User(dto.name);
         userRepository.save(user);
     }
 }
