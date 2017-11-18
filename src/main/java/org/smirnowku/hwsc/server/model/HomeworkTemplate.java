@@ -38,10 +38,6 @@ public class HomeworkTemplate extends BaseEntity {
         this.description = description;
     }
 
-    public User getCreator() {
-        return creator;
-    }
-
     public List<TaskTemplate> getTaskTemplates() {
         return taskTemplates;
     }

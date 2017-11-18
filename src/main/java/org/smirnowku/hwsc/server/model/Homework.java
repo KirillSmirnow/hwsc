@@ -1,15 +1,15 @@
 package org.smirnowku.hwsc.server.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 public class Homework extends BaseEntity {
 
-    @OneToOne
+    @ManyToOne
     private Classroom classroom;
 
     @OneToMany
@@ -30,10 +30,6 @@ public class Homework extends BaseEntity {
         this.description = template.getDescription();
         this.deadline = deadline;
         this.subgroupSize = subgroupSize;
-    }
-
-    public Classroom getClassroom() {
-        return classroom;
     }
 
     public List<Task> getTasks() {
