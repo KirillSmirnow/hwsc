@@ -15,10 +15,19 @@ public class Check extends BaseEntity {
     private User checker;
 
     @OneToOne
-    private Progress homeworkToCheck;
+    private Assignment assignment;
 
     @Enumerated(EnumType.STRING)
     private Status status;
+
+    public Check() {
+    }
+
+    public Check(User checker, Assignment assignment) {
+        this.checker = checker;
+        this.assignment = assignment;
+        this.status = Status.PENDING;
+    }
 
     public void setStatus(Status status) {
         this.status = status;
@@ -28,8 +37,8 @@ public class Check extends BaseEntity {
         return checker;
     }
 
-    public Progress getHomeworkToCheck() {
-        return homeworkToCheck;
+    public Assignment getAssignment() {
+        return assignment;
     }
 
     public Status getStatus() {

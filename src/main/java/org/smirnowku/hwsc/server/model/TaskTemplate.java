@@ -3,17 +3,17 @@ package org.smirnowku.hwsc.server.model;
 import javax.persistence.Entity;
 
 @Entity
-public class Task extends BaseEntity {
+public class TaskTemplate extends BaseEntity {
 
     private String name;
     private String description;
 
-    public Task() {
+    public TaskTemplate() {
     }
 
-    public Task(TaskTemplate template) {
-        this.name = template.getName();
-        this.description = template.getDescription();
+    public TaskTemplate(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
 
     public String getName() {

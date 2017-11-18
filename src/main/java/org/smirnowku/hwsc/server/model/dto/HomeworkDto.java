@@ -1,10 +1,9 @@
-package org.smirnowku.hwsc.server.controller.dto;
+package org.smirnowku.hwsc.server.model.dto;
 
 import java.util.Date;
 
 public class HomeworkDto {
 
-    public String name;
     public Date deadline;
     public Integer subgroupSize;
 }

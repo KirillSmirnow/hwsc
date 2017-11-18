@@ -1,9 +1,9 @@
 package org.smirnowku.hwsc.server.controller;
 
-import org.smirnowku.hwsc.server.controller.dto.ClassroomDto;
 import org.smirnowku.hwsc.server.model.Classroom;
 import org.smirnowku.hwsc.server.model.Homework;
 import org.smirnowku.hwsc.server.model.User;
+import org.smirnowku.hwsc.server.model.dto.ClassroomDto;
 import org.smirnowku.hwsc.server.service.ClassroomService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

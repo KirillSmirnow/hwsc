@@ -1,6 +1,5 @@
 package org.smirnowku.hwsc.server.controller;
 
-import org.smirnowku.hwsc.server.controller.dto.HomeworkDto;
 import org.smirnowku.hwsc.server.model.HomeworkSolution;
 import org.smirnowku.hwsc.server.service.HomeworkService;
 import org.springframework.http.HttpStatus;

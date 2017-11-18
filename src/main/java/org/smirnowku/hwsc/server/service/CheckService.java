@@ -1,8 +1,8 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.model.Assignment;
 import org.smirnowku.hwsc.server.model.Check;
 import org.smirnowku.hwsc.server.model.HomeworkSolution;
-import org.smirnowku.hwsc.server.model.Progress;
 import org.smirnowku.hwsc.server.model.User;
 import org.smirnowku.hwsc.server.repository.CheckRepository;
 import org.smirnowku.hwsc.server.repository.ProgressRepository;
@@ -38,11 +38,11 @@ public class CheckService {
     }
 
     public void submitCheck(long progressId, Integer result) {
-        Progress progress = progressRepository.findOne(progressId);
-        Check check = checkRepository.findByHomeworkToCheck(progress);
+        Assignment assignment = progressRepository.findOne(progressId);
+        Check check = checkRepository.findByHomeworkToCheck(assignment);
         check.setStatus(Check.Status.CHECKED);
         checkRepository.save(check);
-        progress.setResult(result);
+        assignment.setScore(result);
         checkIfCompleted();
     }
 

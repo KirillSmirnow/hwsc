@@ -14,33 +14,41 @@ public class Classroom extends BaseEntity {
     @ManyToMany
     private List<User> students;
 
-    @ManyToMany
-    private List<Homework> homeworks;
-
     private String name;
+    private String description;
 
     public Classroom() {
     }
 
-    public Classroom(User teacher, String name) {
+    public Classroom(User teacher, String name, String description) {
         this.teachers = new ArrayList<>();
+        this.students = new ArrayList<>();
         this.teachers.add(teacher);
+        this.name = name;
+        this.description = description;
+    }
+
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List<User> teachers() {
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public List<User> getTeachers() {
         return teachers;
     }
 
-    public List<User> students() {
+    public List<User> getStudents() {
         return students;
-    }
-
-    public List<Homework> homeworks() {
-        return homeworks;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }

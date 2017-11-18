@@ -1,6 +1,6 @@
 package org.smirnowku.hwsc.server.service;
 
-import org.smirnowku.hwsc.server.model.Progress;
+import org.smirnowku.hwsc.server.model.Assignment;
 import org.smirnowku.hwsc.server.model.User;
 import org.smirnowku.hwsc.server.repository.ProgressRepository;
 import org.springframework.stereotype.Service;
@@ -17,18 +17,18 @@ public class ProgressService {
     @Resource
     private ProgressRepository progressRepository;
 
-    public List<Progress> getProgressToDo(long studentId) {
+    public List<Assignment> getProgressToDo(long studentId) {
         User student = userService.getUser(studentId);
-        return progressRepository.findAllByStudentAndStatusIn(student, Progress.Status.TODO);
+        return progressRepository.findAllByStudentAndStatusIn(student, Assignment.Status.TODO);
     }
 
-    public List<Progress> getProgressSolved(long studentId) {
+    public List<Assignment> getProgressSolved(long studentId) {
         User student = userService.getUser(studentId);
-        return progressRepository.findAllByStudentAndStatusIn(student, Progress.Status.SOLVED, Progress.Status.ASSIGNED);
+        return progressRepository.findAllByStudentAndStatusIn(student, Assignment.Status.SOLVED, Assignment.Status.ASSIGNED);
     }
 
-    public List<Progress> getProgressCompleted(long studentId) {
+    public List<Assignment> getProgressCompleted(long studentId) {
         User student = userService.getUser(studentId);
-        return progressRepository.findAllByStudentAndStatusIn(student, Progress.Status.COMPLETED);
+        return progressRepository.findAllByStudentAndStatusIn(student, Assignment.Status.COMPLETED);
     }
 }

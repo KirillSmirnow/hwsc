@@ -34,8 +34,8 @@ public class HomeworkService {
     public HomeworkSolution getHomeworkSolution(long userId, long homeworkId) {
         User student = userService.getUser(userId);
         Homework homework = homeworkRepository.findOne(homeworkId);
-        Progress progress = progressRepository.findByStudentAndHomeworkSolution_Homework(student, homework);
-        return progress.homeworkSolution();
+        Assignment assignment = progressRepository.findByStudentAndHomeworkSolution_Homework(student, homework);
+        return assignment.homeworkSolution();
     }
 
     public void createHomework(long classroomId, String name, Date deadline, Integer subgroupSize) {
@@ -47,17 +47,17 @@ public class HomeworkService {
         classroom.students().forEach(student -> {
             HomeworkSolution homeworkSolution = new HomeworkSolution(homework);
             homeworkSolutionRepository.save(homeworkSolution);
-            Progress progress = new Progress(student, homeworkSolution);
-            progressRepository.save(progress);
+            Assignment assignment = new Assignment(student, homeworkSolution);
+            progressRepository.save(assignment);
         });
     }
 
     public void submitHomework(long userId, long homeworkId) {
         User student = userService.getUser(userId);
         Homework homework = homeworkRepository.findOne(homeworkId);
-        Progress progress = progressRepository.findByStudentAndHomeworkSolution_Homework(student, homework);
-        progress.setStatus(Progress.Status.SOLVED);
-        progressRepository.save(progress);
+        Assignment assignment = progressRepository.findByStudentAndHomeworkSolution_Homework(student, homework);
+        assignment.setStatus(Assignment.Status.SOLVED);
+        progressRepository.save(assignment);
         doHwAssignment();
     }
 

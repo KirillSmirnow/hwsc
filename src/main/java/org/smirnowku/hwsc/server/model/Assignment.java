@@ -1,17 +1,14 @@
 package org.smirnowku.hwsc.server.model;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
-public class Progress extends BaseEntity {
+public class Assignment extends BaseEntity {
 
     public enum Status {
         TODO,
-        SOLVED,
-        ASSIGNED,
+        SUBMITTED,
+        CHECKING,
         COMPLETED
     }
 
@@ -19,33 +16,33 @@ public class Progress extends BaseEntity {
     private User student;
 
     @ManyToOne
+    private Homework homework;
+
+    @OneToOne
     private HomeworkSolution homeworkSolution;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private Integer result;
+    private Integer score;
 
-    public Progress() {
+    public Assignment() {
     }
 
-    public Progress(User student, HomeworkSolution homeworkSolution) {
+    public Assignment(User student, Homework homework, HomeworkSolution homeworkSolution) {
         this.student = student;
+        this.homework = homework;
         this.homeworkSolution = homeworkSolution;
         this.status = Status.TODO;
-        this.result = 0;
-    }
-
-    public HomeworkSolution homeworkSolution() {
-        return homeworkSolution;
+        this.score = -1;
     }
 
     public void setStatus(Status status) {
         this.status = status;
     }
 
-    public void setResult(Integer result) {
-        this.result = result;
+    public void setScore(Integer score) {
+        this.score = score;
     }
 
     public User getStudent() {
@@ -53,14 +50,18 @@ public class Progress extends BaseEntity {
     }
 
     public Homework getHomework() {
-        return homeworkSolution.getHomework();
+        return homework;
+    }
+
+    public HomeworkSolution getHomeworkSolution() {
+        return homeworkSolution;
     }
 
     public Status getStatus() {
         return status;
     }
 
-    public Integer getResult() {
-        return result;
+    public Integer getScore() {
+        return score;
     }
 }

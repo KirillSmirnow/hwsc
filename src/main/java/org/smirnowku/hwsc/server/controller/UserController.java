@@ -1,10 +1,10 @@
 package org.smirnowku.hwsc.server.controller;
 
-import org.smirnowku.hwsc.server.controller.dto.SignUpDto;
+import org.smirnowku.hwsc.server.model.Assignment;
 import org.smirnowku.hwsc.server.model.Check;
 import org.smirnowku.hwsc.server.model.Classroom;
-import org.smirnowku.hwsc.server.model.Progress;
 import org.smirnowku.hwsc.server.model.User;
+import org.smirnowku.hwsc.server.model.dto.UserDto;
 import org.smirnowku.hwsc.server.service.CheckService;
 import org.smirnowku.hwsc.server.service.ClassroomService;
 import org.smirnowku.hwsc.server.service.ProgressService;
@@ -49,17 +49,17 @@ public class UserController {
     }
 
     @GetMapping("/{id}/progress/todo")
-    public ResponseEntity<List<Progress>> getProgressToDo(@PathVariable long id) {
+    public ResponseEntity<List<Assignment>> getProgressToDo(@PathVariable long id) {
         return new ResponseEntity<>(progressService.getProgressToDo(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/progress/solved")
-    public ResponseEntity<List<Progress>> getProgressSolved(@PathVariable long id) {
+    public ResponseEntity<List<Assignment>> getProgressSolved(@PathVariable long id) {
         return new ResponseEntity<>(progressService.getProgressSolved(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/progress/completed")
-    public ResponseEntity<List<Progress>> getProgressCompleted(@PathVariable long id) {
+    public ResponseEntity<List<Assignment>> getProgressCompleted(@PathVariable long id) {
         return new ResponseEntity<>(progressService.getProgressCompleted(id), HttpStatus.OK);
     }
 
@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity signUp(@RequestBody SignUpDto signUpDto) {
+    public ResponseEntity signUp(@RequestBody UserDto signUpDto) {
         userService.signUp();
         return new ResponseEntity(HttpStatus.CREATED);
     }
