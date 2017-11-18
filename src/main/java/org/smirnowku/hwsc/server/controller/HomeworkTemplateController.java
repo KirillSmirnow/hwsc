@@ -19,27 +19,26 @@ public class HomeworkTemplateController {
     private HomeworkTemplateService service;
 
     @PostMapping
-    public ResponseEntity createTemplate(@PathVariable long userId, @RequestBody HomeworkTemplateDto dto) {
-        //
+    public ResponseEntity create(@PathVariable long userId, @RequestBody HomeworkTemplateDto dto) {
+        service.create(userId, dto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editTemplate(@PathVariable long userId, @PathVariable long id,
-                                       @RequestBody HomeworkTemplateDto dto) {
-        //
+    public ResponseEntity edit(@PathVariable long userId, @PathVariable long id,
+                               @RequestBody HomeworkTemplateDto dto) {
+        service.edit(userId, id, dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<HomeworkTemplate>> getHomeworkTemplates(@PathVariable long userId) {
-        //
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<List<HomeworkTemplate>> get(@PathVariable long userId) {
+        return new ResponseEntity<>(service.get(userId), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteTemplate(@PathVariable long userId, @PathVariable long id) {
-        //
+    public ResponseEntity delete(@PathVariable long userId, @PathVariable long id) {
+        service.delete(userId, id);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

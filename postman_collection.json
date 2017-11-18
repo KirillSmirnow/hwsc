@@ -1,0 +1,754 @@
+{
+  "info": {
+    "name": "HWSC",
+    "_postman_id": "daa46db1-30de-14b6-0beb-0210e8900c32",
+    "description": "",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "assignment",
+      "description": "",
+      "item": [
+        {
+          "name": "Submit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/assignment/{{assignmentId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "assignment",
+                "{{assignmentId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "ToDo",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/assignment/todo",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "assignment",
+                "todo"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Submitted",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/assignment/submitted",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "assignment",
+                "submitted"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Completed",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/assignment/completed",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "assignment",
+                "completed"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Assignment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/assignment/{{assignmentId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "assignment",
+                "{{assignmentId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "check",
+      "description": "",
+      "item": [
+        {
+          "name": "Pending",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/check/pending",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "check",
+                "pending"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Checked",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/check/checked",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "check",
+                "checked"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "classroom",
+      "description": "",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/classroom",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "classroom"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Add members",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {},
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}/add-members?studentsIds=2,3,8&teachersIds=10",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "classroom",
+                "{{classroomId}}",
+                "add-members"
+              ],
+              "query": [
+                {
+                  "key": "studentsIds",
+                  "value": "2,3,8",
+                  "equals": true
+                },
+                {
+                  "key": "teachersIds",
+                  "value": "10",
+                  "equals": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "classroom",
+                "{{classroomId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "All as student",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/classroom/student",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "classroom",
+                "student"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "All as teacher",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/classroom/teacher",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "classroom",
+                "teacher"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "One",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "classroom",
+                "{{classroomId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Homeworks",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}/homeworks",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "classroom",
+                "{{classroomId}}",
+                "homeworks"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "homework",
+      "description": "",
+      "item": [
+        {
+          "name": "Assign",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"deadline\": \"2017-11-25\",\n\t\"subgroupSize\": 3\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/homework?homeworkTemplateId={{templateId}}&classroomId={{classroomId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "homework"
+              ],
+              "query": [
+                {
+                  "key": "homeworkTemplateId",
+                  "value": "{{templateId}}",
+                  "equals": true
+                },
+                {
+                  "key": "classroomId",
+                  "value": "{{classroomId}}",
+                  "equals": true
+                }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "hw-solution",
+      "description": "",
+      "item": [
+        {
+          "name": "Save",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"taskSolutions\": [\n\t\t{\n\t\t\t\"link\": \"Oops, I did it again and again and again\"\n\t\t}\n\t]\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/hw-solution/{{solutionId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "hw-solution",
+                "{{solutionId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "hw-template",
+      "description": "",
+      "item": [
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"My homework #{{$randomInt}}\",\n    \"description\": \"blablablah\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/hw-template",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "hw-template"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Just one task\",\n    \t\t\"description\": \"Do smth\"\n    \t}\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/hw-template/{{templateId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "hw-template",
+                "{{templateId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "All",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task1\",\n    \t\t\"description\": \"Do thing1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task2\",\n    \t\t\"description\": \"Do thing2\"\n    \t}\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/hw-template",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "hw-template"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "One",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task1\",\n    \t\t\"description\": \"Do thing1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task2\",\n    \t\t\"description\": \"Do thing2\"\n    \t}\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}/hw-template/{{templateId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}",
+                "hw-template",
+                "{{templateId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "description": "",
+      "item": [
+        {
+          "name": "Sign Up",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"George\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Edit",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Davy Johnes\"\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "One",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{userId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{userId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

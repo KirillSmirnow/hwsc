@@ -17,9 +17,9 @@ public class HomeworkController {
     private HomeworkService service;
 
     @PostMapping
-    public ResponseEntity assignHomework(@PathVariable long userId, @RequestParam long classroomId,
-                                         @RequestBody HomeworkDto dto) {
-        //
+    public ResponseEntity assign(@PathVariable long userId, @RequestParam long homeworkTemplateId,
+                                 @RequestParam long classroomId, @RequestBody HomeworkDto dto) {
+        service.assign(userId, homeworkTemplateId, classroomId, dto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }

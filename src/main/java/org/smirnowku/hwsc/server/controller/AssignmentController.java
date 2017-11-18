@@ -18,29 +18,28 @@ public class AssignmentController {
     private AssignmentService service;
 
     @PutMapping("/{id}")
-    public ResponseEntity submitAssignment(@PathVariable long userId, @PathVariable long id) {
-        //
+    public ResponseEntity submit(@PathVariable long userId, @PathVariable long id) {
+        service.submit(userId, id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/todo")
-    public ResponseEntity<List<Assignment>> getAssignmentsToDo(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getAssignmentsToDo(userId), HttpStatus.OK);
+    public ResponseEntity<List<Assignment>> getToDo(@PathVariable long userId) {
+        return new ResponseEntity<>(service.getToDo(userId), HttpStatus.OK);
     }
 
     @GetMapping("/submitted")
-    public ResponseEntity<List<Assignment>> getAssignmentsSubmitted(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getAssignmentsSubmitted(userId), HttpStatus.OK);
+    public ResponseEntity<List<Assignment>> getSubmitted(@PathVariable long userId) {
+        return new ResponseEntity<>(service.getSubmitted(userId), HttpStatus.OK);
     }
 
     @GetMapping("/completed")
-    public ResponseEntity<List<Assignment>> getAssignmentsCompleted(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getAssignmentsCompleted(userId), HttpStatus.OK);
+    public ResponseEntity<List<Assignment>> getCompleted(@PathVariable long userId) {
+        return new ResponseEntity<>(service.getCompleted(userId), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Assignment> getAssignment(@PathVariable long userId, @PathVariable long id) {
-        //
-        return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<Assignment> get(@PathVariable long userId, @PathVariable long id) {
+        return new ResponseEntity<>(service.get(userId, id), HttpStatus.OK);
     }
 }

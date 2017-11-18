@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
-    Assignment findByStudentAndHomework(User student, Homework homework);
+    int countByHomeworkAndStatusIn(Homework homework, Assignment.Status... statuses);
 
     List<Assignment> findAllByStudentAndStatusIn(User student, Assignment.Status... statuses);
 }

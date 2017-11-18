@@ -18,12 +18,12 @@ public class CheckController {
     private CheckService service;
 
     @GetMapping("/pending")
-    public ResponseEntity<List<Check>> getChecksPending(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getChecksPending(userId), HttpStatus.OK);
+    public ResponseEntity<List<Check>> getPending(@PathVariable long userId) {
+        return new ResponseEntity<>(service.getPending(userId), HttpStatus.OK);
     }
 
     @GetMapping("/checked")
-    public ResponseEntity<List<Check>> getChecksChecked(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getChecksChecked(userId), HttpStatus.OK);
+    public ResponseEntity<List<Check>> getChecked(@PathVariable long userId) {
+        return new ResponseEntity<>(service.getChecked(userId), HttpStatus.OK);
     }
 }

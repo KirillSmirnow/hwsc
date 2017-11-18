@@ -15,6 +15,10 @@ import java.util.List;
 @Service
 public class ClassroomService {
 
+    private interface MemberAdder {
+        void addMemberToClassroom(Classroom classroom, User user);
+    }
+
     @Resource
     private UserService userService;
 
@@ -24,50 +28,54 @@ public class ClassroomService {
     @Resource
     private HomeworkRepository homeworkRepository;
 
-    public void createClassroom(long teacherId, ClassroomDto dto) {
-        User teacher = userService.getUser(teacherId);
+    public void create(long teacherId, ClassroomDto dto) {
+        User teacher = userService.get(teacherId);
         Classroom classroom = new Classroom(teacher, dto.name, dto.description);
         classroomRepository.save(classroom);
     }
 
-    public Classroom getClassroom(long id) {
-        return classroomRepository.findOne(id);
+    public void addMembers(long userId, long id, long[] studentsIds, long[] teachersIds) {
+        Classroom classroom = get(userId, id);
+        addMembersToClassroom(classroom, studentsIds, this::addStudentToClassroom);
+        addMembersToClassroom(classroom, teachersIds, this::addTeacherToClassroom);
+        classroomRepository.save(classroom);
     }
 
-    public List<Classroom> getClassroomsAsTeacher(long teacherId) {
-        User teacher = userService.getUser(teacherId);
-        return classroomRepository.findAllByTeachers(teacher);
+    public void edit(long userId, long id, ClassroomDto dto) {
+        Classroom classroom = get(userId, id);
+        classroom.setName(dto.name);
+        classroom.setDescription(dto.description);
+        classroomRepository.save(classroom);
     }
 
     public List<Classroom> getClassroomsAsStudent(long studentId) {
-        User student = userService.getUser(studentId);
+        User student = userService.get(studentId);
         return classroomRepository.findAllByStudents(student);
     }
 
-    public List<Homework> getHomeworks(long id) {
-        Classroom classroom = getClassroom(id);
+    public List<Classroom> getClassroomsAsTeacher(long teacherId) {
+        User teacher = userService.get(teacherId);
+        return classroomRepository.findAllByTeachers(teacher);
+    }
+
+    public Classroom get(long userId, long id) {
+        return classroomRepository.findOne(id);
+    }
+
+    public List<Homework> getHomeworks(long userId, long id) {
+        Classroom classroom = get(userId, id);
         return homeworkRepository.findAllByClassroom(classroom);
     }
 
-    public void addMembers(long classroomId, long[] studentsIds, long[] teachersIds) {
-        Classroom classroom = getClassroom(classroomId);
-        if (studentsIds != null)
-            Arrays.stream(studentsIds).forEach(studentId -> {
-                try {
-                    User student = userService.getUser(studentId);
-                    addStudentToClassroom(classroom, student);
-                } catch (Exception e) {
-                }
-            });
-        if (teachersIds != null)
-            Arrays.stream(teachersIds).forEach(teacherId -> {
-                try {
-                    User teacher = userService.getUser(teacherId);
-                    addTeacherToClassroom(classroom, teacher);
-                } catch (Exception e) {
-                }
-            });
-        classroomRepository.save(classroom);
+    private void addMembersToClassroom(Classroom classroom, long[] usersIds, MemberAdder memberAdder) {
+        if (usersIds == null) return;
+        Arrays.stream(usersIds).forEach(userId -> {
+            try {
+                User user = userService.get(userId);
+                memberAdder.addMemberToClassroom(classroom, user);
+            } catch (Exception ignored) {
+            }
+        });
     }
 
     private void addStudentToClassroom(Classroom classroom, User student) {

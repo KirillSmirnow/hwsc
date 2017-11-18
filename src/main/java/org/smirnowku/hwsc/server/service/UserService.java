@@ -13,12 +13,18 @@ public class UserService {
     @Resource
     private UserRepository userRepository;
 
-    public User getUser(long id) {
-        return userRepository.findOne(id);
-    }
-
     public void signUp(UserDto dto) {
         User user = new User(dto.name);
         userRepository.save(user);
+    }
+
+    public void edit(long id, UserDto dto) {
+        User user = get(id);
+        user.setName(dto.name);
+        userRepository.save(user);
+    }
+
+    public User get(long id) {
+        return userRepository.findOne(id);
     }
 }

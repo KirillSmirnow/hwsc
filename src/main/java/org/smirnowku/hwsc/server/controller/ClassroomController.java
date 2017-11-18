@@ -20,8 +20,8 @@ public class ClassroomController {
     private ClassroomService service;
 
     @PostMapping
-    public ResponseEntity createClassroom(@PathVariable long userId, @RequestBody ClassroomDto classroomDto) {
-        //service.createClassroom(userId, classroomDto);
+    public ResponseEntity create(@PathVariable long userId, @RequestBody ClassroomDto dto) {
+        service.create(userId, dto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
@@ -29,14 +29,14 @@ public class ClassroomController {
     public ResponseEntity addMembers(@PathVariable long userId, @PathVariable long id,
                                      @RequestParam(required = false) long[] studentsIds,
                                      @RequestParam(required = false) long[] teachersIds) {
-        service.addMembers(id, studentsIds, teachersIds);
+        service.addMembers(userId, id, studentsIds, teachersIds);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editClassroom(@PathVariable long userId, @PathVariable long id,
-                                        @RequestBody ClassroomDto classroomDto) {
-        //
+    public ResponseEntity edit(@PathVariable long userId, @PathVariable long id,
+                               @RequestBody ClassroomDto dto) {
+        service.edit(userId, id, dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -51,12 +51,12 @@ public class ClassroomController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Classroom> getClassroom(@PathVariable long userId, @PathVariable long id) {
-        return new ResponseEntity<>(service.getClassroom(id), HttpStatus.OK);
+    public ResponseEntity<Classroom> get(@PathVariable long userId, @PathVariable long id) {
+        return new ResponseEntity<>(service.get(userId, id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/homeworks")
     public ResponseEntity<List<Homework>> getHomeworks(@PathVariable long userId, @PathVariable long id) {
-        return new ResponseEntity<>(service.getHomeworks(id), HttpStatus.OK);
+        return new ResponseEntity<>(service.getHomeworks(userId, id), HttpStatus.OK);
     }
 }

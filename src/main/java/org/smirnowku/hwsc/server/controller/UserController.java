@@ -24,13 +24,13 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity editUser(@PathVariable long id, @RequestBody UserDto dto) {
-        //
+    public ResponseEntity edit(@PathVariable long id, @RequestBody UserDto dto) {
+        service.edit(id, dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id) {
-        return new ResponseEntity<>(service.getUser(id), HttpStatus.OK);
+    public ResponseEntity<User> get(@PathVariable long id) {
+        return new ResponseEntity<>(service.get(id), HttpStatus.OK);
     }
 }

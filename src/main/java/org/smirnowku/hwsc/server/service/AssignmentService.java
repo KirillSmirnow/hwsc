@@ -1,6 +1,7 @@
 package org.smirnowku.hwsc.server.service;
 
 import org.smirnowku.hwsc.server.model.Assignment;
+import org.smirnowku.hwsc.server.model.Homework;
 import org.smirnowku.hwsc.server.model.User;
 import org.smirnowku.hwsc.server.repository.AssignmentRepository;
 import org.springframework.stereotype.Service;
@@ -17,22 +18,41 @@ public class AssignmentService {
     @Resource
     private AssignmentRepository assignmentRepository;
 
-    public List<Assignment> getAssignmentsToDo(long userId) {
-        User user = userService.getUser(userId);
+    public void submit(long userId, long id) {
+        Assignment assignment = get(userId, id);
+        assignment.setStatus(Assignment.Status.SUBMITTED);
+        assignmentRepository.save(assignment);
+        onAssignmentSubmitted(assignment.getHomework());
+    }
+
+    public List<Assignment> getToDo(long userId) {
+        User user = userService.get(userId);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO);
     }
 
-    public List<Assignment> getAssignmentsSubmitted(long userId) {
-        User user = userService.getUser(userId);
+    public List<Assignment> getSubmitted(long userId) {
+        User user = userService.get(userId);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.SUBMITTED, Assignment.Status.CHECKING);
     }
 
-    public List<Assignment> getAssignmentsCompleted(long userId) {
-        User user = userService.getUser(userId);
+    public List<Assignment> getCompleted(long userId) {
+        User user = userService.get(userId);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED);
     }
 
-    Assignment getAssignment(long id) {
+    public Assignment get(long userId, long id) {
         return assignmentRepository.findOne(id);
+    }
+
+    private void onAssignmentSubmitted(Homework homework) {
+        int studentsSolving = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.TODO);
+        int studentsReady = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.SUBMITTED);
+        if (studentsSolving == 0 || studentsReady == homework.getSubgroupSize() && studentsSolving > 1) {
+            assignP2PCheck();
+        }
+    }
+
+    private void assignP2PCheck() {
+        System.out.println("P2P check assigned");
     }
 }

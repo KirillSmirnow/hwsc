@@ -17,9 +17,9 @@ public class HomeworkSolutionController {
     private HomeworkSolutionService service;
 
     @PutMapping("/{id}")
-    public ResponseEntity saveSolution(@PathVariable long userId, @PathVariable long id,
-                                       @RequestBody HomeworkSolutionDto dto) {
-        //
+    public ResponseEntity save(@PathVariable long userId, @PathVariable long id,
+                               @RequestBody HomeworkSolutionDto dto) {
+        service.save(userId, id, dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 }
