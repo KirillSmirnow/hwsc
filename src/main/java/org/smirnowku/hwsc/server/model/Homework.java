@@ -51,4 +51,16 @@ public class Homework extends BaseEntity {
     public Integer getSubgroupSize() {
         return subgroupSize;
     }
+
+    @Override
+    public String toString() {
+        return "Homework{" +
+                "classroom=" + classroom +
+                ", tasks=" + tasks +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", deadline=" + deadline +
+                ", subgroupSize=" + subgroupSize +
+                '}';
+    }
 }

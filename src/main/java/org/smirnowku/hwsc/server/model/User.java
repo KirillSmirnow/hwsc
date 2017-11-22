@@ -23,4 +23,11 @@ public class User extends BaseEntity {
     public String getName() {
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

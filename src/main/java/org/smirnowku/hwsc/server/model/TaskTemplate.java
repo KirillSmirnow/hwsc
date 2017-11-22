@@ -23,4 +23,12 @@ public class TaskTemplate extends BaseEntity {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "TaskTemplate{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

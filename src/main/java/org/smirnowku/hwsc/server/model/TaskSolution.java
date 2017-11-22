@@ -21,4 +21,11 @@ public class TaskSolution extends BaseEntity {
     public String getLink() {
         return link;
     }
+
+    @Override
+    public String toString() {
+        return "TaskSolution{" +
+                "link='" + link + '\'' +
+                '}';
+    }
 }

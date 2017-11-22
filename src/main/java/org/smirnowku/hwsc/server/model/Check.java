@@ -44,4 +44,13 @@ public class Check extends BaseEntity {
     public Status getStatus() {
         return status;
     }
+
+    @Override
+    public String toString() {
+        return "Check{" +
+                "checker=" + checker +
+                ", assignment=" + assignment +
+                ", status=" + status +
+                '}';
+    }
 }

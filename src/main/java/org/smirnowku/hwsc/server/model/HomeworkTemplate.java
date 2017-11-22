@@ -49,4 +49,14 @@ public class HomeworkTemplate extends BaseEntity {
     public String getDescription() {
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "HomeworkTemplate{" +
+                "creator=" + creator +
+                ", taskTemplates=" + taskTemplates +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

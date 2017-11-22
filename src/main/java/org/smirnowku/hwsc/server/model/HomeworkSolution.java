@@ -20,4 +20,11 @@ public class HomeworkSolution extends BaseEntity {
     public List<TaskSolution> getTaskSolutions() {
         return taskSolutions;
     }
+
+    @Override
+    public String toString() {
+        return "HomeworkSolution{" +
+                "taskSolutions=" + taskSolutions +
+                '}';
+    }
 }

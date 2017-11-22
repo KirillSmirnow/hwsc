@@ -64,4 +64,15 @@ public class Assignment extends BaseEntity {
     public Integer getScore() {
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "Assignment{" +
+                "student=" + student +
+                ", homework=" + homework +
+                ", homeworkSolution=" + homeworkSolution +
+                ", status=" + status +
+                ", score=" + score +
+                '}';
+    }
 }
