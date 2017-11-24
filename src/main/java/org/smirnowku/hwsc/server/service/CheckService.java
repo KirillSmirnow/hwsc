@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.exception.ForbiddenException;
 import org.smirnowku.hwsc.server.exception.NotFoundException;
 import org.smirnowku.hwsc.server.model.Assignment;
 import org.smirnowku.hwsc.server.model.Check;
@@ -38,6 +39,8 @@ public class CheckService {
     public Check get(String username, long id) {
         Check check = checkRepository.findOne(id);
         if (check == null) throw new NotFoundException("Check not found");
+        User user = userService.get(username);
+        authorizeAccess(check, user);
         return check;
     }
 
@@ -68,5 +71,10 @@ public class CheckService {
         return checkRepository.findByAssignment(assignment).getStatus() == Check.Status.CHECKED &&
                 checkRepository.findByCheckerAndAssignment_Homework(assignment.getStudent(), assignment.getHomework()).stream()
                         .allMatch(check -> check.getStatus() == Check.Status.CHECKED);
+    }
+
+    private void authorizeAccess(Check check, User user) {
+        if (!check.getChecker().equals(user))
+            throw new ForbiddenException("You are not allowed to access this check: you are not assigned to it");
     }
 }

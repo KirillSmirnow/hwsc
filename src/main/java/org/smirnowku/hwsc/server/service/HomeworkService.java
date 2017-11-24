@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.exception.ForbiddenException;
 import org.smirnowku.hwsc.server.model.*;
 import org.smirnowku.hwsc.server.model.dto.HomeworkDto;
 import org.smirnowku.hwsc.server.repository.AssignmentRepository;
@@ -22,6 +23,9 @@ public class HomeworkService {
     private HomeworkTemplateService homeworkTemplateService;
 
     @Resource
+    private UserService userService;
+
+    @Resource
     private AssignmentRepository assignmentRepository;
 
     @Resource
@@ -36,6 +40,8 @@ public class HomeworkService {
     public void assign(String username, long homeworkTemplateId, long classroomId, HomeworkDto dto) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateService.get(username, homeworkTemplateId);
         Classroom classroom = classroomService.get(username, classroomId);
+        User user = userService.get(username);
+        authorizeAssign(classroom, user);
         Homework homework = new Homework(homeworkTemplate, classroom, createTasks(homeworkTemplate),
                 dto.getDeadline(), dto.getSubgroupSize());
         homeworkRepository.save(homework);
@@ -56,5 +62,10 @@ public class HomeworkService {
             Assignment assignment = new Assignment(student, homework, homeworkSolution);
             assignmentRepository.save(assignment);
         });
+    }
+
+    private void authorizeAssign(Classroom classroom, User user) {
+        if (!classroom.getTeachers().contains(user))
+            throw new ForbiddenException("You are not allowed to assign homework in this classroom: you are not a teacher");
     }
 }

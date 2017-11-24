@@ -1,6 +1,7 @@
 package org.smirnowku.hwsc.server.service;
 
 import org.apache.log4j.Logger;
+import org.smirnowku.hwsc.server.exception.ForbiddenException;
 import org.smirnowku.hwsc.server.exception.NotFoundException;
 import org.smirnowku.hwsc.server.model.Assignment;
 import org.smirnowku.hwsc.server.model.Check;
@@ -53,6 +54,8 @@ public class AssignmentService {
     public Assignment get(String username, long id) {
         Assignment assignment = assignmentRepository.findOne(id);
         if (assignment == null) throw new NotFoundException("Assignment not found");
+        User user = userService.get(username);
+        authorizeAccess(assignment, user);
         return assignment;
     }
 
@@ -76,5 +79,10 @@ public class AssignmentService {
             assignmentRepository.save(assignment);
             log.info("Check assigned: " + check);
         }
+    }
+
+    private void authorizeAccess(Assignment assignment, User user) {
+        if (!assignment.getStudent().equals(user))
+            throw new ForbiddenException("You are not allowed to access this assignment");
     }
 }

@@ -2,6 +2,7 @@ package org.smirnowku.hwsc.server.repository;
 
 import org.smirnowku.hwsc.server.model.Assignment;
 import org.smirnowku.hwsc.server.model.Homework;
+import org.smirnowku.hwsc.server.model.HomeworkSolution;
 import org.smirnowku.hwsc.server.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +13,8 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
     int countByHomeworkAndStatusIn(Homework homework, Assignment.Status... statuses);
 
     Assignment findByStudentAndHomework(User student, Homework homework);
+
+    Assignment findByHomeworkSolution(HomeworkSolution homeworkSolution);
 
     List<Assignment> findAllByStudentAndStatusIn(User student, Assignment.Status... statuses);
 

@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.exception.ForbiddenException;
 import org.smirnowku.hwsc.server.exception.HwscException;
 import org.smirnowku.hwsc.server.exception.NotFoundException;
 import org.smirnowku.hwsc.server.model.Classroom;
@@ -37,6 +38,8 @@ public class ClassroomService {
 
     public void addMembers(String username, long id, List<String> studentsUsernames, List<String> teachersUsernames) {
         Classroom classroom = get(username, id);
+        User user = userService.get(username);
+        authorizeUpdate(classroom, user);
         addMembersToClassroom(classroom, studentsUsernames, this::addStudentToClassroom);
         addMembersToClassroom(classroom, teachersUsernames, this::addTeacherToClassroom);
         classroomRepository.save(classroom);
@@ -44,6 +47,8 @@ public class ClassroomService {
 
     public void edit(String username, long id, ClassroomDto dto) {
         Classroom classroom = get(username, id);
+        User user = userService.get(username);
+        authorizeUpdate(classroom, user);
         classroom.setName(dto.getName());
         classroom.setDescription(dto.getDescription());
         classroomRepository.save(classroom);
@@ -62,6 +67,8 @@ public class ClassroomService {
     public Classroom get(String username, long id) {
         Classroom classroom = classroomRepository.findOne(id);
         if (classroom == null) throw new NotFoundException("Classroom not found");
+        User user = userService.get(username);
+        authorizeRead(classroom, user);
         return classroom;
     }
 
@@ -91,5 +98,15 @@ public class ClassroomService {
     private void addTeacherToClassroom(Classroom classroom, User teacher) {
         if (!classroom.getTeachers().contains(teacher))
             classroom.getTeachers().add(teacher);
+    }
+
+    private void authorizeUpdate(Classroom classroom, User user) {
+        if (!classroom.getTeachers().contains(user))
+            throw new ForbiddenException("You are not allowed to update this classroom: you are not a teacher");
+    }
+
+    private void authorizeRead(Classroom classroom, User user) {
+        if (!classroom.getTeachers().contains(user) && !classroom.getStudents().contains(user))
+            throw new ForbiddenException("You are not allowed to access this classroom: you are not a member");
     }
 }

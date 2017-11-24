@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.exception.ForbiddenException;
 import org.smirnowku.hwsc.server.exception.NotFoundException;
 import org.smirnowku.hwsc.server.model.HomeworkTemplate;
 import org.smirnowku.hwsc.server.model.TaskTemplate;
@@ -52,6 +53,8 @@ public class HomeworkTemplateService {
     HomeworkTemplate get(String username, long id) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateRepository.findOne(id);
         if (homeworkTemplate == null) throw new NotFoundException("Homework template not found");
+        User user = userService.get(username);
+        authorizeAccess(homeworkTemplate, user);
         return homeworkTemplate;
     }
 
@@ -60,5 +63,10 @@ public class HomeworkTemplateService {
                 .map(ttDto -> new TaskTemplate(ttDto.getName(), ttDto.getDescription()))
                 .peek(taskTemplateRepository::save)
                 .collect(Collectors.toList());
+    }
+
+    private void authorizeAccess(HomeworkTemplate homeworkTemplate, User user) {
+        if (!homeworkTemplate.creator().equals(user))
+            throw new ForbiddenException("You are not allowed to access this homework template: you are not its owner");
     }
 }
