@@ -57,15 +57,16 @@ public class CheckService {
     }
 
     private void checkIfAssignmentCompleted(User student, Homework homework) {
-        if (userCheckedAllAssignments(student, homework)) {
-            Assignment assignment = assignmentRepository.findByStudentAndHomework(student, homework);
+        Assignment assignment = assignmentRepository.findByStudentAndHomework(student, homework);
+        if (isAssignmentCompleted(assignment)) {
             assignment.setStatus(Assignment.Status.COMPLETED);
             assignmentRepository.save(assignment);
         }
     }
 
-    private boolean userCheckedAllAssignments(User user, Homework homework) {
-        return checkRepository.findByCheckerAndAssignment_Homework(user, homework).stream()
-                .allMatch(c -> c.getStatus() == Check.Status.CHECKED);
+    private boolean isAssignmentCompleted(Assignment assignment) {
+        return checkRepository.findByAssignment(assignment).getStatus() == Check.Status.CHECKED &&
+                checkRepository.findByCheckerAndAssignment_Homework(assignment.getStudent(), assignment.getHomework()).stream()
+                        .allMatch(check -> check.getStatus() == Check.Status.CHECKED);
     }
 }
