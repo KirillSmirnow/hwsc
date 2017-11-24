@@ -11,7 +11,6 @@ import org.smirnowku.hwsc.server.repository.HomeworkRepository;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -30,53 +29,53 @@ public class ClassroomService {
     @Resource
     private HomeworkRepository homeworkRepository;
 
-    public void create(long teacherId, ClassroomDto dto) {
-        User teacher = userService.get(teacherId);
+    public void create(String teacherUsername, ClassroomDto dto) {
+        User teacher = userService.get(teacherUsername);
         Classroom classroom = new Classroom(teacher, dto.getName(), dto.getDescription());
         classroomRepository.save(classroom);
     }
 
-    public void addMembers(long userId, long id, long[] studentsIds, long[] teachersIds) {
-        Classroom classroom = get(userId, id);
-        addMembersToClassroom(classroom, studentsIds, this::addStudentToClassroom);
-        addMembersToClassroom(classroom, teachersIds, this::addTeacherToClassroom);
+    public void addMembers(String username, long id, List<String> studentsUsernames, List<String> teachersUsernames) {
+        Classroom classroom = get(username, id);
+        addMembersToClassroom(classroom, studentsUsernames, this::addStudentToClassroom);
+        addMembersToClassroom(classroom, teachersUsernames, this::addTeacherToClassroom);
         classroomRepository.save(classroom);
     }
 
-    public void edit(long userId, long id, ClassroomDto dto) {
-        Classroom classroom = get(userId, id);
+    public void edit(String username, long id, ClassroomDto dto) {
+        Classroom classroom = get(username, id);
         classroom.setName(dto.getName());
         classroom.setDescription(dto.getDescription());
         classroomRepository.save(classroom);
     }
 
-    public List<Classroom> getClassroomsAsStudent(long studentId) {
-        User student = userService.get(studentId);
+    public List<Classroom> getClassroomsAsStudent(String studentUsername) {
+        User student = userService.get(studentUsername);
         return classroomRepository.findAllByStudents(student);
     }
 
-    public List<Classroom> getClassroomsAsTeacher(long teacherId) {
-        User teacher = userService.get(teacherId);
+    public List<Classroom> getClassroomsAsTeacher(String teacherUsername) {
+        User teacher = userService.get(teacherUsername);
         return classroomRepository.findAllByTeachers(teacher);
     }
 
-    public Classroom get(long userId, long id) {
+    public Classroom get(String username, long id) {
         Classroom classroom = classroomRepository.findOne(id);
         if (classroom == null) throw new NotFoundException("Classroom not found");
         return classroom;
     }
 
-    public List<Homework> getHomeworks(long userId, long id) {
-        Classroom classroom = get(userId, id);
+    public List<Homework> getHomeworks(String username, long id) {
+        Classroom classroom = get(username, id);
         return homeworkRepository.findAllByClassroom(classroom);
     }
 
-    private void addMembersToClassroom(Classroom classroom, long[] usersIds, MemberAdder memberAdder) {
-        if (usersIds == null) return;
-        Arrays.stream(usersIds).forEach(userId -> {
+    private void addMembersToClassroom(Classroom classroom, List<String> usernames, MemberAdder memberAdder) {
+        if (usernames == null) return;
+        usernames.forEach(username -> {
             User user;
             try {
-                user = userService.get(userId);
+                user = userService.get(username);
             } catch (HwscException e) {
                 return;
             }

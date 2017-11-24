@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/{userId}/assignment")
+@RequestMapping("/user/{username}/assignment")
 @CrossOrigin
 public class AssignmentController {
 
@@ -18,28 +18,28 @@ public class AssignmentController {
     private AssignmentService service;
 
     @PutMapping("/{id}")
-    public ResponseEntity submit(@PathVariable long userId, @PathVariable long id) {
-        service.submit(userId, id);
+    public ResponseEntity submit(@PathVariable String username, @PathVariable long id) {
+        service.submit(username, id);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/todo")
-    public ResponseEntity<List<Assignment>> getToDo(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getToDo(userId), HttpStatus.OK);
+    public ResponseEntity<List<Assignment>> getToDo(@PathVariable String username) {
+        return new ResponseEntity<>(service.getToDo(username), HttpStatus.OK);
     }
 
     @GetMapping("/submitted")
-    public ResponseEntity<List<Assignment>> getSubmitted(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getSubmitted(userId), HttpStatus.OK);
+    public ResponseEntity<List<Assignment>> getSubmitted(@PathVariable String username) {
+        return new ResponseEntity<>(service.getSubmitted(username), HttpStatus.OK);
     }
 
     @GetMapping("/completed")
-    public ResponseEntity<List<Assignment>> getCompleted(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getCompleted(userId), HttpStatus.OK);
+    public ResponseEntity<List<Assignment>> getCompleted(@PathVariable String username) {
+        return new ResponseEntity<>(service.getCompleted(username), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Assignment> get(@PathVariable long userId, @PathVariable long id) {
-        return new ResponseEntity<>(service.get(userId, id), HttpStatus.OK);
+    public ResponseEntity<Assignment> get(@PathVariable String username, @PathVariable long id) {
+        return new ResponseEntity<>(service.get(username, id), HttpStatus.OK);
     }
 }

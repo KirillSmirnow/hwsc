@@ -25,4 +25,12 @@ public class UserDto {
             throw new IllegalArgumentException("Name cannot be empty");
         return name;
     }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "username='" + username + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

@@ -17,13 +17,13 @@ public class CheckService {
     @Resource
     private CheckRepository checkRepository;
 
-    public List<Check> getPending(long userId) {
-        User checker = userService.get(userId);
+    public List<Check> getPending(String username) {
+        User checker = userService.get(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.PENDING);
     }
 
-    public List<Check> getChecked(long userId) {
-        User checker = userService.get(userId);
+    public List<Check> getChecked(String username) {
+        User checker = userService.get(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.CHECKED);
     }
 }

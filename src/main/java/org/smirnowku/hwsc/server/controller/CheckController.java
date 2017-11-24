@@ -10,7 +10,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/{userId}/check")
+@RequestMapping("/user/{username}/check")
 @CrossOrigin
 public class CheckController {
 
@@ -18,12 +18,12 @@ public class CheckController {
     private CheckService service;
 
     @GetMapping("/pending")
-    public ResponseEntity<List<Check>> getPending(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getPending(userId), HttpStatus.OK);
+    public ResponseEntity<List<Check>> getPending(@PathVariable String username) {
+        return new ResponseEntity<>(service.getPending(username), HttpStatus.OK);
     }
 
     @GetMapping("/checked")
-    public ResponseEntity<List<Check>> getChecked(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getChecked(userId), HttpStatus.OK);
+    public ResponseEntity<List<Check>> getChecked(@PathVariable String username) {
+        return new ResponseEntity<>(service.getChecked(username), HttpStatus.OK);
     }
 }

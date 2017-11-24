@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("/user/{userId}/homework")
+@RequestMapping("/user/{username}/homework")
 @CrossOrigin
 public class HomeworkController {
 
@@ -17,9 +17,9 @@ public class HomeworkController {
     private HomeworkService service;
 
     @PostMapping
-    public ResponseEntity assign(@PathVariable long userId, @RequestParam long homeworkTemplateId,
+    public ResponseEntity assign(@PathVariable String username, @RequestParam long homeworkTemplateId,
                                  @RequestParam long classroomId, @RequestBody HomeworkDto dto) {
-        service.assign(userId, homeworkTemplateId, classroomId, dto);
+        service.assign(username, homeworkTemplateId, classroomId, dto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 }

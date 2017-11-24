@@ -12,7 +12,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/{userId}/classroom")
+@RequestMapping("/user/{username}/classroom")
 @CrossOrigin
 public class ClassroomController {
 
@@ -20,43 +20,43 @@ public class ClassroomController {
     private ClassroomService service;
 
     @PostMapping
-    public ResponseEntity create(@PathVariable long userId, @RequestBody ClassroomDto dto) {
-        service.create(userId, dto);
+    public ResponseEntity create(@PathVariable String username, @RequestBody ClassroomDto dto) {
+        service.create(username, dto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PostMapping("/{id}/add-members")
-    public ResponseEntity addMembers(@PathVariable long userId, @PathVariable long id,
-                                     @RequestParam(required = false) long[] studentsIds,
-                                     @RequestParam(required = false) long[] teachersIds) {
-        service.addMembers(userId, id, studentsIds, teachersIds);
+    public ResponseEntity addMembers(@PathVariable String username, @PathVariable long id,
+                                     @RequestParam(required = false) List<String> studentsUsernames,
+                                     @RequestParam(required = false) List<String> teachersUsernames) {
+        service.addMembers(username, id, studentsUsernames, teachersUsernames);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity edit(@PathVariable long userId, @PathVariable long id,
+    public ResponseEntity edit(@PathVariable String username, @PathVariable long id,
                                @RequestBody ClassroomDto dto) {
-        service.edit(userId, id, dto);
+        service.edit(username, id, dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("/student")
-    public ResponseEntity<List<Classroom>> getClassroomsAsStudent(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getClassroomsAsStudent(userId), HttpStatus.OK);
+    public ResponseEntity<List<Classroom>> getClassroomsAsStudent(@PathVariable String username) {
+        return new ResponseEntity<>(service.getClassroomsAsStudent(username), HttpStatus.OK);
     }
 
     @GetMapping("/teacher")
-    public ResponseEntity<List<Classroom>> getClassroomsAsTeacher(@PathVariable long userId) {
-        return new ResponseEntity<>(service.getClassroomsAsTeacher(userId), HttpStatus.OK);
+    public ResponseEntity<List<Classroom>> getClassroomsAsTeacher(@PathVariable String username) {
+        return new ResponseEntity<>(service.getClassroomsAsTeacher(username), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Classroom> get(@PathVariable long userId, @PathVariable long id) {
-        return new ResponseEntity<>(service.get(userId, id), HttpStatus.OK);
+    public ResponseEntity<Classroom> get(@PathVariable String username, @PathVariable long id) {
+        return new ResponseEntity<>(service.get(username, id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/homeworks")
-    public ResponseEntity<List<Homework>> getHomeworks(@PathVariable long userId, @PathVariable long id) {
-        return new ResponseEntity<>(service.getHomeworks(userId, id), HttpStatus.OK);
+    public ResponseEntity<List<Homework>> getHomeworks(@PathVariable String username, @PathVariable long id) {
+        return new ResponseEntity<>(service.getHomeworks(username, id), HttpStatus.OK);
     }
 }

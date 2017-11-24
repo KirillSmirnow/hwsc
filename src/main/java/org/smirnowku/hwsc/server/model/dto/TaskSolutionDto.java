@@ -11,4 +11,11 @@ public class TaskSolutionDto {
             throw new IllegalArgumentException("Link cannot be empty");
         return link;
     }
+
+    @Override
+    public String toString() {
+        return "TaskSolutionDto{" +
+                "link='" + link + '\'' +
+                '}';
+    }
 }

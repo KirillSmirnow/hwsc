@@ -21,13 +21,13 @@ public class HomeworkSolutionService {
     @Resource
     private TaskSolutionRepository taskSolutionRepository;
 
-    public void save(long userId, long id, HomeworkSolutionDto dto) {
-        HomeworkSolution homeworkSolution = get(userId, id);
+    public void save(String username, long id, HomeworkSolutionDto dto) {
+        HomeworkSolution homeworkSolution = get(username, id);
         homeworkSolution.setTaskSolutions(createTaskSolutions(dto));
         homeworkSolutionRepository.save(homeworkSolution);
     }
 
-    public HomeworkSolution get(long userId, long id) {
+    public HomeworkSolution get(String username, long id) {
         HomeworkSolution homeworkSolution = homeworkSolutionRepository.findOne(id);
         if (homeworkSolution == null) throw new NotFoundException("Homework solution not found");
         return homeworkSolution;

@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class LoggingAspect {
 
     private static final Logger logger = Logger.getLogger("Main Log");
-    private static final int ARG_LENGTH_LIMIT = 30;
 
     @Pointcut("@within(org.springframework.stereotype.Service)")
     public void serviceMethods() {
@@ -23,8 +22,7 @@ public class LoggingAspect {
     public void logInvoke(JoinPoint joinPoint) {
         String method = joinPoint.getSignature().toShortString();
         String args = String.join(", ", Arrays.stream(joinPoint.getArgs())
-                .map(Object::toString)
-                .map(arg -> arg.length() > ARG_LENGTH_LIMIT ? arg.substring(0, ARG_LENGTH_LIMIT) : arg)
+                .map(arg -> arg == null ? "NULL" : arg.toString())
                 .collect(Collectors.toList()));
         logger.info(method.replace("..", args));
     }

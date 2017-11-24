@@ -23,14 +23,14 @@ public class UserController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity edit(@PathVariable long id, @RequestBody UserDto dto) {
-        service.edit(id, dto);
+    @PutMapping("/{username}")
+    public ResponseEntity edit(@PathVariable String username, @RequestBody UserDto dto) {
+        service.edit(username, dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<User> get(@PathVariable long id) {
-        return new ResponseEntity<>(service.get(id), HttpStatus.OK);
+    @GetMapping("/{username}")
+    public ResponseEntity<User> get(@PathVariable String username) {
+        return new ResponseEntity<>(service.get(username), HttpStatus.OK);
     }
 }

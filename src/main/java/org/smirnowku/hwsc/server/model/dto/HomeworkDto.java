@@ -18,4 +18,12 @@ public class HomeworkDto {
             throw new IllegalArgumentException("Subgroup size cannot be empty");
         return subgroupSize;
     }
+
+    @Override
+    public String toString() {
+        return "HomeworkDto{" +
+                "deadline=" + deadline +
+                ", subgroupSize=" + subgroupSize +
+                '}';
+    }
 }

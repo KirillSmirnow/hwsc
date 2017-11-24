@@ -13,4 +13,11 @@ public class HomeworkSolutionDto {
             throw new IllegalArgumentException("Task solutions cannot be empty");
         return taskSolutions;
     }
+
+    @Override
+    public String toString() {
+        return "HomeworkSolutionDto{" +
+                "taskSolutions=" + taskSolutions +
+                '}';
+    }
 }

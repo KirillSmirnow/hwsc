@@ -19,29 +19,29 @@ public class AssignmentService {
     @Resource
     private AssignmentRepository assignmentRepository;
 
-    public void submit(long userId, long id) {
-        Assignment assignment = get(userId, id);
+    public void submit(String username, long id) {
+        Assignment assignment = get(username, id);
         assignment.setStatus(Assignment.Status.SUBMITTED);
         assignmentRepository.save(assignment);
         onAssignmentSubmitted(assignment.getHomework());
     }
 
-    public List<Assignment> getToDo(long userId) {
-        User user = userService.get(userId);
+    public List<Assignment> getToDo(String username) {
+        User user = userService.get(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO);
     }
 
-    public List<Assignment> getSubmitted(long userId) {
-        User user = userService.get(userId);
+    public List<Assignment> getSubmitted(String username) {
+        User user = userService.get(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.SUBMITTED, Assignment.Status.CHECKING);
     }
 
-    public List<Assignment> getCompleted(long userId) {
-        User user = userService.get(userId);
+    public List<Assignment> getCompleted(String username) {
+        User user = userService.get(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED);
     }
 
-    public Assignment get(long userId, long id) {
+    public Assignment get(String username, long id) {
         Assignment assignment = assignmentRepository.findOne(id);
         if (assignment == null) throw new NotFoundException("Assignment not found");
         return assignment;

@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user/{userId}/hw-template")
+@RequestMapping("/user/{username}/hw-template")
 @CrossOrigin
 public class HomeworkTemplateController {
 
@@ -19,26 +19,26 @@ public class HomeworkTemplateController {
     private HomeworkTemplateService service;
 
     @PostMapping
-    public ResponseEntity create(@PathVariable long userId, @RequestBody HomeworkTemplateDto dto) {
-        service.create(userId, dto);
+    public ResponseEntity create(@PathVariable String username, @RequestBody HomeworkTemplateDto dto) {
+        service.create(username, dto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity edit(@PathVariable long userId, @PathVariable long id,
+    public ResponseEntity edit(@PathVariable String username, @PathVariable long id,
                                @RequestBody HomeworkTemplateDto dto) {
-        service.edit(userId, id, dto);
+        service.edit(username, id, dto);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<HomeworkTemplate>> get(@PathVariable long userId) {
-        return new ResponseEntity<>(service.get(userId), HttpStatus.OK);
+    public ResponseEntity<List<HomeworkTemplate>> get(@PathVariable String username) {
+        return new ResponseEntity<>(service.get(username), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable long userId, @PathVariable long id) {
-        service.delete(userId, id);
+    public ResponseEntity delete(@PathVariable String username, @PathVariable long id) {
+        service.delete(username, id);
         return new ResponseEntity(HttpStatus.OK);
     }
 }

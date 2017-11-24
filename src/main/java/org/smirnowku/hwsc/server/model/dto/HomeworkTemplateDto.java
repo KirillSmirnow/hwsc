@@ -25,4 +25,13 @@ public class HomeworkTemplateDto {
             throw new IllegalArgumentException("Task templates cannot be empty");
         return taskTemplates;
     }
+
+    @Override
+    public String toString() {
+        return "HomeworkTemplateDto{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", taskTemplates=" + taskTemplates +
+                '}';
+    }
 }

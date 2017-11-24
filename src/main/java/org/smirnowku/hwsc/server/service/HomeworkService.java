@@ -33,9 +33,9 @@ public class HomeworkService {
     @Resource
     private TaskRepository taskRepository;
 
-    public void assign(long userId, long homeworkTemplateId, long classroomId, HomeworkDto dto) {
-        HomeworkTemplate homeworkTemplate = homeworkTemplateService.get(userId, homeworkTemplateId);
-        Classroom classroom = classroomService.get(userId, classroomId);
+    public void assign(String username, long homeworkTemplateId, long classroomId, HomeworkDto dto) {
+        HomeworkTemplate homeworkTemplate = homeworkTemplateService.get(username, homeworkTemplateId);
+        Classroom classroom = classroomService.get(username, classroomId);
         Homework homework = new Homework(homeworkTemplate, classroom, createTasks(homeworkTemplate),
                 dto.getDeadline(), dto.getSubgroupSize());
         homeworkRepository.save(homework);

@@ -18,4 +18,12 @@ public class TaskTemplateDto {
             throw new IllegalArgumentException("Description cannot be empty");
         return description;
     }
+
+    @Override
+    public String toString() {
+        return "TaskTemplateDto{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

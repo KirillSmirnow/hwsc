@@ -25,31 +25,31 @@ public class HomeworkTemplateService {
     @Resource
     private TaskTemplateRepository taskTemplateRepository;
 
-    public void create(long userId, HomeworkTemplateDto dto) {
-        User creator = userService.get(userId);
+    public void create(String username, HomeworkTemplateDto dto) {
+        User creator = userService.get(username);
         HomeworkTemplate homeworkTemplate = new HomeworkTemplate(creator, dto.getName(), dto.getDescription());
         homeworkTemplateRepository.save(homeworkTemplate);
     }
 
-    public void edit(long userId, long id, HomeworkTemplateDto dto) {
-        HomeworkTemplate homeworkTemplate = get(userId, id);
+    public void edit(String username, long id, HomeworkTemplateDto dto) {
+        HomeworkTemplate homeworkTemplate = get(username, id);
         homeworkTemplate.setName(dto.getName());
         homeworkTemplate.setDescription(dto.getDescription());
         homeworkTemplate.setTaskTemplates(createTaskTemplates(dto));
         homeworkTemplateRepository.save(homeworkTemplate);
     }
 
-    public List<HomeworkTemplate> get(long userId) {
-        User user = userService.get(userId);
+    public List<HomeworkTemplate> get(String username) {
+        User user = userService.get(username);
         return homeworkTemplateRepository.findAllByCreator(user);
     }
 
-    public void delete(long userId, long id) {
-        HomeworkTemplate homeworkTemplate = get(userId, id);
+    public void delete(String username, long id) {
+        HomeworkTemplate homeworkTemplate = get(username, id);
         homeworkTemplateRepository.delete(homeworkTemplate);
     }
 
-    HomeworkTemplate get(long userId, long id) {
+    HomeworkTemplate get(String username, long id) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateRepository.findOne(id);
         if (homeworkTemplate == null) throw new NotFoundException("Homework template not found");
         return homeworkTemplate;

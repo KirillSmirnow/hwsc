@@ -11,4 +11,11 @@ public class CheckResultDto {
             throw new IllegalArgumentException("Score cannot be empty");
         return score;
     }
+
+    @Override
+    public String toString() {
+        return "CheckResultDto{" +
+                "score=" + score +
+                '}';
+    }
 }
