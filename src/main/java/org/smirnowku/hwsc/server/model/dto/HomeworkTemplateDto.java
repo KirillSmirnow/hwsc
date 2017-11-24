@@ -1,10 +1,28 @@
 package org.smirnowku.hwsc.server.model.dto;
 
+import org.smirnowku.hwsc.server.exception.IllegalArgumentException;
+
 import java.util.List;
 
 public class HomeworkTemplateDto {
 
-    public String name;
-    public String description;
-    public List<TaskTemplateDto> taskTemplates;
+    private String name;
+    private String description;
+    private List<TaskTemplateDto> taskTemplates;
+
+    public String getName() {
+        if (PropertyValidator.isEmpty(name))
+            throw new IllegalArgumentException("Name cannot be empty");
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<TaskTemplateDto> getTaskTemplates() {
+        if (PropertyValidator.isEmpty(taskTemplates))
+            throw new IllegalArgumentException("Task templates cannot be empty");
+        return taskTemplates;
+    }
 }

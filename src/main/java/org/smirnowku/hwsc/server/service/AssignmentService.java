@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.exception.NotFoundException;
 import org.smirnowku.hwsc.server.model.Assignment;
 import org.smirnowku.hwsc.server.model.Homework;
 import org.smirnowku.hwsc.server.model.User;
@@ -41,7 +42,9 @@ public class AssignmentService {
     }
 
     public Assignment get(long userId, long id) {
-        return assignmentRepository.findOne(id);
+        Assignment assignment = assignmentRepository.findOne(id);
+        if (assignment == null) throw new NotFoundException("Assignment not found");
+        return assignment;
     }
 
     private void onAssignmentSubmitted(Homework homework) {

@@ -1,5 +1,7 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.exception.HwscException;
+import org.smirnowku.hwsc.server.exception.NotFoundException;
 import org.smirnowku.hwsc.server.model.Classroom;
 import org.smirnowku.hwsc.server.model.Homework;
 import org.smirnowku.hwsc.server.model.User;
@@ -30,7 +32,7 @@ public class ClassroomService {
 
     public void create(long teacherId, ClassroomDto dto) {
         User teacher = userService.get(teacherId);
-        Classroom classroom = new Classroom(teacher, dto.name, dto.description);
+        Classroom classroom = new Classroom(teacher, dto.getName(), dto.getDescription());
         classroomRepository.save(classroom);
     }
 
@@ -43,8 +45,8 @@ public class ClassroomService {
 
     public void edit(long userId, long id, ClassroomDto dto) {
         Classroom classroom = get(userId, id);
-        classroom.setName(dto.name);
-        classroom.setDescription(dto.description);
+        classroom.setName(dto.getName());
+        classroom.setDescription(dto.getDescription());
         classroomRepository.save(classroom);
     }
 
@@ -59,7 +61,9 @@ public class ClassroomService {
     }
 
     public Classroom get(long userId, long id) {
-        return classroomRepository.findOne(id);
+        Classroom classroom = classroomRepository.findOne(id);
+        if (classroom == null) throw new NotFoundException("Classroom not found");
+        return classroom;
     }
 
     public List<Homework> getHomeworks(long userId, long id) {
@@ -70,11 +74,13 @@ public class ClassroomService {
     private void addMembersToClassroom(Classroom classroom, long[] usersIds, MemberAdder memberAdder) {
         if (usersIds == null) return;
         Arrays.stream(usersIds).forEach(userId -> {
+            User user;
             try {
-                User user = userService.get(userId);
-                memberAdder.addMemberToClassroom(classroom, user);
-            } catch (Exception ignored) {
+                user = userService.get(userId);
+            } catch (HwscException e) {
+                return;
             }
+            memberAdder.addMemberToClassroom(classroom, user);
         });
     }
 

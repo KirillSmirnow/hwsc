@@ -37,7 +37,7 @@ public class HomeworkService {
         HomeworkTemplate homeworkTemplate = homeworkTemplateService.get(userId, homeworkTemplateId);
         Classroom classroom = classroomService.get(userId, classroomId);
         Homework homework = new Homework(homeworkTemplate, classroom, createTasks(homeworkTemplate),
-                dto.deadline, dto.subgroupSize);
+                dto.getDeadline(), dto.getSubgroupSize());
         homeworkRepository.save(homework);
         assignHomeworkToStudents(homework, classroom);
     }

@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.server.service;
 
+import org.smirnowku.hwsc.server.exception.NotFoundException;
 import org.smirnowku.hwsc.server.model.HomeworkTemplate;
 import org.smirnowku.hwsc.server.model.TaskTemplate;
 import org.smirnowku.hwsc.server.model.User;
@@ -26,14 +27,14 @@ public class HomeworkTemplateService {
 
     public void create(long userId, HomeworkTemplateDto dto) {
         User creator = userService.get(userId);
-        HomeworkTemplate homeworkTemplate = new HomeworkTemplate(creator, dto.name, dto.description);
+        HomeworkTemplate homeworkTemplate = new HomeworkTemplate(creator, dto.getName(), dto.getDescription());
         homeworkTemplateRepository.save(homeworkTemplate);
     }
 
     public void edit(long userId, long id, HomeworkTemplateDto dto) {
         HomeworkTemplate homeworkTemplate = get(userId, id);
-        homeworkTemplate.setName(dto.name);
-        homeworkTemplate.setDescription(dto.description);
+        homeworkTemplate.setName(dto.getName());
+        homeworkTemplate.setDescription(dto.getDescription());
         homeworkTemplate.setTaskTemplates(createTaskTemplates(dto));
         homeworkTemplateRepository.save(homeworkTemplate);
     }
@@ -49,12 +50,14 @@ public class HomeworkTemplateService {
     }
 
     HomeworkTemplate get(long userId, long id) {
-        return homeworkTemplateRepository.findOne(id);
+        HomeworkTemplate homeworkTemplate = homeworkTemplateRepository.findOne(id);
+        if (homeworkTemplate == null) throw new NotFoundException("Homework template not found");
+        return homeworkTemplate;
     }
 
     private List<TaskTemplate> createTaskTemplates(HomeworkTemplateDto dto) {
-        return dto.taskTemplates.stream()
-                .map(ttDto -> new TaskTemplate(ttDto.name, ttDto.description))
+        return dto.getTaskTemplates().stream()
+                .map(ttDto -> new TaskTemplate(ttDto.getName(), ttDto.getDescription()))
                 .peek(taskTemplateRepository::save)
                 .collect(Collectors.toList());
     }
