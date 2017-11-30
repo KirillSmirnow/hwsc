@@ -1,2 +1,2 @@
-# hwsc-server
+# HWSC
 Homework: solve &amp; check
