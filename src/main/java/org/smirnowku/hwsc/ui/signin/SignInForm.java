@@ -5,7 +5,8 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.smirnowku.hwsc.core.service.impl.UserService;
+import org.smirnowku.hwsc.core.exception.BaseException;
+import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 
 import javax.annotation.PostConstruct;
@@ -19,9 +20,6 @@ public class SignInForm extends VerticalLayout {
 
     @Resource
     private AuthenticationService authenticationService;
-
-    @Resource
-    private UserService userService;
 
     private TextField usernameField;
     private PasswordField passwordField;
@@ -45,13 +43,15 @@ public class SignInForm extends VerticalLayout {
     }
 
     private void signIn() {
-        authenticationService.signIn(usernameField.getValue(), passwordField.getValue());
+        try {
+            authenticationService.signIn(usernameField.getValue(), passwordField.getValue());
+        } catch (BaseException e) {
+            log.info(String.format("Sign in failed: %s", e.getMessage()));
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            return;
+        }
+        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
         Notification.show(String.format("Signed in as %s", authenticationService.getUser().getName()),
                 Notification.Type.TRAY_NOTIFICATION);
-    }
-
-    private void signInFail(String errorMessage) {
-        log.info(String.format("Sign in failed: %s", errorMessage));
-        Notification.show(errorMessage, Notification.Type.WARNING_MESSAGE);
     }
 }

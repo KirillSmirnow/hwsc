@@ -13,6 +13,6 @@ public class ErrorView extends Panel implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        UI.getCurrent().getNavigator().navigateTo(Views.ROOT);
+        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
     }
 }

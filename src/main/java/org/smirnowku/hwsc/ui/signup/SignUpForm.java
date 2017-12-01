@@ -5,6 +5,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.smirnowku.hwsc.core.exception.BaseException;
 import org.smirnowku.hwsc.core.service.impl.UserService;
 import org.smirnowku.hwsc.dto.UserDto;
 import org.smirnowku.hwsc.ui.Views;
@@ -58,17 +59,22 @@ public class SignUpForm extends VerticalLayout {
             repeatPasswordField.clear();
             Notification.show("Passwords don't match", Notification.Type.WARNING_MESSAGE);
         } else {
-            UserDto dto = new UserDto(username, password, "Empty name");
-            userService.signUp(dto);
-            log.info(String.format("Sign up successful for user %s", username));
-            authenticationService.signIn(username, password);
-            UI.getCurrent().getNavigator().navigateTo(Views.ROOT);
-            Notification.show(String.format("Signed in as %s", username), Notification.Type.TRAY_NOTIFICATION);
+            signUp(username, password);
         }
     }
 
-    private void signUpFail(String errorMessage) {
-        log.info(String.format("Sign up failed: %s", errorMessage));
-        Notification.show(errorMessage, Notification.Type.WARNING_MESSAGE);
+    private void signUp(String username, String password) {
+        UserDto dto = new UserDto(username, password, "<Empty name>");
+        try {
+            userService.signUp(dto);
+        } catch (BaseException e) {
+            log.info(String.format("Sign up failed: %s", e.getMessage()));
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            return;
+        }
+        log.info(String.format("Sign up successful for user %s", username));
+        authenticationService.signIn(username, password);
+        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
+        Notification.show(String.format("Signed in as %s", username), Notification.Type.TRAY_NOTIFICATION);
     }
 }

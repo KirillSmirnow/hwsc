@@ -8,16 +8,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.smirnowku.hwsc.ui.Views;
-import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @SpringView(name = Views.SIGN_IN)
 public class SignInView extends VerticalLayout implements View {
-
-    @Resource
-    private AuthenticationService authenticationService;
 
     @Resource
     private SignInForm signInForm;
@@ -39,10 +35,6 @@ public class SignInView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        if (authenticationService.isAuthenticated()) {
-            UI.getCurrent().getNavigator().navigateTo(Views.ROOT);
-        } else {
-            signInForm.refresh();
-        }
+        signInForm.refresh();
     }
 }
