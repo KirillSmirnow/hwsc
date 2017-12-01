@@ -10,6 +10,9 @@ public class HomeworkTemplateDto {
     private String description;
     private List<TaskTemplateDto> taskTemplates;
 
+    public HomeworkTemplateDto() {
+    }
+
     public String getName() {
         if (PropertyValidator.isEmpty(name))
             throw new IllegalArgumentException("Name cannot be empty");

@@ -7,6 +7,9 @@ public class TaskTemplateDto {
     private String name;
     private String description;
 
+    public TaskTemplateDto() {
+    }
+
     public String getName() {
         if (PropertyValidator.isEmpty(name))
             throw new IllegalArgumentException("Name cannot be empty");

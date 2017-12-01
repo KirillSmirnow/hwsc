@@ -1,4 +1,4 @@
-package org.smirnowku.hwsc.rest.security;
+package org.smirnowku.hwsc.security;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,8 +13,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
-                .authorizeRequests()
 
+                .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .antMatchers("/user/{username}/**").access("authentication.name.equals(#username)")
 

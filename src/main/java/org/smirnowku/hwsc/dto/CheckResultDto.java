@@ -6,6 +6,9 @@ public class CheckResultDto {
 
     private Integer score;
 
+    public CheckResultDto() {
+    }
+
     public Integer getScore() {
         if (PropertyValidator.isEmpty(score))
             throw new IllegalArgumentException("Score cannot be empty");

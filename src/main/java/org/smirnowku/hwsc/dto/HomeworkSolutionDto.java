@@ -8,6 +8,9 @@ public class HomeworkSolutionDto {
 
     private List<TaskSolutionDto> taskSolutions;
 
+    public HomeworkSolutionDto() {
+    }
+
     public List<TaskSolutionDto> getTaskSolutions() {
         if (PropertyValidator.isEmpty(taskSolutions))
             throw new IllegalArgumentException("Task solutions cannot be empty");

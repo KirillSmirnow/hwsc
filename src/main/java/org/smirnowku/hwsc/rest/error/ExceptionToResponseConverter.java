@@ -7,8 +7,8 @@ import org.smirnowku.hwsc.core.exception.BaseException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
-@Component
 @Aspect
+@Component
 public class ExceptionToResponseConverter {
 
     @Around("execution(org.springframework.http.ResponseEntity org.smirnowku.hwsc.rest.controller.*.*(..))")

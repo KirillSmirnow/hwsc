@@ -9,6 +9,9 @@ public class HomeworkDto {
     private Date deadline;
     private Integer subgroupSize;
 
+    public HomeworkDto() {
+    }
+
     public Date getDeadline() {
         return deadline;
     }

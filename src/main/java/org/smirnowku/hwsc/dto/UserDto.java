@@ -8,6 +8,15 @@ public class UserDto {
     private String password;
     private String name;
 
+    public UserDto() {
+    }
+
+    public UserDto(String username, String password, String name) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+    }
+
     public String getUsername() {
         if (PropertyValidator.isEmpty(username))
             throw new IllegalArgumentException("Username cannot be empty");
