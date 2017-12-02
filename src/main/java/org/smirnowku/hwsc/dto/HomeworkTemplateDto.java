@@ -13,6 +13,11 @@ public class HomeworkTemplateDto extends BaseDto {
     public HomeworkTemplateDto() {
     }
 
+    public HomeworkTemplateDto(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public HomeworkTemplateDto(long id, Date created, Date updated, UserDto creator,
                                List<TaskTemplateDto> taskTemplates, String name, String description) {
         super(id, created, updated);
