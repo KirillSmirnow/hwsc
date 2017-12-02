@@ -36,8 +36,10 @@ public class HwTemplateView extends VerticalLayout implements View {
 
     @PostConstruct
     public void init() {
-        setDefaultComponentAlignment(Alignment.TOP_CENTER);
         addComponents(nameLabel, descriptionLabel, hwTemplateCenterLayout);
+        setComponentAlignment(nameLabel, Alignment.TOP_CENTER);
+        setComponentAlignment(descriptionLabel, Alignment.TOP_CENTER);
+        setComponentAlignment(hwTemplateCenterLayout, Alignment.MIDDLE_CENTER);
     }
 
     @Override
