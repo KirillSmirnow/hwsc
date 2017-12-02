@@ -1,5 +1,9 @@
 package org.smirnowku.hwsc.core.model;
 
+import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import org.smirnowku.hwsc.dto.AssignmentDto;
+import org.smirnowku.hwsc.util.PropertyValidator;
+
 import javax.persistence.*;
 
 @Entity
@@ -42,6 +46,10 @@ public class Assignment extends BaseEntity {
     }
 
     public void setScore(Integer score) {
+        if (PropertyValidator.isEmpty(score))
+            throw new IllegalArgumentException("Score cannot be empty");
+        if (score < 0)
+            throw new IllegalArgumentException("Score cannot be negative");
         this.score = score;
     }
 
@@ -63,6 +71,11 @@ public class Assignment extends BaseEntity {
 
     public Integer getScore() {
         return score;
+    }
+
+    public AssignmentDto toDto() {
+        return new AssignmentDto(getId(), getCreated(), getUpdated(), student.toDto(),
+                homework.toDto(), homeworkSolution.toDto(), status, score);
     }
 
     @Override

@@ -5,8 +5,8 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
-import org.smirnowku.hwsc.core.model.Classroom;
 import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 
 import javax.annotation.PostConstruct;
@@ -45,11 +45,11 @@ public class ClassroomCenterLayout extends HorizontalLayout {
         addComponents(membersTabSheet, homeworksLayout);
     }
 
-    public void refresh(Classroom classroom) {
+    public void refresh(ClassroomDto classroom) {
         membersTabSheet.setSelectedTab(studentsTab);
         studentsTab.refresh(classroom);
         teachersTab.refresh(classroom);
-        homeworksLayout.refresh(classroomService.getHomeworks(authenticationService.getUser().getUsername(),
+        homeworksLayout.refresh(classroomService.getHomeworks(authenticationService.getUsername(),
                 classroom.getId()));
     }
 }

@@ -4,8 +4,8 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.HorizontalLayout;
-import org.smirnowku.hwsc.core.model.HomeworkTemplate;
-import org.smirnowku.hwsc.core.model.TaskTemplate;
+import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
+import org.smirnowku.hwsc.dto.TaskTemplateDto;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -17,11 +17,11 @@ public class HwTemplateCenterLayout extends HorizontalLayout {
     @Resource
     private TaskTemplateLayout taskTemplateLayout;
 
-    private Grid<TaskTemplate> tasksGrid;
+    private Grid<TaskTemplateDto> tasksGrid;
 
     public HwTemplateCenterLayout() {
         tasksGrid = new Grid<>();
-        tasksGrid.addColumn(TaskTemplate::getName).setCaption("Tasks");
+        tasksGrid.addColumn(TaskTemplateDto::getName).setCaption("Tasks");
         tasksGrid.addItemClickListener(this::openTask);
     }
 
@@ -31,12 +31,12 @@ public class HwTemplateCenterLayout extends HorizontalLayout {
         addComponents(tasksGrid, taskTemplateLayout);
     }
 
-    public void refresh(HomeworkTemplate template) {
+    public void refresh(HomeworkTemplateDto template) {
         tasksGrid.setItems(template.getTaskTemplates());
     }
 
-    private void openTask(Grid.ItemClick<TaskTemplate> itemClick) {
-        TaskTemplate taskTemplate = itemClick.getItem();
+    private void openTask(Grid.ItemClick<TaskTemplateDto> itemClick) {
+        TaskTemplateDto taskTemplate = itemClick.getItem();
         taskTemplateLayout.refresh(taskTemplate);
     }
 }

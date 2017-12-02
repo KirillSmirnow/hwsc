@@ -1,6 +1,5 @@
 package org.smirnowku.hwsc.rest.controller;
 
-import org.smirnowku.hwsc.core.model.HomeworkTemplate;
 import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.springframework.http.HttpStatus;
@@ -31,8 +30,13 @@ public class HomeworkTemplateController {
     }
 
     @GetMapping
-    public ResponseEntity<List<HomeworkTemplate>> get(@PathVariable String username) {
+    public ResponseEntity<List<HomeworkTemplateDto>> get(@PathVariable String username) {
         return new ResponseEntity<>(service.get(username), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<HomeworkTemplateDto> get(@PathVariable String username, @PathVariable long id) {
+        return new ResponseEntity<>(service.get(username, id), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

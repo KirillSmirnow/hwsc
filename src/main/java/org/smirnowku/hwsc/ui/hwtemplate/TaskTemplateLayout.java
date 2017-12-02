@@ -6,7 +6,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import org.smirnowku.hwsc.core.model.TaskTemplate;
+import org.smirnowku.hwsc.dto.TaskTemplateDto;
 
 @UIScope
 @SpringComponent
@@ -24,7 +24,7 @@ public class TaskTemplateLayout extends VerticalLayout {
         descriptionArea.setWidth(100, Unit.PERCENTAGE);
     }
 
-    public void refresh(TaskTemplate taskTemplate) {
+    public void refresh(TaskTemplateDto taskTemplate) {
         nameField.setValue(taskTemplate.getName());
         descriptionArea.setValue(taskTemplate.getDescription());
     }

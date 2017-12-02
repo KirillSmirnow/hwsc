@@ -8,11 +8,13 @@ import org.smirnowku.hwsc.core.model.Homework;
 import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.AssignmentRepository;
 import org.smirnowku.hwsc.core.repository.CheckRepository;
-import org.smirnowku.hwsc.dto.CheckResultDto;
+import org.smirnowku.hwsc.dto.AssignmentDto;
+import org.smirnowku.hwsc.dto.CheckDto;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CheckService {
@@ -26,8 +28,8 @@ public class CheckService {
     @Resource
     private CheckRepository checkRepository;
 
-    public void submit(String username, long id, CheckResultDto dto) {
-        Check check = get(username, id);
+    public void submit(String username, long id, AssignmentDto dto) {
+        Check check = getEntity(username, id);
         check.setStatus(Check.Status.CHECKED);
         checkRepository.save(check);
         Assignment assignment = check.getAssignment();
@@ -36,22 +38,28 @@ public class CheckService {
         onCheckSubmitted(check.getChecker(), assignment.getStudent(), assignment.getHomework());
     }
 
-    public Check get(String username, long id) {
+    public CheckDto get(String username, long id) {
+        return getEntity(username, id).toDto();
+    }
+
+    public List<CheckDto> getPending(String username) {
+        User checker = userService.getEntity(username);
+        return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.PENDING).stream()
+                .map(Check::toDto).collect(Collectors.toList());
+    }
+
+    public List<CheckDto> getChecked(String username) {
+        User checker = userService.getEntity(username);
+        return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.CHECKED).stream()
+                .map(Check::toDto).collect(Collectors.toList());
+    }
+
+    private Check getEntity(String username, long id) {
         Check check = checkRepository.findOne(id);
         if (check == null) throw new NotFoundException("Check not found");
-        User user = userService.get(username);
+        User user = userService.getEntity(username);
         authorizeAccess(check, user);
         return check;
-    }
-
-    public List<Check> getPending(String username) {
-        User checker = userService.get(username);
-        return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.PENDING);
-    }
-
-    public List<Check> getChecked(String username) {
-        User checker = userService.get(username);
-        return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.CHECKED);
     }
 
     private void onCheckSubmitted(User checker, User checkedStudent, Homework homework) {

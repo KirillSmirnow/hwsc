@@ -1,19 +1,21 @@
 package org.smirnowku.hwsc.dto;
 
-import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
-
+import java.util.Date;
 import java.util.List;
 
-public class HomeworkSolutionDto {
+public class HomeworkSolutionDto extends BaseDto {
 
     private List<TaskSolutionDto> taskSolutions;
 
     public HomeworkSolutionDto() {
     }
 
+    public HomeworkSolutionDto(long id, Date created, Date updated, List<TaskSolutionDto> taskSolutions) {
+        super(id, created, updated);
+        this.taskSolutions = taskSolutions;
+    }
+
     public List<TaskSolutionDto> getTaskSolutions() {
-        if (PropertyValidator.isEmpty(taskSolutions))
-            throw new IllegalArgumentException("Task solutions cannot be empty");
         return taskSolutions;
     }
 

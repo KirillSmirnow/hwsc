@@ -1,9 +1,8 @@
 package org.smirnowku.hwsc.rest.controller;
 
-import org.smirnowku.hwsc.core.model.Classroom;
-import org.smirnowku.hwsc.core.model.Homework;
 import org.smirnowku.hwsc.core.service.impl.ClassroomService;
 import org.smirnowku.hwsc.dto.ClassroomDto;
+import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,22 +39,22 @@ public class ClassroomController {
     }
 
     @GetMapping("/student")
-    public ResponseEntity<List<Classroom>> getClassroomsAsStudent(@PathVariable String username) {
+    public ResponseEntity<List<ClassroomDto>> getClassroomsAsStudent(@PathVariable String username) {
         return new ResponseEntity<>(service.getClassroomsAsStudent(username), HttpStatus.OK);
     }
 
     @GetMapping("/teacher")
-    public ResponseEntity<List<Classroom>> getClassroomsAsTeacher(@PathVariable String username) {
+    public ResponseEntity<List<ClassroomDto>> getClassroomsAsTeacher(@PathVariable String username) {
         return new ResponseEntity<>(service.getClassroomsAsTeacher(username), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Classroom> get(@PathVariable String username, @PathVariable long id) {
+    public ResponseEntity<ClassroomDto> get(@PathVariable String username, @PathVariable long id) {
         return new ResponseEntity<>(service.get(username, id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/homeworks")
-    public ResponseEntity<List<Homework>> getHomeworks(@PathVariable String username, @PathVariable long id) {
+    public ResponseEntity<List<HomeworkDto>> getHomeworks(@PathVariable String username, @PathVariable long id) {
         return new ResponseEntity<>(service.getHomeworks(username, id), HttpStatus.OK);
     }
 }

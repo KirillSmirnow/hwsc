@@ -2,15 +2,15 @@ package org.smirnowku.hwsc.dto;
 
 import java.util.Date;
 
-public class TaskTemplateDto extends BaseDto {
+public class TaskDto extends BaseDto {
 
     private String name;
     private String description;
 
-    public TaskTemplateDto() {
+    public TaskDto() {
     }
 
-    public TaskTemplateDto(long id, Date created, Date updated, String name, String description) {
+    public TaskDto(long id, Date created, Date updated, String name, String description) {
         super(id, created, updated);
         this.name = name;
         this.description = description;
@@ -26,7 +26,7 @@ public class TaskTemplateDto extends BaseDto {
 
     @Override
     public String toString() {
-        return "TaskTemplateDto{" +
+        return "TaskDto{" +
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';

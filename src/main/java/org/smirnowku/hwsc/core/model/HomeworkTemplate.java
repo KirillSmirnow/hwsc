@@ -1,10 +1,14 @@
 package org.smirnowku.hwsc.core.model;
 
+import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
+import org.smirnowku.hwsc.util.PropertyValidator;
+
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class HomeworkTemplate extends BaseEntity {
@@ -12,7 +16,7 @@ public class HomeworkTemplate extends BaseEntity {
     @ManyToOne
     private User creator;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<TaskTemplate> taskTemplates;
 
     private String name;
@@ -23,8 +27,8 @@ public class HomeworkTemplate extends BaseEntity {
 
     public HomeworkTemplate(User creator, String name, String description) {
         this.creator = creator;
-        this.name = name;
-        this.description = description;
+        setName(name);
+        setDescription(description);
     }
 
     public void setTaskTemplates(List<TaskTemplate> taskTemplates) {
@@ -32,6 +36,8 @@ public class HomeworkTemplate extends BaseEntity {
     }
 
     public void setName(String name) {
+        if (PropertyValidator.isEmpty(name))
+            throw new IllegalArgumentException("Name cannot be empty");
         this.name = name;
     }
 
@@ -39,7 +45,7 @@ public class HomeworkTemplate extends BaseEntity {
         this.description = description;
     }
 
-    public User creator() {
+    public User getCreator() {
         return creator;
     }
 
@@ -53,6 +59,11 @@ public class HomeworkTemplate extends BaseEntity {
 
     public String getDescription() {
         return description;
+    }
+
+    public HomeworkTemplateDto toDto() {
+        return new HomeworkTemplateDto(getId(), getCreated(), getUpdated(), creator.toDto(),
+                taskTemplates.stream().map(TaskTemplate::toDto).collect(Collectors.toList()), name, description);
     }
 
     @Override

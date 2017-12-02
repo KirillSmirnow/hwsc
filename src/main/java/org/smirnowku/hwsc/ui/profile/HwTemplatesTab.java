@@ -6,8 +6,8 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import org.smirnowku.hwsc.core.model.HomeworkTemplate;
 import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
+import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 
@@ -23,12 +23,12 @@ public class HwTemplatesTab extends VerticalLayout {
     @Resource
     private HomeworkTemplateService homeworkTemplateService;
 
-    private Grid<HomeworkTemplate> templatesGrid;
+    private Grid<HomeworkTemplateDto> templatesGrid;
 
     public HwTemplatesTab() {
         templatesGrid = new Grid<>();
-        templatesGrid.addColumn(HomeworkTemplate::getName).setCaption("Name");
-        templatesGrid.addColumn(HomeworkTemplate::getDescription).setCaption("Description");
+        templatesGrid.addColumn(HomeworkTemplateDto::getName).setCaption("Name");
+        templatesGrid.addColumn(HomeworkTemplateDto::getDescription).setCaption("Description");
         templatesGrid.addItemClickListener(this::navToTemplate);
 
         setSizeFull();
@@ -39,12 +39,12 @@ public class HwTemplatesTab extends VerticalLayout {
     }
 
     public void refresh() {
-        templatesGrid.setItems(homeworkTemplateService.get(authenticationService.getUser().getUsername()));
+        templatesGrid.setItems(homeworkTemplateService.get(authenticationService.getUsername()));
     }
 
-    private void navToTemplate(Grid.ItemClick<HomeworkTemplate> itemClick) {
+    private void navToTemplate(Grid.ItemClick<HomeworkTemplateDto> itemClick) {
         if (itemClick.getMouseEventDetails().isDoubleClick()) {
-            HomeworkTemplate template = itemClick.getItem();
+            HomeworkTemplateDto template = itemClick.getItem();
             UI.getCurrent().getNavigator().navigateTo(Views.hwTemplate(template.getId()));
         }
     }

@@ -31,15 +31,19 @@ public class HomeworkSolutionService {
     private TaskSolutionRepository taskSolutionRepository;
 
     public void save(String username, long id, HomeworkSolutionDto dto) {
-        HomeworkSolution homeworkSolution = get(username, id);
+        HomeworkSolution homeworkSolution = getEntity(username, id);
         homeworkSolution.setTaskSolutions(createTaskSolutions(dto));
         homeworkSolutionRepository.save(homeworkSolution);
     }
 
-    public HomeworkSolution get(String username, long id) {
+    public HomeworkSolutionDto get(String username, long id) {
+        return getEntity(username, id).toDto();
+    }
+
+    private HomeworkSolution getEntity(String username, long id) {
         HomeworkSolution homeworkSolution = homeworkSolutionRepository.findOne(id);
         if (homeworkSolution == null) throw new NotFoundException("Homework solution not found");
-        User user = userService.get(username);
+        User user = userService.getEntity(username);
         authorizeAccess(homeworkSolution, user);
         return homeworkSolution;
     }

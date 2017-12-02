@@ -1,10 +1,15 @@
 package org.smirnowku.hwsc.core.model;
 
+import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import org.smirnowku.hwsc.dto.HomeworkDto;
+import org.smirnowku.hwsc.util.PropertyValidator;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Homework extends BaseEntity {
@@ -24,6 +29,8 @@ public class Homework extends BaseEntity {
     }
 
     public Homework(HomeworkTemplate template, Classroom classroom, List<Task> tasks, Date deadline, Integer subgroupSize) {
+        if (PropertyValidator.isEmpty(subgroupSize))
+            throw new IllegalArgumentException("Subgroup size cannot be empty");
         this.classroom = classroom;
         this.tasks = tasks;
         this.name = template.getName();
@@ -54,6 +61,11 @@ public class Homework extends BaseEntity {
 
     public Integer getSubgroupSize() {
         return subgroupSize;
+    }
+
+    public HomeworkDto toDto() {
+        return new HomeworkDto(getId(), getCreated(), getUpdated(), classroom.toDto(),
+                tasks.stream().map(Task::toDto).collect(Collectors.toList()), name, description, deadline, subgroupSize);
     }
 
     @Override

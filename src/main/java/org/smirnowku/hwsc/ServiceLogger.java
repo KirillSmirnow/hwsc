@@ -1,4 +1,4 @@
-package org.smirnowku.hwsc.core;
+package org.smirnowku.hwsc;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -11,9 +11,9 @@ import java.util.stream.Collectors;
 
 @Aspect
 @Component
-public class CoreLogger {
+public class ServiceLogger {
 
-    private static final Logger log = LoggerFactory.getLogger(CoreLogger.class);
+    private static final Logger log = LoggerFactory.getLogger(ServiceLogger.class);
 
     @Pointcut("@within(org.springframework.stereotype.Service)")
     public void serviceMethods() {

@@ -38,9 +38,9 @@ public class HomeworkService {
     private TaskRepository taskRepository;
 
     public void assign(String username, long homeworkTemplateId, long classroomId, HomeworkDto dto) {
-        HomeworkTemplate homeworkTemplate = homeworkTemplateService.get(username, homeworkTemplateId);
-        Classroom classroom = classroomService.get(username, classroomId);
-        User user = userService.get(username);
+        HomeworkTemplate homeworkTemplate = homeworkTemplateService.getEntity(username, homeworkTemplateId);
+        Classroom classroom = classroomService.getEntity(username, classroomId);
+        User user = userService.getEntity(username);
         authorizeAssign(classroom, user);
         Homework homework = new Homework(homeworkTemplate, classroom, createTasks(homeworkTemplate),
                 dto.getDeadline(), dto.getSubgroupSize());

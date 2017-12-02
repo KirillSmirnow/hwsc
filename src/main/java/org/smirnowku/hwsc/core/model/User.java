@@ -1,5 +1,9 @@
 package org.smirnowku.hwsc.core.model;
 
+import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import org.smirnowku.hwsc.dto.UserDto;
+import org.smirnowku.hwsc.util.PropertyValidator;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -18,9 +22,11 @@ public class User extends BaseEntity {
     }
 
     public User(String username, String password, String name) {
+        if (PropertyValidator.isEmpty(username))
+            throw new IllegalArgumentException("Username cannot be empty");
         this.username = username;
-        this.password = password;
-        this.name = name;
+        setPassword(password);
+        setName(name);
     }
 
     public void setPassword(String password) {
@@ -28,10 +34,12 @@ public class User extends BaseEntity {
     }
 
     public void setName(String name) {
+        if (PropertyValidator.isEmpty(name))
+            throw new IllegalArgumentException("Name cannot be empty");
         this.name = name;
     }
 
-    public String password() {
+    public String getPassword() {
         return password;
     }
 
@@ -41,6 +49,10 @@ public class User extends BaseEntity {
 
     public String getName() {
         return name;
+    }
+
+    public UserDto toDto() {
+        return new UserDto(getId(), getCreated(), getUpdated(), username, name);
     }
 
     @Override

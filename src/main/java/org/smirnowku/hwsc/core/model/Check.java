@@ -1,5 +1,7 @@
 package org.smirnowku.hwsc.core.model;
 
+import org.smirnowku.hwsc.dto.CheckDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -43,6 +45,10 @@ public class Check extends BaseEntity {
 
     public Status getStatus() {
         return status;
+    }
+
+    public CheckDto toDto() {
+        return new CheckDto(getId(), getCreated(), getUpdated(), checker.toDto(), assignment.toDto(), status);
     }
 
     @Override

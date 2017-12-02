@@ -4,22 +4,22 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.VerticalLayout;
-import org.smirnowku.hwsc.core.model.Classroom;
-import org.smirnowku.hwsc.core.model.User;
+import org.smirnowku.hwsc.dto.ClassroomDto;
+import org.smirnowku.hwsc.dto.UserDto;
 
 @UIScope
 @SpringComponent
 public class StudentsTab extends VerticalLayout {
 
-    private Grid<User> studentsGrid;
+    private Grid<UserDto> studentsGrid;
 
     public StudentsTab() {
         studentsGrid = new Grid<>();
-        studentsGrid.addColumn(User::getName).setCaption("Name");
+        studentsGrid.addColumn(UserDto::getName).setCaption("Name");
         addComponents(studentsGrid);
     }
 
-    public void refresh(Classroom classroom) {
+    public void refresh(ClassroomDto classroom) {
         studentsGrid.setItems(classroom.getStudents());
     }
 }

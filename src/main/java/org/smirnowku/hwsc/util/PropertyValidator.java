@@ -1,4 +1,4 @@
-package org.smirnowku.hwsc.dto;
+package org.smirnowku.hwsc.util;
 
 import java.util.Collection;
 

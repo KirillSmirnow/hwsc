@@ -27,33 +27,38 @@ public class HomeworkTemplateService {
     private TaskTemplateRepository taskTemplateRepository;
 
     public void create(String username, HomeworkTemplateDto dto) {
-        User creator = userService.get(username);
+        User creator = userService.getEntity(username);
         HomeworkTemplate homeworkTemplate = new HomeworkTemplate(creator, dto.getName(), dto.getDescription());
         homeworkTemplateRepository.save(homeworkTemplate);
     }
 
     public void edit(String username, long id, HomeworkTemplateDto dto) {
-        HomeworkTemplate homeworkTemplate = get(username, id);
+        HomeworkTemplate homeworkTemplate = getEntity(username, id);
         homeworkTemplate.setName(dto.getName());
         homeworkTemplate.setDescription(dto.getDescription());
         homeworkTemplate.setTaskTemplates(createTaskTemplates(dto));
         homeworkTemplateRepository.save(homeworkTemplate);
     }
 
-    public List<HomeworkTemplate> get(String username) {
-        User user = userService.get(username);
-        return homeworkTemplateRepository.findAllByCreator(user);
+    public List<HomeworkTemplateDto> get(String username) {
+        User user = userService.getEntity(username);
+        return homeworkTemplateRepository.findAllByCreator(user).stream()
+                .map(HomeworkTemplate::toDto).collect(Collectors.toList());
     }
 
     public void delete(String username, long id) {
-        HomeworkTemplate homeworkTemplate = get(username, id);
+        HomeworkTemplate homeworkTemplate = getEntity(username, id);
         homeworkTemplateRepository.delete(homeworkTemplate);
     }
 
-    public HomeworkTemplate get(String username, long id) {
+    public HomeworkTemplateDto get(String username, long id) {
+        return getEntity(username, id).toDto();
+    }
+
+    HomeworkTemplate getEntity(String username, long id) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateRepository.findOne(id);
         if (homeworkTemplate == null) throw new NotFoundException("Homework template not found");
-        User user = userService.get(username);
+        User user = userService.getEntity(username);
         authorizeAccess(homeworkTemplate, user);
         return homeworkTemplate;
     }
@@ -66,7 +71,7 @@ public class HomeworkTemplateService {
     }
 
     private void authorizeAccess(HomeworkTemplate homeworkTemplate, User user) {
-        if (!homeworkTemplate.creator().equals(user))
+        if (!homeworkTemplate.getCreator().equals(user))
             throw new ForbiddenException("You are not allowed to access this homework template: you are not its owner");
     }
 }

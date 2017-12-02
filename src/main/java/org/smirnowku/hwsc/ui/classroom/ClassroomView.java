@@ -6,8 +6,8 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.model.Classroom;
 import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 
@@ -50,7 +50,7 @@ public class ClassroomView extends VerticalLayout implements View {
             return;
         }
         try {
-            Classroom classroom = classroomService.get(authenticationService.getUser().getUsername(), id);
+            ClassroomDto classroom = classroomService.get(authenticationService.getUsername(), id);
             refresh(classroom);
         } catch (BaseException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
@@ -58,7 +58,7 @@ public class ClassroomView extends VerticalLayout implements View {
         }
     }
 
-    private void refresh(Classroom classroom) {
+    private void refresh(ClassroomDto classroom) {
         nameLabel.setValue(String.format("<h1>%s</h1>", classroom.getName()));
         if (classroom.getDescription() == null || classroom.getDescription().isEmpty()) {
             descriptionLabel.setVisible(false);

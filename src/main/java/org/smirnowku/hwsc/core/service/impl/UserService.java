@@ -22,20 +22,24 @@ public class UserService {
     public void signUp(UserDto dto) {
         if (userRepository.exists(dto.getUsername()))
             throw new ConflictException(String.format("Username %s occupied", dto.getUsername()));
-        String password = passwordEncoder.encode(dto.getPassword());
+        String password = passwordEncoder.encode(dto.password());
         User user = new User(dto.getUsername(), password, dto.getName());
         userRepository.save(user);
     }
 
     public void edit(String username, UserDto dto) {
-        User user = get(username);
-        String password = passwordEncoder.encode(dto.getPassword());
+        User user = getEntity(username);
+        String password = passwordEncoder.encode(dto.password());
         user.setPassword(password);
         user.setName(dto.getName());
         userRepository.save(user);
     }
 
-    public User get(String username) {
+    public UserDto get(String username) {
+        return getEntity(username).toDto();
+    }
+
+    User getEntity(String username) {
         User user = userRepository.findByUsername(username);
         if (user == null) throw new NotFoundException(String.format("User %s not found", username));
         return user;

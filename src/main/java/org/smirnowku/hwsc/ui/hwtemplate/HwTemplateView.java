@@ -6,8 +6,8 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.model.HomeworkTemplate;
 import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
+import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 
@@ -50,7 +50,7 @@ public class HwTemplateView extends VerticalLayout implements View {
             return;
         }
         try {
-            HomeworkTemplate template = homeworkTemplateService.get(authenticationService.getUser().getUsername(), id);
+            HomeworkTemplateDto template = homeworkTemplateService.get(authenticationService.getUsername(), id);
             refresh(template);
         } catch (BaseException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
@@ -58,7 +58,7 @@ public class HwTemplateView extends VerticalLayout implements View {
         }
     }
 
-    private void refresh(HomeworkTemplate template) {
+    private void refresh(HomeworkTemplateDto template) {
         nameLabel.setValue(String.format("<h1>%s</h1>", template.getName()));
         if (template.getDescription() == null || template.getDescription().isEmpty()) {
             descriptionLabel.setVisible(false);

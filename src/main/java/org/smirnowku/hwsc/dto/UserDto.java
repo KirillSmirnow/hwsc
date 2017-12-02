@@ -1,8 +1,8 @@
 package org.smirnowku.hwsc.dto;
 
-import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import java.util.Date;
 
-public class UserDto {
+public class UserDto extends BaseDto {
 
     private String username;
     private String password;
@@ -17,21 +17,25 @@ public class UserDto {
         this.name = name;
     }
 
-    public String getUsername() {
-        if (PropertyValidator.isEmpty(username))
-            throw new IllegalArgumentException("Username cannot be empty");
-        return username;
+    public UserDto(long id, Date created, Date updated, String username, String name) {
+        super(id, created, updated);
+        this.username = username;
+        this.name = name;
     }
 
-    public String getPassword() {
-        if (PropertyValidator.isEmpty(password))
-            throw new IllegalArgumentException("Password cannot be empty");
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String password() {
         return password;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
     public String getName() {
-        if (PropertyValidator.isEmpty(name))
-            throw new IllegalArgumentException("Name cannot be empty");
         return name;
     }
 
