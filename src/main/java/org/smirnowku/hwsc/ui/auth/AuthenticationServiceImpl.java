@@ -2,7 +2,6 @@ package org.smirnowku.hwsc.ui.auth;
 
 import com.vaadin.server.VaadinSession;
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
-import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.service.impl.AuthService;
 import org.smirnowku.hwsc.core.service.impl.UserService;
 import org.smirnowku.hwsc.dto.UserDto;
@@ -40,6 +39,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public void signOut() {
-        VaadinSession.getCurrent().setAttribute(User.class, null);
+        VaadinSession.getCurrent().setAttribute(UserDto.class, null);
     }
 }

@@ -12,6 +12,7 @@ import org.smirnowku.hwsc.core.repository.AssignmentRepository;
 import org.smirnowku.hwsc.core.repository.CheckRepository;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collections;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AssignmentService {
 
     private static final Logger log = LoggerFactory.getLogger(AssignmentService.class);

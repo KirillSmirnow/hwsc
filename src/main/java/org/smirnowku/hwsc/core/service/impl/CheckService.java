@@ -11,12 +11,14 @@ import org.smirnowku.hwsc.core.repository.CheckRepository;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.dto.CheckDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class CheckService {
 
     @Resource

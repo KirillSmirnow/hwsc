@@ -10,12 +10,14 @@ import org.smirnowku.hwsc.core.repository.HomeworkSolutionRepository;
 import org.smirnowku.hwsc.core.repository.TaskSolutionRepository;
 import org.smirnowku.hwsc.dto.HomeworkSolutionDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class HomeworkSolutionService {
 
     @Resource

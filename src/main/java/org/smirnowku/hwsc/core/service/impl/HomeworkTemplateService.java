@@ -9,12 +9,14 @@ import org.smirnowku.hwsc.core.repository.HomeworkTemplateRepository;
 import org.smirnowku.hwsc.core.repository.TaskTemplateRepository;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class HomeworkTemplateService {
 
     @Resource

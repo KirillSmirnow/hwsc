@@ -11,12 +11,14 @@ import org.smirnowku.hwsc.core.repository.HomeworkRepository;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ClassroomService {
 
     private interface MemberAdder {

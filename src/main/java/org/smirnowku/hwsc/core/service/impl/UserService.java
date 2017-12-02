@@ -7,10 +7,12 @@ import org.smirnowku.hwsc.core.repository.UserRepository;
 import org.smirnowku.hwsc.dto.UserDto;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 
 @Service
+@Transactional
 public class UserService {
 
     @Resource
