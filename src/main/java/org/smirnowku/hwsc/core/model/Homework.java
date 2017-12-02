@@ -32,6 +32,10 @@ public class Homework extends BaseEntity {
         this.subgroupSize = subgroupSize;
     }
 
+    public Classroom getClassroom() {
+        return classroom;
+    }
+
     public List<Task> getTasks() {
         return tasks;
     }
@@ -56,7 +60,6 @@ public class Homework extends BaseEntity {
     public String toString() {
         return "Homework{" +
                 "classroom=" + classroom +
-                ", tasks=" + tasks +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", deadline=" + deadline +

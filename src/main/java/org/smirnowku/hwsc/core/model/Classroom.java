@@ -55,9 +55,7 @@ public class Classroom extends BaseEntity {
     @Override
     public String toString() {
         return "Classroom{" +
-                "teachers=" + teachers +
-                ", students=" + students +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

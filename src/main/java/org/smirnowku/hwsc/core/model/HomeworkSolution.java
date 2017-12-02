@@ -23,8 +23,6 @@ public class HomeworkSolution extends BaseEntity {
 
     @Override
     public String toString() {
-        return "HomeworkSolution{" +
-                "taskSolutions=" + taskSolutions +
-                '}';
+        return "HomeworkSolution{}";
     }
 }

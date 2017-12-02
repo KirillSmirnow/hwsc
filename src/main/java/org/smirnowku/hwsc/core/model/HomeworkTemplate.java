@@ -58,7 +58,6 @@ public class HomeworkTemplate extends BaseEntity {
     public String toString() {
         return "HomeworkTemplate{" +
                 "creator=" + creator +
-                ", taskTemplates=" + taskTemplates +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
