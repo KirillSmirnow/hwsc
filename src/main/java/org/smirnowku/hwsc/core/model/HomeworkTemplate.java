@@ -1,6 +1,7 @@
 package org.smirnowku.hwsc.core.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -11,7 +12,7 @@ public class HomeworkTemplate extends BaseEntity {
     @ManyToOne
     private User creator;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<TaskTemplate> taskTemplates;
 
     private String name;

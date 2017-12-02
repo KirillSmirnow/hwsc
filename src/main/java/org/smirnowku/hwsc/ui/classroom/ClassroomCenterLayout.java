@@ -14,7 +14,7 @@ import javax.annotation.Resource;
 
 @UIScope
 @SpringComponent
-public class CenterLayout extends HorizontalLayout {
+public class ClassroomCenterLayout extends HorizontalLayout {
 
     @Resource
     private AuthenticationService authenticationService;
@@ -33,7 +33,7 @@ public class CenterLayout extends HorizontalLayout {
 
     private TabSheet membersTabSheet;
 
-    public CenterLayout() {
+    public ClassroomCenterLayout() {
         membersTabSheet = new TabSheet();
     }
 

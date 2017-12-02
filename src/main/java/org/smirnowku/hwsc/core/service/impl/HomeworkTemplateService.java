@@ -50,7 +50,7 @@ public class HomeworkTemplateService {
         homeworkTemplateRepository.delete(homeworkTemplate);
     }
 
-    HomeworkTemplate get(String username, long id) {
+    public HomeworkTemplate get(String username, long id) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateRepository.findOne(id);
         if (homeworkTemplate == null) throw new NotFoundException("Homework template not found");
         User user = userService.get(username);

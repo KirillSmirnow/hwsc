@@ -25,6 +25,9 @@ public class ProfileView extends VerticalLayout implements View {
     @Resource
     private ChecksTab checksTab;
 
+    @Resource
+    private HwTemplatesTab hwTemplatesTab;
+
     private TabSheet tabSheet;
 
     public ProfileView() {
@@ -36,6 +39,7 @@ public class ProfileView extends VerticalLayout implements View {
         tabSheet.addTab(classroomsTab).setCaption("Classrooms");
         tabSheet.addTab(homeworksTab).setCaption("Homework");
         tabSheet.addTab(checksTab).setCaption("Checks");
+        tabSheet.addTab(hwTemplatesTab).setCaption("HW Templates");
         tabSheet.setSelectedTab(homeworksTab);
         addComponents(profileHeader, tabSheet);
     }
@@ -45,6 +49,7 @@ public class ProfileView extends VerticalLayout implements View {
         profileHeader.refresh();
         homeworksTab.refresh();
         classroomsTab.refresh();
+        hwTemplatesTab.refresh();
         checksTab.refresh();
     }
 }

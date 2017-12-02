@@ -21,6 +21,7 @@ public class HomeworksLayout extends VerticalLayout {
         titleLabel = new Label("Homework");
         homeworkGrid = new Grid<>();
         homeworkGrid.addColumn(Homework::getName).setCaption("Name");
+        homeworkGrid.addColumn(Homework::getDeadline).setCaption("Deadline");
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addComponents(titleLabel, homeworkGrid);
     }
