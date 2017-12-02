@@ -13,6 +13,11 @@ public class ClassroomDto extends BaseDto {
     public ClassroomDto() {
     }
 
+    public ClassroomDto(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
     public ClassroomDto(long id, Date created, Date updated, Set<UserDto> teachers, Set<UserDto> students,
                         String name, String description) {
         super(id, created, updated);

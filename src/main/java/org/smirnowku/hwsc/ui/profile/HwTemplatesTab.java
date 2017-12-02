@@ -26,8 +26,7 @@ public class HwTemplatesTab extends VerticalLayout {
     private Grid<HomeworkTemplateDto> templatesGrid;
 
     public HwTemplatesTab() {
-        newTemplateButton = new Button("New Template");
-        newTemplateButton.addClickListener(clickEvent -> newTemplate());
+        newTemplateButton = new Button("New Template", clickEvent -> newTemplate());
 
         templatesGrid = new Grid<>();
         templatesGrid.addColumn(HomeworkTemplateDto::getName).setCaption("Name");
