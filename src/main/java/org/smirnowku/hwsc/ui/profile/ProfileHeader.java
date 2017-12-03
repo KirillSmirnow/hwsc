@@ -16,21 +16,23 @@ public class ProfileHeader extends HorizontalLayout {
     @Resource
     private AuthenticationService authenticationService;
 
-    private Label userLabel;
+    private Label nameLabel;
     private Button signOutButton;
 
     public ProfileHeader() {
-        userLabel = new Label("User", ContentMode.HTML);
+        nameLabel = new Label("name", ContentMode.HTML);
         signOutButton = new Button("Sign Out", clickEvent -> signOut());
-        addComponents(userLabel, signOutButton);
 
         setSizeFull();
-        setComponentAlignment(userLabel, Alignment.MIDDLE_LEFT);
+
+        addComponents(nameLabel, signOutButton);
+        setComponentAlignment(nameLabel, Alignment.MIDDLE_LEFT);
         setComponentAlignment(signOutButton, Alignment.MIDDLE_RIGHT);
     }
 
     public void refresh() {
-        userLabel.setValue(String.format("User: <b>%s</b>", authenticationService.getUser().getName()));
+        nameLabel.setValue(String.format("<b style=\"color:green\">%s</b><br/>%s",
+                authenticationService.getUser().getName(), authenticationService.getUsername()));
     }
 
     private void signOut() {

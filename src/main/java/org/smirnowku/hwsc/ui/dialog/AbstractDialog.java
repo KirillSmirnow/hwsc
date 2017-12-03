@@ -8,6 +8,7 @@ public abstract class AbstractDialog extends Window implements CloseDialogListen
     public AbstractDialog(String caption) {
         super(caption);
         setResizable(false);
+        setModal(true);
         center();
     }
 
@@ -22,7 +23,7 @@ public abstract class AbstractDialog extends Window implements CloseDialogListen
     }
 
     @Override
-    public boolean equals(Object o) {
-        return this == o || o != null && getClass() == o.getClass();
+    public final boolean equals(Object o) {
+        return o != null && o instanceof AbstractDialog;
     }
 }
