@@ -20,7 +20,7 @@ public class HomeworkTemplate extends BaseEntity {
     @ManyToOne(optional = false)
     private User creator;
 
-    @OneToMany(orphanRemoval = true)
+    @OneToMany
     private List<TaskTemplate> taskTemplates;
 
     @Column(nullable = false, length = MAX_NAME_LENGTH)
