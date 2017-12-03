@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.core.model;
 
+import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
 import org.smirnowku.hwsc.dto.TaskDto;
 
 import javax.persistence.Column;
@@ -21,6 +22,7 @@ public class Task extends BaseEntity {
     }
 
     public Task(TaskTemplate template) {
+        validateDescription(template.getDescription());
         this.name = template.getName();
         this.description = template.getDescription();
     }
@@ -43,5 +45,11 @@ public class Task extends BaseEntity {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    private void validateDescription(String description) {
+        if (description != null && description.length() > MAX_DESCRIPTION_LENGTH)
+            throw new IllegalArgumentException(String.format("Description is too long (max length is %d)", MAX_DESCRIPTION_LENGTH),
+                    String.format("Description is too long (max length is %d, current length is %d)", MAX_DESCRIPTION_LENGTH, description.length()));
     }
 }

@@ -9,21 +9,17 @@ public abstract class AbstractDialog extends Window implements CloseDialogListen
         super(caption);
         setResizable(false);
         setModal(true);
+        setWidth(500, Unit.PIXELS);
+        setHeight(400, Unit.PIXELS);
         center();
     }
 
     public void showDialog() {
-        if (UI.getCurrent().getWindows().stream().noneMatch(this::equals))
-            UI.getCurrent().addWindow(this);
+        UI.getCurrent().addWindow(this);
     }
 
     @Override
     public void onClose() {
         close();
-    }
-
-    @Override
-    public final boolean equals(Object o) {
-        return o != null && o instanceof AbstractDialog;
     }
 }

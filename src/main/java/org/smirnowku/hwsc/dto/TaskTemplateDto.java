@@ -10,6 +10,10 @@ public class TaskTemplateDto extends BaseDto {
     public TaskTemplateDto() {
     }
 
+    public TaskTemplateDto(String name) {
+        this.name = name;
+    }
+
     public TaskTemplateDto(long id, Date created, Date updated, String name, String description) {
         super(id, created, updated);
         this.name = name;

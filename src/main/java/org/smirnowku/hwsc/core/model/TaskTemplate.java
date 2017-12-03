@@ -16,7 +16,7 @@ public class TaskTemplate extends BaseEntity {
     @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 
-    @Column(nullable = false, length = MAX_DESCRIPTION_LENGTH)
+    @Column(nullable = true, length = MAX_DESCRIPTION_LENGTH)
     private String description;
 
     public TaskTemplate() {
@@ -57,8 +57,7 @@ public class TaskTemplate extends BaseEntity {
     }
 
     private void validateDescription(String description) {
-        if (PropertyValidator.isEmpty(description)) throw new IllegalArgumentException("Description cannot be empty");
-        if (description.length() > MAX_DESCRIPTION_LENGTH)
+        if (description != null && description.length() > MAX_DESCRIPTION_LENGTH)
             throw new IllegalArgumentException(String.format("Description is too long (max length is %d)", MAX_DESCRIPTION_LENGTH),
                     String.format("Description is too long (max length is %d, current length is %d)", MAX_DESCRIPTION_LENGTH, description.length()));
     }

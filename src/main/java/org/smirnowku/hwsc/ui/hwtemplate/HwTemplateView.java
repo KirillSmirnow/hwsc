@@ -8,14 +8,20 @@ import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
 import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
+import org.smirnowku.hwsc.dto.TaskTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.AddTaskListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.AssignHwListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.DeleteHwTemplateListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.EditHwTemplateListener;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @SpringView(name = Views.HW_TEMPLATE)
-public class HwTemplateView extends VerticalLayout implements View {
+public class HwTemplateView extends VerticalLayout implements View,
+        AddTaskListener, AssignHwListener, DeleteHwTemplateListener, EditHwTemplateListener {
 
     @Resource
     private AuthenticationService authenticationService;
@@ -24,7 +30,9 @@ public class HwTemplateView extends VerticalLayout implements View {
     private HomeworkTemplateService homeworkTemplateService;
 
     @Resource
-    private HwTemplateCenterLayout hwTemplateCenterLayout;
+    private HwTemplateTasksLayout hwTemplateTasksLayout;
+
+    private HomeworkTemplateDto homeworkTemplate;
 
     private Label nameLabel;
     private Label descriptionLabel;
@@ -36,38 +44,74 @@ public class HwTemplateView extends VerticalLayout implements View {
 
     @PostConstruct
     public void init() {
-        addComponents(nameLabel, descriptionLabel, hwTemplateCenterLayout);
+        addComponents(nameLabel, descriptionLabel, hwTemplateTasksLayout);
         setComponentAlignment(nameLabel, Alignment.TOP_CENTER);
         setComponentAlignment(descriptionLabel, Alignment.TOP_CENTER);
-        setComponentAlignment(hwTemplateCenterLayout, Alignment.MIDDLE_CENTER);
+        setComponentAlignment(hwTemplateTasksLayout, Alignment.MIDDLE_CENTER);
+        hwTemplateTasksLayout.setListeners(this, this, this, this);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        Long id;
         try {
-            id = Long.valueOf(viewChangeEvent.getParameters());
+            refresh(Long.valueOf(viewChangeEvent.getParameters()));
         } catch (NumberFormatException e) {
-            UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
-            return;
-        }
-        try {
-            HomeworkTemplateDto template = homeworkTemplateService.get(authenticationService.getUsername(), id);
-            refresh(template);
-        } catch (BaseException e) {
-            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
             UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
         }
     }
 
-    private void refresh(HomeworkTemplateDto template) {
-        nameLabel.setValue(String.format("<h1>%s</h1>", template.getName()));
-        if (template.getDescription() == null || template.getDescription().isEmpty()) {
+    @Override
+    public boolean onAddTask(TaskTemplateDto taskTemplate) {
+        homeworkTemplate.getTaskTemplates().add(taskTemplate);
+        return onEditHwTemplate(homeworkTemplate);
+    }
+
+    @Override
+    public boolean onDeleteHwTemplate() {
+        try {
+            homeworkTemplateService.delete(authenticationService.getUsername(), homeworkTemplate.getId());
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            return false;
+        }
+        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
+        return true;
+    }
+
+    @Override
+    public boolean onEditHwTemplate(HomeworkTemplateDto homeworkTemplate) {
+        try {
+            homeworkTemplateService.edit(authenticationService.getUsername(), homeworkTemplate.getId(), homeworkTemplate);
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            refresh(homeworkTemplate.getId());
+            return false;
+        }
+        refresh(homeworkTemplate.getId());
+        return true;
+    }
+
+    public void refresh(Long id) {
+        HomeworkTemplateDto homeworkTemplate;
+        try {
+            homeworkTemplate = homeworkTemplateService.get(authenticationService.getUsername(), id);
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
+            return;
+        }
+        this.homeworkTemplate = homeworkTemplate;
+        refresh();
+    }
+
+    private void refresh() {
+        nameLabel.setValue(String.format("<h1>%s</h1>", homeworkTemplate.getName()));
+        if (homeworkTemplate.getDescription() == null || homeworkTemplate.getDescription().isEmpty()) {
             descriptionLabel.setVisible(false);
         } else {
             descriptionLabel.setVisible(true);
-            descriptionLabel.setValue(String.format("<i>%s</i>", template.getDescription()));
+            descriptionLabel.setValue(String.format("<i>%s</i>", homeworkTemplate.getDescription()));
         }
-        hwTemplateCenterLayout.refresh(template);
+        hwTemplateTasksLayout.refresh(homeworkTemplate);
     }
 }
