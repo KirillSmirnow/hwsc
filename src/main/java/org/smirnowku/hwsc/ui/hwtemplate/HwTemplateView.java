@@ -17,8 +17,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @SpringView(name = Views.HW_TEMPLATE)
-public class HwTemplateView extends VerticalLayout implements View, AddTaskListener, AssignHwListener,
-        DeleteHwTemplateListener, EditHwTemplateListener, EditTaskListener, DeleteTaskListener {
+public class HwTemplateView extends VerticalLayout implements View, AddTaskListener, DeleteHwTemplateListener,
+        EditHwTemplateListener, EditTaskListener, DeleteTaskListener {
 
     @Resource
     private AuthenticationService authenticationService;
@@ -45,7 +45,7 @@ public class HwTemplateView extends VerticalLayout implements View, AddTaskListe
         setComponentAlignment(nameLabel, Alignment.TOP_CENTER);
         setComponentAlignment(descriptionLabel, Alignment.TOP_CENTER);
         setComponentAlignment(hwTemplateTasksLayout, Alignment.MIDDLE_CENTER);
-        hwTemplateTasksLayout.setListeners(this, this, this, this, this, this);
+        hwTemplateTasksLayout.setListeners(this, this, this, this, this);
     }
 
     @Override

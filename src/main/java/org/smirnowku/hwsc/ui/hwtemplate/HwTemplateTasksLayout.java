@@ -31,11 +31,9 @@ public class HwTemplateTasksLayout extends HorizontalSplitPanel {
         hwTemplateSidePanel.refresh(template);
     }
 
-    public void setListeners(AssignHwListener assignHwListener, EditHwTemplateListener editHwTemplateListener,
-                             DeleteHwTemplateListener deleteHwTemplateListener, AddTaskListener addTaskListener,
-                             EditTaskListener editTaskListener, DeleteTaskListener deleteTaskListener) {
-        hwTemplateSidePanel.setListeners(assignHwListener, editHwTemplateListener, deleteHwTemplateListener,
-                addTaskListener, taskEditorPanel);
+    public void setListeners(EditHwTemplateListener editHwTemplateListener, DeleteHwTemplateListener deleteHwTemplateListener,
+                             AddTaskListener addTaskListener, EditTaskListener editTaskListener, DeleteTaskListener deleteTaskListener) {
+        hwTemplateSidePanel.setListeners(editHwTemplateListener, deleteHwTemplateListener, addTaskListener, taskEditorPanel);
         taskEditorPanel.setListeners(editTaskListener, deleteTaskListener);
     }
 }

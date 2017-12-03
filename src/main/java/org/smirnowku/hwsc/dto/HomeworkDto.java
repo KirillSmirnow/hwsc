@@ -15,6 +15,11 @@ public class HomeworkDto extends BaseDto {
     public HomeworkDto() {
     }
 
+    public HomeworkDto(Date deadline, Integer subgroupSize) {
+        this.deadline = deadline;
+        this.subgroupSize = subgroupSize;
+    }
+
     public HomeworkDto(long id, Date created, Date updated, ClassroomDto classroom, List<TaskDto> tasks,
                        String name, String description, Date deadline, Integer subgroupSize) {
         super(id, created, updated);

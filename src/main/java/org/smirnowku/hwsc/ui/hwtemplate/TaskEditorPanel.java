@@ -5,6 +5,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.dto.TaskTemplateDto;
+import org.smirnowku.hwsc.ui.dialog.confirm.ConfirmDialog;
 import org.smirnowku.hwsc.ui.hwtemplate.actions.DeleteTaskListener;
 import org.smirnowku.hwsc.ui.hwtemplate.actions.EditTaskListener;
 import org.smirnowku.hwsc.ui.hwtemplate.actions.SelectTaskListener;
@@ -65,6 +66,8 @@ public class TaskEditorPanel extends VerticalLayout implements SelectTaskListene
     }
 
     private void deleteTask(Button.ClickEvent clickEvent) {
-        deleteTaskListener.onDeleteTask(taskTemplate);
+        ConfirmDialog dialog = new ConfirmDialog("Delete Task", "Are you sure you want to delete this task?",
+                "Delete", () -> deleteTaskListener.onDeleteTask(taskTemplate));
+        dialog.showDialog();
     }
 }

@@ -2,21 +2,42 @@ package org.smirnowku.hwsc.ui.hwtemplate;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.smirnowku.hwsc.core.exception.BaseException;
+import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.core.service.impl.HomeworkService;
+import org.smirnowku.hwsc.dto.ClassroomDto;
+import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.dto.TaskTemplateDto;
+import org.smirnowku.hwsc.ui.Views;
+import org.smirnowku.hwsc.ui.auth.AuthenticationService;
+import org.smirnowku.hwsc.ui.dialog.assignhw.AssignHomeworkDialog;
+import org.smirnowku.hwsc.ui.dialog.assignhw.AssignListener;
 import org.smirnowku.hwsc.ui.dialog.confirm.ConfirmDialog;
 import org.smirnowku.hwsc.ui.dialog.namedescription.NameDescriptionDialog;
 import org.smirnowku.hwsc.ui.dialog.prompt.PromptDialog;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.*;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.AddTaskListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.DeleteHwTemplateListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.EditHwTemplateListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.SelectTaskListener;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 @UIScope
 @SpringComponent
-public class HwTemplateSidePanel extends VerticalLayout {
+public class HwTemplateSidePanel extends VerticalLayout implements AssignListener {
 
-    private AssignHwListener assignHwListener;
+    @Resource
+    private AuthenticationService authenticationService;
+
+    @Resource
+    private HomeworkService homeworkService;
+
+    @Resource
+    private ClassroomService classroomService;
+
     private EditHwTemplateListener editHwTemplateListener;
     private DeleteHwTemplateListener deleteHwTemplateListener;
     private AddTaskListener addTaskListener;
@@ -48,17 +69,30 @@ public class HwTemplateSidePanel extends VerticalLayout {
         tasksGrid.setItems(template.getTaskTemplates());
     }
 
-    public void setListeners(AssignHwListener assignHwListener, EditHwTemplateListener editHwTemplateListener,
-                             DeleteHwTemplateListener deleteHwTemplateListener, AddTaskListener addTaskListener,
-                             SelectTaskListener selectTaskListener) {
-        this.assignHwListener = assignHwListener;
+    public void setListeners(EditHwTemplateListener editHwTemplateListener, DeleteHwTemplateListener deleteHwTemplateListener,
+                             AddTaskListener addTaskListener, SelectTaskListener selectTaskListener) {
         this.editHwTemplateListener = editHwTemplateListener;
         this.deleteHwTemplateListener = deleteHwTemplateListener;
         this.addTaskListener = addTaskListener;
         tasksGrid.addSelectionListener(selectTaskListener::onSelect);
     }
 
+    @Override
+    public boolean onAssign(Long classroomId, HomeworkDto homework) {
+        try {
+            homeworkService.assign(authenticationService.getUsername(), homeworkTemplate.getId(), classroomId, homework);
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            return false;
+        }
+        UI.getCurrent().getNavigator().navigateTo(Views.classroom(classroomId));
+        return true;
+    }
+
     private void assignHw() {
+        List<ClassroomDto> classrooms = classroomService.getClassroomsAsTeacher(authenticationService.getUsername());
+        AssignHomeworkDialog dialog = new AssignHomeworkDialog("Assign Homework", classrooms, this);
+        dialog.showDialog();
     }
 
     private void editInfo() {
