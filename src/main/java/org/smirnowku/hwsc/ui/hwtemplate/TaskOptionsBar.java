@@ -1,23 +1,13 @@
 package org.smirnowku.hwsc.ui.hwtemplate;
 
-import com.vaadin.spring.annotation.SpringComponent;
-import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 
-@UIScope
-@SpringComponent
 public class TaskOptionsBar extends HorizontalLayout {
 
-    public TaskOptionsBar() {
-        Button saveButton = new Button("Save", clickEvent -> save());
-        Button deleteButton = new Button("Delete", clickEvent -> delete());
+    public TaskOptionsBar(Button.ClickListener saveListener, Button.ClickListener deleteListener) {
+        Button saveButton = new Button("Save", saveListener);
+        Button deleteButton = new Button("Delete", deleteListener);
         addComponents(saveButton, deleteButton);
-    }
-
-    private void save() {
-    }
-
-    private void delete() {
     }
 }

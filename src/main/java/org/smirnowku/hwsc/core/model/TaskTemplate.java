@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 public class TaskTemplate extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 50;
-    private static final int MAX_DESCRIPTION_LENGTH = 1000;
+    private static final int MAX_DESCRIPTION_LENGTH = 100000;
 
     @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;

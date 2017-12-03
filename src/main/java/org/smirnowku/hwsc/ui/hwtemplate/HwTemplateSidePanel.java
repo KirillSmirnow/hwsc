@@ -8,11 +8,9 @@ import com.vaadin.ui.VerticalLayout;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.dto.TaskTemplateDto;
 import org.smirnowku.hwsc.ui.dialog.confirm.ConfirmDialog;
+import org.smirnowku.hwsc.ui.dialog.namedescription.NameDescriptionDialog;
 import org.smirnowku.hwsc.ui.dialog.prompt.PromptDialog;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.AddTaskListener;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.AssignHwListener;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.DeleteHwTemplateListener;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.EditHwTemplateListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.*;
 
 @UIScope
 @SpringComponent
@@ -22,6 +20,7 @@ public class HwTemplateSidePanel extends VerticalLayout {
     private EditHwTemplateListener editHwTemplateListener;
     private DeleteHwTemplateListener deleteHwTemplateListener;
     private AddTaskListener addTaskListener;
+
     private HomeworkTemplateDto homeworkTemplate;
 
     private Grid<TaskTemplateDto> tasksGrid;
@@ -50,17 +49,26 @@ public class HwTemplateSidePanel extends VerticalLayout {
     }
 
     public void setListeners(AssignHwListener assignHwListener, EditHwTemplateListener editHwTemplateListener,
-                             DeleteHwTemplateListener deleteHwTemplateListener, AddTaskListener addTaskListener) {
+                             DeleteHwTemplateListener deleteHwTemplateListener, AddTaskListener addTaskListener,
+                             SelectTaskListener selectTaskListener) {
         this.assignHwListener = assignHwListener;
         this.editHwTemplateListener = editHwTemplateListener;
         this.deleteHwTemplateListener = deleteHwTemplateListener;
         this.addTaskListener = addTaskListener;
+        tasksGrid.addSelectionListener(selectTaskListener::onSelect);
     }
 
     private void assignHw() {
     }
 
     private void editInfo() {
+        NameDescriptionDialog dialog = new NameDescriptionDialog("Edit Info", homeworkTemplate.getName(),
+                homeworkTemplate.getDescription(), "Save", (name, description) -> {
+            homeworkTemplate.setName(name);
+            homeworkTemplate.setDescription(description);
+            return editHwTemplateListener.onEditHwTemplate(homeworkTemplate);
+        });
+        dialog.showDialog();
     }
 
     private void deleteTemplate() {

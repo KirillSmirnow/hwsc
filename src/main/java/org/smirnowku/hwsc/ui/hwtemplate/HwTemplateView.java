@@ -11,17 +11,14 @@ import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.dto.TaskTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.AddTaskListener;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.AssignHwListener;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.DeleteHwTemplateListener;
-import org.smirnowku.hwsc.ui.hwtemplate.actions.EditHwTemplateListener;
+import org.smirnowku.hwsc.ui.hwtemplate.actions.*;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @SpringView(name = Views.HW_TEMPLATE)
-public class HwTemplateView extends VerticalLayout implements View,
-        AddTaskListener, AssignHwListener, DeleteHwTemplateListener, EditHwTemplateListener {
+public class HwTemplateView extends VerticalLayout implements View, AddTaskListener, AssignHwListener,
+        DeleteHwTemplateListener, EditHwTemplateListener, EditTaskListener, DeleteTaskListener {
 
     @Resource
     private AuthenticationService authenticationService;
@@ -48,7 +45,7 @@ public class HwTemplateView extends VerticalLayout implements View,
         setComponentAlignment(nameLabel, Alignment.TOP_CENTER);
         setComponentAlignment(descriptionLabel, Alignment.TOP_CENTER);
         setComponentAlignment(hwTemplateTasksLayout, Alignment.MIDDLE_CENTER);
-        hwTemplateTasksLayout.setListeners(this, this, this, this);
+        hwTemplateTasksLayout.setListeners(this, this, this, this, this, this);
     }
 
     @Override
@@ -67,15 +64,15 @@ public class HwTemplateView extends VerticalLayout implements View,
     }
 
     @Override
-    public boolean onDeleteHwTemplate() {
-        try {
-            homeworkTemplateService.delete(authenticationService.getUsername(), homeworkTemplate.getId());
-        } catch (BaseException e) {
-            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
-            return false;
-        }
-        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
-        return true;
+    public boolean onEditTask(TaskTemplateDto taskTemplate) {
+        homeworkTemplate.getTaskTemplates().set(homeworkTemplate.getTaskTemplates().indexOf(taskTemplate), taskTemplate);
+        return onEditHwTemplate(homeworkTemplate);
+    }
+
+    @Override
+    public boolean onDeleteTask(TaskTemplateDto taskTemplate) {
+        homeworkTemplate.getTaskTemplates().remove(taskTemplate);
+        return onEditHwTemplate(homeworkTemplate);
     }
 
     @Override
@@ -88,6 +85,18 @@ public class HwTemplateView extends VerticalLayout implements View,
             return false;
         }
         refresh(homeworkTemplate.getId());
+        return true;
+    }
+
+    @Override
+    public boolean onDeleteHwTemplate() {
+        try {
+            homeworkTemplateService.delete(authenticationService.getUsername(), homeworkTemplate.getId());
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            return false;
+        }
+        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
         return true;
     }
 
