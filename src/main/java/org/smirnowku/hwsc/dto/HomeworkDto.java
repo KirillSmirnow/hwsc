@@ -1,5 +1,6 @@
 package org.smirnowku.hwsc.dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -9,19 +10,19 @@ public class HomeworkDto extends BaseDto {
     private List<TaskDto> tasks;
     private String name;
     private String description;
-    private Date deadline;
+    private LocalDateTime deadline;
     private Integer subgroupSize;
 
     public HomeworkDto() {
     }
 
-    public HomeworkDto(Date deadline, Integer subgroupSize) {
+    public HomeworkDto(LocalDateTime deadline, Integer subgroupSize) {
         this.deadline = deadline;
         this.subgroupSize = subgroupSize;
     }
 
     public HomeworkDto(long id, Date created, Date updated, ClassroomDto classroom, List<TaskDto> tasks,
-                       String name, String description, Date deadline, Integer subgroupSize) {
+                       String name, String description, LocalDateTime deadline, Integer subgroupSize) {
         super(id, created, updated);
         this.classroom = classroom;
         this.tasks = tasks;
@@ -47,7 +48,7 @@ public class HomeworkDto extends BaseDto {
         return description;
     }
 
-    public Date getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 

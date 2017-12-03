@@ -6,9 +6,6 @@ import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.smirnowku.hwsc.ui.dialog.CloseDialogListener;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -49,7 +46,7 @@ public class AssignHomeworkDialogLayout extends VerticalLayout {
     private void assign() {
         Optional<ClassroomDto> classroom = classroomComboBox.getSelectedItem();
         if (classroom.isPresent()) {
-            HomeworkDto homework = new HomeworkDto(lol(deadlineField.getValue()), subgroupSizeComboBox.getValue());
+            HomeworkDto homework = new HomeworkDto(deadlineField.getValue(), subgroupSizeComboBox.getValue());
             if (assignListener.onAssign(classroom.get().getId(), homework)) closeDialogListener.onClose();
         } else {
             Notification.show("You should choose classroom", Notification.Type.WARNING_MESSAGE);
@@ -63,11 +60,5 @@ public class AssignHomeworkDialogLayout extends VerticalLayout {
         subgroupSizeComboBox.setCaption(String.format("Subgroup size (total: %d students)", studentsQty));
         subgroupSizeComboBox.clear();
         subgroupSizeComboBox.setItems(IntStream.rangeClosed(2, studentsQty).boxed().collect(Collectors.toList()));
-    }
-
-    private Date lol(LocalDateTime localDateTime) {
-        if (localDateTime == null) return null;
-        ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
-        return Date.from(zdt.toInstant());
     }
 }

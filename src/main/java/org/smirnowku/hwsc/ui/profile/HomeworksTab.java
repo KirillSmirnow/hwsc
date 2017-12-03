@@ -8,6 +8,7 @@ import com.vaadin.ui.VerticalLayout;
 import org.smirnowku.hwsc.core.service.impl.AssignmentService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
+import org.smirnowku.hwsc.util.PropertyFormatter;
 
 import javax.annotation.Resource;
 
@@ -30,7 +31,7 @@ public class HomeworksTab extends VerticalLayout {
         toDoGrid.addColumn(assignment -> assignment.getHomework().getClassroom().getName()).setCaption("Classroom");
         toDoGrid.addColumn(assignment -> assignment.getHomework().getName()).setCaption("Name");
         toDoGrid.addColumn(assignment -> assignment.getHomework().getDescription()).setCaption("Description");
-        toDoGrid.addColumn(assignment -> assignment.getHomework().getDeadline()).setCaption("Deadline");
+        toDoGrid.addColumn(assignment -> PropertyFormatter.format(assignment.getHomework().getDeadline())).setCaption("Deadline");
 
         submittedGrid = new Grid<>("Submitted");
         submittedGrid.addColumn(assignment -> assignment.getHomework().getClassroom().getName()).setCaption("Classroom");

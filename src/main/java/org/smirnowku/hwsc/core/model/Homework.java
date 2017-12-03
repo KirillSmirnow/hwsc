@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,15 +30,16 @@ public class Homework extends BaseEntity {
     @Column(nullable = true, length = MAX_DESCRIPTION_LENGTH)
     private String description;
 
-    private Date deadline;
+    private LocalDateTime deadline;
     private Integer subgroupSize;
 
     public Homework() {
     }
 
-    public Homework(HomeworkTemplate template, Classroom classroom, List<Task> tasks, Date deadline, Integer subgroupSize) {
+    public Homework(HomeworkTemplate template, Classroom classroom, List<Task> tasks,
+                    LocalDateTime deadline, Integer subgroupSize) {
         validateDeadline(deadline);
-        validateSubgroupSize(subgroupSize);
+        validateSubgroupSize(subgroupSize, classroom);
         this.classroom = classroom;
         this.tasks = tasks;
         this.name = template.getName();
@@ -63,7 +64,7 @@ public class Homework extends BaseEntity {
         return description;
     }
 
-    public Date getDeadline() {
+    public LocalDateTime getDeadline() {
         return deadline;
     }
 
@@ -87,11 +88,17 @@ public class Homework extends BaseEntity {
                 '}';
     }
 
-    private void validateDeadline(Date deadline) {
+    private void validateDeadline(LocalDateTime deadline) {
+        if (deadline != null && LocalDateTime.now().isAfter(deadline))
+            throw new IllegalArgumentException("Deadline must be later than right now");
     }
 
-    private void validateSubgroupSize(Integer subgroupSize) {
+    private void validateSubgroupSize(Integer subgroupSize, Classroom classroom) {
         if (PropertyValidator.isEmpty(subgroupSize))
             throw new IllegalArgumentException("Subgroup size cannot be empty");
+        int studentsQty = classroom.getStudents().size();
+        if (subgroupSize < 2 || subgroupSize > studentsQty)
+            throw new IllegalArgumentException(String.format("Subgroup size must be between 2 and %d", studentsQty),
+                    String.format("Subgroup size must be between 2 and %d, actual = %d", studentsQty, subgroupSize));
     }
 }

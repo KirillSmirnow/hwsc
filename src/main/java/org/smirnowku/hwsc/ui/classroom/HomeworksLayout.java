@@ -7,6 +7,7 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.smirnowku.hwsc.dto.HomeworkDto;
+import org.smirnowku.hwsc.util.PropertyFormatter;
 
 import java.util.List;
 
@@ -14,14 +15,13 @@ import java.util.List;
 @SpringComponent
 public class HomeworksLayout extends VerticalLayout {
 
-    private Label titleLabel;
     private Grid<HomeworkDto> homeworkGrid;
 
     public HomeworksLayout() {
-        titleLabel = new Label("Homework");
+        Label titleLabel = new Label("Homework");
         homeworkGrid = new Grid<>();
         homeworkGrid.addColumn(HomeworkDto::getName).setCaption("Name");
-        homeworkGrid.addColumn(HomeworkDto::getDeadline).setCaption("Deadline");
+        homeworkGrid.addColumn(homework -> PropertyFormatter.format(homework.getDeadline())).setCaption("Deadline");
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addComponents(titleLabel, homeworkGrid);
     }
