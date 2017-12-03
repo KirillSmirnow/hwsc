@@ -8,7 +8,7 @@ import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
-import org.smirnowku.hwsc.ui.profile.newtemplate.NewHwTemplateDialog;
+import org.smirnowku.hwsc.ui.dialog.namedescription.NameDescriptionDialog;
 
 import javax.annotation.Resource;
 
@@ -53,14 +53,15 @@ public class HwTemplatesTab extends VerticalLayout {
     }
 
     private void newTemplate() {
-        NewHwTemplateDialog dialog = new NewHwTemplateDialog(this::createTemplate);
+        NameDescriptionDialog dialog = new NameDescriptionDialog("New Template", null, null,
+                "Create", this::createTemplate);
         dialog.showDialog();
     }
 
     private boolean createTemplate(String name, String description) {
-        HomeworkTemplateDto dto = new HomeworkTemplateDto(name, description);
+        HomeworkTemplateDto homeworkTemplate = new HomeworkTemplateDto(name, description);
         try {
-            homeworkTemplateService.create(authenticationService.getUsername(), dto);
+            homeworkTemplateService.create(authenticationService.getUsername(), homeworkTemplate);
             refresh();
         } catch (BaseException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
