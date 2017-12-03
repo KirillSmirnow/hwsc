@@ -16,15 +16,16 @@ public class Assignment extends BaseEntity {
         COMPLETED
     }
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User student;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Homework homework;
 
-    @OneToOne
+    @OneToOne(optional = false)
     private HomeworkSolution homeworkSolution;
 
+    @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -46,10 +47,7 @@ public class Assignment extends BaseEntity {
     }
 
     public void setScore(Integer score) {
-        if (PropertyValidator.isEmpty(score))
-            throw new IllegalArgumentException("Score cannot be empty");
-        if (score < 0)
-            throw new IllegalArgumentException("Score cannot be negative");
+        validateScore(score);
         this.score = score;
     }
 
@@ -87,5 +85,10 @@ public class Assignment extends BaseEntity {
                 ", status=" + status +
                 ", score=" + score +
                 '}';
+    }
+
+    private void validateScore(Integer score) {
+        if (PropertyValidator.isEmpty(score)) throw new IllegalArgumentException("Score cannot be empty");
+        if (score < 0) throw new IllegalArgumentException("Score cannot be negative");
     }
 }

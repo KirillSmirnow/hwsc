@@ -4,11 +4,15 @@ import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
 import org.smirnowku.hwsc.dto.TaskSolutionDto;
 import org.smirnowku.hwsc.util.PropertyValidator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
 public class TaskSolution extends BaseEntity {
 
+    private static final int MAX_LINK_LENGTH = 200;
+
+    @Column(nullable = false, length = MAX_LINK_LENGTH)
     private String link;
 
     public TaskSolution() {
@@ -19,8 +23,7 @@ public class TaskSolution extends BaseEntity {
     }
 
     public void setLink(String link) {
-        if (PropertyValidator.isEmpty(link))
-            throw new IllegalArgumentException("Link cannot be empty");
+        validateLink(link);
         this.link = link;
     }
 
@@ -37,5 +40,12 @@ public class TaskSolution extends BaseEntity {
         return "TaskSolution{" +
                 "link='" + link + '\'' +
                 '}';
+    }
+
+    private void validateLink(String link) {
+        if (PropertyValidator.isEmpty(link)) throw new IllegalArgumentException("Link cannot be empty");
+        if (link.length() > MAX_LINK_LENGTH)
+            throw new IllegalArgumentException(String.format("Link is too long (max length is %d)", MAX_LINK_LENGTH),
+                    String.format("Link is too long (max length is %d, current length is %d)", MAX_LINK_LENGTH, link.length()));
     }
 }

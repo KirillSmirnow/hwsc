@@ -12,18 +12,23 @@ import javax.persistence.Table;
 @Table(name = "hwsc_user")
 public class User extends BaseEntity {
 
-    @Column(nullable = false, unique = true, updatable = false)
+    private static final int MAX_USERNAME_LENGTH = 20;
+    private static final int MAX_NAME_LENGTH = 30;
+
+    @Column(nullable = false, unique = true, updatable = false, length = MAX_USERNAME_LENGTH)
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
 
     public User() {
     }
 
     public User(String username, String password, String name) {
-        if (PropertyValidator.isEmpty(username))
-            throw new IllegalArgumentException("Username cannot be empty");
+        validateUsername(username);
         this.username = username;
         setPassword(password);
         setName(name);
@@ -34,8 +39,7 @@ public class User extends BaseEntity {
     }
 
     public void setName(String name) {
-        if (PropertyValidator.isEmpty(name))
-            throw new IllegalArgumentException("Name cannot be empty");
+        validateName(name);
         this.name = name;
     }
 
@@ -61,5 +65,19 @@ public class User extends BaseEntity {
                 "username='" + username + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    private void validateUsername(String username) {
+        if (PropertyValidator.isEmpty(username)) throw new IllegalArgumentException("Username cannot be empty");
+        if (username.length() > MAX_USERNAME_LENGTH)
+            throw new IllegalArgumentException(String.format("Username is too long (max length is %d)", MAX_USERNAME_LENGTH),
+                    String.format("Username is too long (max length is %d, current length is %d)", MAX_USERNAME_LENGTH, username.length()));
+    }
+
+    private void validateName(String name) {
+        if (PropertyValidator.isEmpty(name)) throw new IllegalArgumentException("Name cannot be empty");
+        if (name.length() > MAX_NAME_LENGTH)
+            throw new IllegalArgumentException(String.format("Name is too long (max length is %d)", MAX_NAME_LENGTH),
+                    String.format("Name is too long (max length is %d, current length is %d)", MAX_NAME_LENGTH, name.length()));
     }
 }

@@ -13,12 +13,13 @@ public class Check extends BaseEntity {
         CHECKED
     }
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User checker;
 
-    @OneToOne
+    @OneToOne(optional = false)
     private Assignment assignment;
 
+    @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Status status;
 

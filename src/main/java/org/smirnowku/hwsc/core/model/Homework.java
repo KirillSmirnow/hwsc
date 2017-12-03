@@ -4,6 +4,7 @@ import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.smirnowku.hwsc.util.PropertyValidator;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -14,14 +15,21 @@ import java.util.stream.Collectors;
 @Entity
 public class Homework extends BaseEntity {
 
-    @ManyToOne
+    private static final int MAX_NAME_LENGTH = 50;
+    private static final int MAX_DESCRIPTION_LENGTH = 500;
+
+    @ManyToOne(optional = false)
     private Classroom classroom;
 
     @OneToMany
     private List<Task> tasks;
 
+    @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
+
+    @Column(nullable = true, length = MAX_DESCRIPTION_LENGTH)
     private String description;
+
     private Date deadline;
     private Integer subgroupSize;
 
@@ -29,8 +37,8 @@ public class Homework extends BaseEntity {
     }
 
     public Homework(HomeworkTemplate template, Classroom classroom, List<Task> tasks, Date deadline, Integer subgroupSize) {
-        if (PropertyValidator.isEmpty(subgroupSize))
-            throw new IllegalArgumentException("Subgroup size cannot be empty");
+        validateDeadline(deadline);
+        validateSubgroupSize(subgroupSize);
         this.classroom = classroom;
         this.tasks = tasks;
         this.name = template.getName();
@@ -77,5 +85,13 @@ public class Homework extends BaseEntity {
                 ", deadline=" + deadline +
                 ", subgroupSize=" + subgroupSize +
                 '}';
+    }
+
+    private void validateDeadline(Date deadline) {
+    }
+
+    private void validateSubgroupSize(Integer subgroupSize) {
+        if (PropertyValidator.isEmpty(subgroupSize))
+            throw new IllegalArgumentException("Subgroup size cannot be empty");
     }
 }

@@ -2,12 +2,19 @@ package org.smirnowku.hwsc.core.model;
 
 import org.smirnowku.hwsc.dto.TaskDto;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
 public class Task extends BaseEntity {
 
+    private static final int MAX_NAME_LENGTH = 50;
+    private static final int MAX_DESCRIPTION_LENGTH = 1000;
+
+    @Column(nullable = false, length = MAX_NAME_LENGTH)
     private String name;
+
+    @Column(nullable = false, length = MAX_DESCRIPTION_LENGTH)
     private String description;
 
     public Task() {
