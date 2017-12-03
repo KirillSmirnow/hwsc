@@ -1,6 +1,7 @@
 package org.smirnowku.hwsc.core.service.impl;
 
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
+import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
 import org.smirnowku.hwsc.core.model.*;
 import org.smirnowku.hwsc.core.repository.AssignmentRepository;
 import org.smirnowku.hwsc.core.repository.HomeworkRepository;
@@ -44,6 +45,7 @@ public class HomeworkService {
         Classroom classroom = classroomService.getEntity(username, classroomId);
         User user = userService.getEntity(username);
         authorizeAssign(classroom, user);
+        validateSubgroupSize(classroom, dto.getSubgroupSize());
         Homework homework = new Homework(homeworkTemplate, classroom, createTasks(homeworkTemplate),
                 dto.getDeadline(), dto.getSubgroupSize());
         homeworkRepository.save(homework);
@@ -64,6 +66,13 @@ public class HomeworkService {
             Assignment assignment = new Assignment(student, homework, homeworkSolution);
             assignmentRepository.save(assignment);
         });
+    }
+
+    private void validateSubgroupSize(Classroom classroom, Integer subgroupSize) {
+        int studentsQty = classroom.getStudents().size();
+        if (subgroupSize < 2 || subgroupSize > studentsQty)
+            throw new IllegalArgumentException(String.format("Subgroup size must be between 2 and %d", studentsQty),
+                    String.format("Subgroup size must be between 2 and %d, actual = %d", studentsQty, subgroupSize));
     }
 
     private void authorizeAssign(Classroom classroom, User user) {

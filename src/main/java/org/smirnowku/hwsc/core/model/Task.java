@@ -2,6 +2,7 @@ package org.smirnowku.hwsc.core.model;
 
 import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
 import org.smirnowku.hwsc.dto.TaskDto;
+import org.smirnowku.hwsc.util.PropertyValidator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,7 +23,7 @@ public class Task extends BaseEntity {
     }
 
     public Task(TaskTemplate template) {
-        validateDescription(template.getDescription());
+        validateDescription(template.getDescription(), template.getName());
         this.name = template.getName();
         this.description = template.getDescription();
     }
@@ -47,8 +48,10 @@ public class Task extends BaseEntity {
                 '}';
     }
 
-    private void validateDescription(String description) {
-        if (description != null && description.length() > MAX_DESCRIPTION_LENGTH)
+    private void validateDescription(String description, String name) {
+        if (PropertyValidator.isEmpty(description))
+            throw new IllegalArgumentException(String.format("Task %s has no description", name));
+        if (description.length() > MAX_DESCRIPTION_LENGTH)
             throw new IllegalArgumentException(String.format("Description is too long (max length is %d)", MAX_DESCRIPTION_LENGTH),
                     String.format("Description is too long (max length is %d, current length is %d)", MAX_DESCRIPTION_LENGTH, description.length()));
     }
