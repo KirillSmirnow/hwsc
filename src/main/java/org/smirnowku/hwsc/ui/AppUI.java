@@ -39,6 +39,7 @@ public class AppUI extends UI {
 
             case Views.PROFILE:
             case Views.CLASSROOM:
+            case Views.ASSIGNMENT:
             case Views.HW_TEMPLATE:
                 if (!authenticationService.isAuthenticated()) {
                     navigator.navigateTo(Views.SIGN_IN);

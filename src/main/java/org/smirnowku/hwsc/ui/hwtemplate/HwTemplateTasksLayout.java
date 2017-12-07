@@ -21,7 +21,7 @@ public class HwTemplateTasksLayout extends HorizontalSplitPanel {
 
     @PostConstruct
     public void init() {
-        setSplitPosition(20, Unit.PERCENTAGE);
+        setSplitPosition(25, Unit.PERCENTAGE);
         setMinSplitPosition(20, Unit.PERCENTAGE);
         setMaxSplitPosition(50, Unit.PERCENTAGE);
         addComponents(hwTemplateSidePanel, taskEditorPanel);
