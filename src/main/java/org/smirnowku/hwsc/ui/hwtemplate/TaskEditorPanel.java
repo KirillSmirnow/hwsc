@@ -32,7 +32,7 @@ public class TaskEditorPanel extends VerticalLayout implements SelectTaskListene
         descriptionArea.setWidth(90, Unit.PERCENTAGE);
         descriptionArea.setHeight(600, Unit.PIXELS);
 
-        setEnabled(false);
+        setVisible(false);
         addComponents(nameField, descriptionArea, taskOptionsBar);
         setComponentAlignment(nameField, Alignment.TOP_CENTER);
         setComponentAlignment(descriptionArea, Alignment.MIDDLE_CENTER);
@@ -53,9 +53,7 @@ public class TaskEditorPanel extends VerticalLayout implements SelectTaskListene
     @Override
     public void onSelect(SelectionEvent<TaskTemplateDto> selectionEvent) {
         Optional<TaskTemplateDto> taskTemplate = selectionEvent.getFirstSelectedItem();
-        setEnabled(taskTemplate.isPresent());
-        nameField.clear();
-        descriptionArea.clear();
+        setVisible(taskTemplate.isPresent());
         taskTemplate.ifPresent(this::refresh);
     }
 

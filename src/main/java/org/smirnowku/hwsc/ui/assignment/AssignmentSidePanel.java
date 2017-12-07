@@ -12,6 +12,8 @@ import org.smirnowku.hwsc.ui.assignment.actions.SelectTaskListener;
 @SpringComponent
 public class AssignmentSidePanel extends VerticalLayout {
 
+    private ViewMode viewMode;
+
     private Grid<TaskDto> tasksGrid;
 
     public AssignmentSidePanel() {
@@ -24,7 +26,8 @@ public class AssignmentSidePanel extends VerticalLayout {
         addComponents(tasksGrid);
     }
 
-    public void refresh(HomeworkDto homework) {
+    public void refresh(HomeworkDto homework, ViewMode viewMode) {
+        this.viewMode = viewMode;
         tasksGrid.setItems(homework.getTasks());
     }
 

@@ -14,6 +14,10 @@ public class TaskSolutionDto extends BaseDto {
         this.link = link;
     }
 
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public String getLink() {
         return link;
     }

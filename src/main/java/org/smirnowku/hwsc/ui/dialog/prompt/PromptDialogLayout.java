@@ -10,11 +10,11 @@ public class PromptDialogLayout extends VerticalLayout {
 
     private TextField valueField;
 
-    public PromptDialogLayout(String valueCaption, String confirmButtonCaption, String cancelButtonCaption,
+    public PromptDialogLayout(String valueCaption, String value, String confirmButtonCaption, String cancelButtonCaption,
                               PromptListener promptListener, CloseDialogListener closeDialogListener) {
         this.promptListener = promptListener;
         this.closeDialogListener = closeDialogListener;
-        valueField = new TextField(valueCaption);
+        valueField = new TextField(valueCaption, value == null ? "" : value);
         valueField.setWidth(300, Unit.PIXELS);
         Button confirmButton = new Button(confirmButtonCaption, this::onConfirmButtonClick);
         Button cancelButton = new Button(cancelButtonCaption, clickEvent -> closeDialogListener.onClose());

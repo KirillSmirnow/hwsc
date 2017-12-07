@@ -22,7 +22,7 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public void signUp(UserDto dto) {
-        if (userRepository.exists(dto.getUsername()))
+        if (userRepository.existsByUsername(dto.getUsername()))
             throw new ConflictException(String.format("Username %s occupied", dto.getUsername()));
         String password = passwordEncoder.encode(dto.password());
         User user = new User(dto.getUsername(), password, dto.getName());

@@ -12,6 +12,7 @@ import org.smirnowku.hwsc.dto.TaskTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 import org.smirnowku.hwsc.ui.hwtemplate.actions.*;
+import org.smirnowku.hwsc.util.PropertyValidator;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
@@ -115,7 +116,7 @@ public class HwTemplateView extends VerticalLayout implements View, AddTaskListe
 
     private void refresh() {
         nameLabel.setValue(String.format("<h1>%s</h1>", homeworkTemplate.getName()));
-        if (homeworkTemplate.getDescription() == null || homeworkTemplate.getDescription().isEmpty()) {
+        if (PropertyValidator.isEmpty(homeworkTemplate.getDescription())) {
             descriptionLabel.setVisible(false);
         } else {
             descriptionLabel.setVisible(true);

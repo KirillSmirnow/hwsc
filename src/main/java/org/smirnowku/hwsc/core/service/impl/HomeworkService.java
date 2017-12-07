@@ -2,10 +2,7 @@ package org.smirnowku.hwsc.core.service.impl;
 
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
 import org.smirnowku.hwsc.core.model.*;
-import org.smirnowku.hwsc.core.repository.AssignmentRepository;
-import org.smirnowku.hwsc.core.repository.HomeworkRepository;
-import org.smirnowku.hwsc.core.repository.HomeworkSolutionRepository;
-import org.smirnowku.hwsc.core.repository.TaskRepository;
+import org.smirnowku.hwsc.core.repository.*;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +36,9 @@ public class HomeworkService {
     @Resource
     private TaskRepository taskRepository;
 
+    @Resource
+    private TaskSolutionRepository taskSolutionRepository;
+
     public void assign(String username, long homeworkTemplateId, long classroomId, HomeworkDto dto) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateService.getEntity(username, homeworkTemplateId);
         Classroom classroom = classroomService.getEntity(username, classroomId);
@@ -60,6 +60,11 @@ public class HomeworkService {
     private void assignHomeworkToStudents(Homework homework, Classroom classroom) {
         classroom.getStudents().forEach(student -> {
             HomeworkSolution homeworkSolution = new HomeworkSolution();
+            homeworkSolution.setTaskSolutions(homework.getTasks().stream()
+                    .map(task -> new TaskSolution())
+                    .peek(taskSolutionRepository::save)
+                    .collect(Collectors.toList())
+            );
             homeworkSolutionRepository.save(homeworkSolution);
             Assignment assignment = new Assignment(student, homework, homeworkSolution);
             assignmentRepository.save(assignment);

@@ -11,6 +11,7 @@ import org.smirnowku.hwsc.core.service.impl.HomeworkSolutionService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.smirnowku.hwsc.dto.HomeworkSolutionDto;
+import org.smirnowku.hwsc.dto.TaskSolutionDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.assignment.actions.SaveSolutionListener;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -63,7 +64,10 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
     }
 
     @Override
-    public boolean onSave(HomeworkSolutionDto homeworkSolution) {
+    public boolean onSave(TaskSolutionDto taskSolution) {
+        HomeworkSolutionDto homeworkSolution = assignment.getHomeworkSolution();
+        int taskIndex = homeworkSolution.getTaskSolutions().indexOf(taskSolution);
+        homeworkSolution.getTaskSolutions().set(taskIndex, taskSolution);
         try {
             homeworkSolutionService.save(authenticationService.getUsername(), homeworkSolution.getId(), homeworkSolution);
         } catch (BaseException e) {
@@ -97,6 +101,12 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
             descriptionLabel.setVisible(true);
             descriptionLabel.setValue(String.format("<i>%s</i>", homework.getDescription()));
         }
-        assignmentTasksLayout.refresh(homework);
+        assignmentTasksLayout.refresh(assignment, getViewMode(assignment));
+    }
+
+    private ViewMode getViewMode(AssignmentDto assignment) {
+        if (assignment.getStudent().equals(authenticationService.getUser()))
+            return ViewMode.ASSIGNEE;
+        return ViewMode.STRANGER;
     }
 }
