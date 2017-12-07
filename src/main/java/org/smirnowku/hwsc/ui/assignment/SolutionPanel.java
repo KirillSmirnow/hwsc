@@ -30,9 +30,9 @@ public class SolutionPanel extends HorizontalLayout {
         addComponents(linkLabel, editButton);
     }
 
-    public void refresh(TaskSolutionDto taskSolution, boolean editable) {
+    public void refresh(TaskSolutionDto taskSolution, boolean solvable) {
         this.taskSolution = taskSolution;
-        this.editButton.setVisible(editable);
+        editButton.setVisible(solvable);
         if (PropertyValidator.isEmpty(taskSolution.getLink())) {
             linkLabel.setValue("Provide link to solution here");
         } else {
@@ -45,9 +45,7 @@ public class SolutionPanel extends HorizontalLayout {
     }
 
     private void edit() {
-        String link = taskSolution.getLink();
-        if (PropertyValidator.isEmpty(link)) link = "http://";
-        PromptDialog dialog = new PromptDialog("Edit Solution Link", link, "Link",
+        PromptDialog dialog = new PromptDialog("Edit Solution Link", taskSolution.getLink(), "Link",
                 "Save", value -> {
             taskSolution.setLink(value);
             return saveSolutionListener.onSave(taskSolution);

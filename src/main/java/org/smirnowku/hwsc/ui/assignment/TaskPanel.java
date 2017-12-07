@@ -7,7 +7,6 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.smirnowku.hwsc.core.model.Assignment;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.dto.TaskDto;
 import org.smirnowku.hwsc.dto.TaskSolutionDto;
@@ -25,8 +24,8 @@ public class TaskPanel extends VerticalLayout implements SelectTaskListener {
     @Resource
     private SolutionPanel solutionPanel;
 
-    private ViewMode viewMode;
     private AssignmentDto assignment;
+    private boolean solvable;
 
     private Label nameLabel;
     private Label descriptionLabel;
@@ -49,10 +48,9 @@ public class TaskPanel extends VerticalLayout implements SelectTaskListener {
         solutionPanel.setSaveSolutionListener(saveSolutionListener);
     }
 
-    public void refresh(AssignmentDto assignment, ViewMode viewMode) {
+    public void refresh(AssignmentDto assignment, boolean solvable) {
         this.assignment = assignment;
-        this.viewMode = viewMode;
-        solutionPanel.setVisible(viewMode != ViewMode.STRANGER);
+        this.solvable = solvable;
     }
 
     public void refresh(TaskDto task) {
@@ -60,8 +58,7 @@ public class TaskPanel extends VerticalLayout implements SelectTaskListener {
         TaskSolutionDto taskSolution = assignment.getHomeworkSolution().getTaskSolutions().get(taskIndex);
         nameLabel.setValue(String.format("<b>%s</b><hr/>", task.getName()));
         descriptionLabel.setValue(task.getDescription());
-        boolean solutionEditable = viewMode == ViewMode.ASSIGNEE && assignment.getStatus() == Assignment.Status.TODO;
-        solutionPanel.refresh(taskSolution, solutionEditable);
+        solutionPanel.refresh(taskSolution, solvable);
     }
 
     @Override

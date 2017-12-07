@@ -14,6 +14,7 @@ import org.smirnowku.hwsc.dto.HomeworkSolutionDto;
 import org.smirnowku.hwsc.dto.TaskSolutionDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.assignment.actions.SaveSolutionListener;
+import org.smirnowku.hwsc.ui.assignment.actions.SubmitSolutionListener;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 import org.smirnowku.hwsc.util.PropertyValidator;
 
@@ -21,7 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @SpringView(name = Views.ASSIGNMENT)
-public class AssignmentView extends VerticalLayout implements View, SaveSolutionListener {
+public class AssignmentView extends VerticalLayout implements View, SaveSolutionListener, SubmitSolutionListener {
 
     @Resource
     private AuthenticationService authenticationService;
@@ -51,7 +52,7 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
         setComponentAlignment(nameLabel, Alignment.TOP_CENTER);
         setComponentAlignment(descriptionLabel, Alignment.TOP_CENTER);
         setComponentAlignment(assignmentTasksLayout, Alignment.MIDDLE_CENTER);
-        assignmentTasksLayout.setListeners(this);
+        assignmentTasksLayout.setListeners(this, this);
     }
 
     @Override
@@ -76,6 +77,19 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
             return false;
         }
         refresh(assignment.getId());
+        return true;
+    }
+
+    @Override
+    public boolean onSubmit() {
+        try {
+            assignmentService.submit(authenticationService.getUsername(), assignment.getId());
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            refresh(assignment.getId());
+            return false;
+        }
+        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
         return true;
     }
 
