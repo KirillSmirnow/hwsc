@@ -35,9 +35,8 @@ public class SignInForm extends VerticalLayout {
 
     public void refresh() {
 //        usernameField.clear();
-//        passwordField.clear();
-        usernameField.setValue("test");
-        passwordField.setValue("test");
+        usernameField.setValue("kirill");
+        passwordField.clear();
     }
 
     private void signIn() {

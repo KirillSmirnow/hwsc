@@ -49,7 +49,6 @@ public class ClassroomCenterLayout extends HorizontalLayout {
         membersTabSheet.setSelectedTab(studentsTab);
         studentsTab.refresh(classroom);
         teachersTab.refresh(classroom);
-        homeworksLayout.refresh(classroomService.getHomeworks(authenticationService.getUsername(),
-                classroom.getId()));
+        homeworksLayout.refresh(classroomService.getHomeworks(authenticationService.getUsername(), classroom.getId()));
     }
 }

@@ -27,6 +27,14 @@ public class ClassroomDto extends BaseDto {
         this.description = description;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Set<UserDto> getTeachers() {
         return teachers;
     }
