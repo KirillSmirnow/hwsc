@@ -1,21 +1,49 @@
 package org.smirnowku.hwsc.dto;
 
-import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
-
+import java.util.Date;
 import java.util.List;
 
-public class HomeworkTemplateDto {
+public class HomeworkTemplateDto extends BaseDto {
 
+    private UserDto creator;
+    private List<TaskTemplateDto> taskTemplates;
     private String name;
     private String description;
-    private List<TaskTemplateDto> taskTemplates;
 
     public HomeworkTemplateDto() {
     }
 
+    public HomeworkTemplateDto(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public HomeworkTemplateDto(long id, Date created, Date updated, UserDto creator,
+                               List<TaskTemplateDto> taskTemplates, String name, String description) {
+        super(id, created, updated);
+        this.creator = creator;
+        this.taskTemplates = taskTemplates;
+        this.name = name;
+        this.description = description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public UserDto getCreator() {
+        return creator;
+    }
+
+    public List<TaskTemplateDto> getTaskTemplates() {
+        return taskTemplates;
+    }
+
     public String getName() {
-        if (PropertyValidator.isEmpty(name))
-            throw new IllegalArgumentException("Name cannot be empty");
         return name;
     }
 
@@ -23,18 +51,13 @@ public class HomeworkTemplateDto {
         return description;
     }
 
-    public List<TaskTemplateDto> getTaskTemplates() {
-        if (PropertyValidator.isEmpty(taskTemplates))
-            throw new IllegalArgumentException("Task templates cannot be empty");
-        return taskTemplates;
-    }
-
     @Override
     public String toString() {
         return "HomeworkTemplateDto{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
+                "creator=" + creator +
                 ", taskTemplates=" + taskTemplates +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

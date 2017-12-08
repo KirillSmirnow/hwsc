@@ -10,13 +10,17 @@ import org.smirnowku.hwsc.core.model.Homework;
 import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.AssignmentRepository;
 import org.smirnowku.hwsc.core.repository.CheckRepository;
+import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AssignmentService {
 
     private static final Logger log = LoggerFactory.getLogger(AssignmentService.class);
@@ -31,31 +35,39 @@ public class AssignmentService {
     private CheckRepository checkRepository;
 
     public void submit(String username, long id) {
-        Assignment assignment = get(username, id);
+        Assignment assignment = getEntity(username, id);
         assignment.setStatus(Assignment.Status.SUBMITTED);
         assignmentRepository.save(assignment);
         onAssignmentSubmitted(assignment.getHomework());
     }
 
-    public List<Assignment> getToDo(String username) {
-        User user = userService.get(username);
-        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO);
+    public List<AssignmentDto> getToDo(String username) {
+        User user = userService.getEntity(username);
+        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO).stream()
+                .map(Assignment::toDto).collect(Collectors.toList());
     }
 
-    public List<Assignment> getSubmitted(String username) {
-        User user = userService.get(username);
-        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.SUBMITTED, Assignment.Status.CHECKING);
+    public List<AssignmentDto> getSubmitted(String username) {
+        User user = userService.getEntity(username);
+        return assignmentRepository.findAllByStudentAndStatusIn(user,
+                Assignment.Status.SUBMITTED, Assignment.Status.CHECKING).stream()
+                .map(Assignment::toDto).collect(Collectors.toList());
     }
 
-    public List<Assignment> getCompleted(String username) {
-        User user = userService.get(username);
-        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED);
+    public List<AssignmentDto> getCompleted(String username) {
+        User user = userService.getEntity(username);
+        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED).stream()
+                .map(Assignment::toDto).collect(Collectors.toList());
     }
 
-    public Assignment get(String username, long id) {
+    public AssignmentDto get(String username, long id) {
+        return getEntity(username, id).toDto();
+    }
+
+    private Assignment getEntity(String username, long id) {
         Assignment assignment = assignmentRepository.findOne(id);
         if (assignment == null) throw new NotFoundException("Assignment not found");
-        User user = userService.get(username);
+        User user = userService.getEntity(username);
         authorizeAccess(assignment, user);
         return assignment;
     }

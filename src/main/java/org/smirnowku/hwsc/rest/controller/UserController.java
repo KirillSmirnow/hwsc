@@ -1,6 +1,5 @@
 package org.smirnowku.hwsc.rest.controller;
 
-import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.service.impl.UserService;
 import org.smirnowku.hwsc.dto.UserDto;
 import org.springframework.http.HttpStatus;
@@ -29,7 +28,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<User> get(@PathVariable String username) {
+    public ResponseEntity<UserDto> get(@PathVariable String username) {
         return new ResponseEntity<>(service.get(username), HttpStatus.OK);
     }
 }

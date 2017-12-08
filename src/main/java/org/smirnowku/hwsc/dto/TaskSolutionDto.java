@@ -1,17 +1,24 @@
 package org.smirnowku.hwsc.dto;
 
-import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import java.util.Date;
 
-public class TaskSolutionDto {
+public class TaskSolutionDto extends BaseDto {
 
     private String link;
 
     public TaskSolutionDto() {
     }
 
+    public TaskSolutionDto(long id, Date created, Date updated, String link) {
+        super(id, created, updated);
+        this.link = link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public String getLink() {
-        if (PropertyValidator.isEmpty(link))
-            throw new IllegalArgumentException("Link cannot be empty");
         return link;
     }
 

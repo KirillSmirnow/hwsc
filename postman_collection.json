@@ -13,6 +13,30 @@
         {
           "name": "Submit",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [
               {
@@ -25,13 +49,13 @@
               "raw": ""
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/assignment/{{assignmentId}}",
+              "raw": "{{root}}/user/{{username}}/assignment/{{assignmentId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "assignment",
                 "{{assignmentId}}"
               ]
@@ -43,6 +67,30 @@
         {
           "name": "ToDo",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -55,13 +103,13 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/assignment/todo",
+              "raw": "{{root}}/user/{{username}}/assignment/todo",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "assignment",
                 "todo"
               ]
@@ -73,6 +121,30 @@
         {
           "name": "Submitted",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -85,13 +157,13 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/assignment/submitted",
+              "raw": "{{root}}/user/{{username}}/assignment/submitted",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "assignment",
                 "submitted"
               ]
@@ -103,6 +175,30 @@
         {
           "name": "Completed",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -115,13 +211,13 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/assignment/completed",
+              "raw": "{{root}}/user/{{username}}/assignment/completed",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "assignment",
                 "completed"
               ]
@@ -133,6 +229,30 @@
         {
           "name": "Assignment",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -145,13 +265,13 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/assignment/{{assignmentId}}",
+              "raw": "{{root}}/user/{{username}}/assignment/{{assignmentId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "assignment",
                 "{{assignmentId}}"
               ]
@@ -167,8 +287,86 @@
       "description": "",
       "item": [
         {
+          "name": "Submit",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"score\": 1\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{username}}/check/{{checkId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{username}}",
+                "check",
+                "{{checkId}}"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
           "name": "Pending",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -181,13 +379,13 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/check/pending",
+              "raw": "{{root}}/user/{{username}}/check/pending",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "check",
                 "pending"
               ]
@@ -199,6 +397,30 @@
         {
           "name": "Checked",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -211,15 +433,69 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/check/checked",
+              "raw": "{{root}}/user/{{username}}/check/checked",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "check",
                 "checked"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "One",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{username}}/check/{{checkId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{username}}",
+                "check",
+                "{{checkId}}"
               ]
             },
             "description": ""
@@ -235,6 +511,30 @@
         {
           "name": "Create",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
@@ -244,16 +544,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
+              "raw": "{\n\t\"name\": \"Dandelion\"\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/classroom",
+              "raw": "{{root}}/user/{{username}}/classroom",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "classroom"
               ]
             },
@@ -264,6 +564,30 @@
         {
           "name": "Add members",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
@@ -273,26 +597,26 @@
             ],
             "body": {},
             "url": {
-              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}/add-members?studentsIds=2,3,8&teachersIds=10",
+              "raw": "{{root}}/user/{{username}}/classroom/{{classroomId}}/add-members?studentsUsernames=Sasha,Alex,Masha,A,B,C,D,E,F,G&teachersUsernames=Tolya,Kolya",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "classroom",
                 "{{classroomId}}",
                 "add-members"
               ],
               "query": [
                 {
-                  "key": "studentsIds",
-                  "value": "2,3,8",
+                  "key": "studentsUsernames",
+                  "value": "Sasha,Alex,Masha,A,B,C,D,E,F,G",
                   "equals": true
                 },
                 {
-                  "key": "teachersIds",
-                  "value": "10",
+                  "key": "teachersUsernames",
+                  "value": "Tolya,Kolya",
                   "equals": true
                 }
               ]
@@ -304,6 +628,30 @@
         {
           "name": "Edit",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [
               {
@@ -313,16 +661,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
+              "raw": "{\n\t\"name\": \"Dandelion\",\n\t\"description\": \"This classroom has been created to...\"\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}",
+              "raw": "{{root}}/user/{{username}}/classroom/{{classroomId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "classroom",
                 "{{classroomId}}"
               ]
@@ -334,6 +682,30 @@
         {
           "name": "All as student",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -346,13 +718,13 @@
               "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/classroom/student",
+              "raw": "{{root}}/user/{{username}}/classroom/student",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "classroom",
                 "student"
               ]
@@ -364,6 +736,30 @@
         {
           "name": "All as teacher",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -376,13 +772,13 @@
               "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/classroom/teacher",
+              "raw": "{{root}}/user/{{username}}/classroom/teacher",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "classroom",
                 "teacher"
               ]
@@ -394,6 +790,30 @@
         {
           "name": "One",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -406,13 +826,13 @@
               "raw": "{\n\t\"name\": \"Mayflower\",\n\t\"description\": \"description\"\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}",
+              "raw": "{{root}}/user/{{username}}/classroom/{{classroomId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "classroom",
                 "{{classroomId}}"
               ]
@@ -424,6 +844,30 @@
         {
           "name": "Homeworks",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -436,13 +880,13 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/classroom/{{classroomId}}/homeworks",
+              "raw": "{{root}}/user/{{username}}/classroom/{{classroomId}}/homeworks",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "classroom",
                 "{{classroomId}}",
                 "homeworks"
@@ -461,6 +905,30 @@
         {
           "name": "Assign",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
@@ -470,16 +938,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"deadline\": \"2017-11-25\",\n\t\"subgroupSize\": 3\n}"
+              "raw": "{\n\t\"deadline\": \"2017-12-15\",\n\t\"subgroupSize\": 3\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/homework?homeworkTemplateId={{templateId}}&classroomId={{classroomId}}",
+              "raw": "{{root}}/user/{{username}}/homework?homeworkTemplateId={{templateId}}&classroomId={{classroomId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "homework"
               ],
               "query": [
@@ -508,6 +976,30 @@
         {
           "name": "Save",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [
               {
@@ -517,16 +1009,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"taskSolutions\": [\n\t\t{\n\t\t\t\"link\": \"Oops, I did it again and again and again\"\n\t\t}\n\t]\n}"
+              "raw": "{\n\t\"taskSolutions\": [\n\t\t{\n\t\t\t\"link\": \"solution1 by {{username}}\"\n\t\t},\n\t\t{\n\t\t\t\"link\": \"solution2 by {{username}}\"\n\t\t}\n\t]\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/hw-solution/{{solutionId}}",
+              "raw": "{{root}}/user/{{username}}/hw-solution/{{solutionId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "hw-solution",
                 "{{solutionId}}"
               ]
@@ -544,6 +1036,30 @@
         {
           "name": "Create",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "POST",
             "header": [
               {
@@ -553,16 +1069,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"My homework #{{$randomInt}}\",\n    \"description\": \"blablablah\"\n}"
+              "raw": "{\n\t\"name\": \"The homework #{{$randomInt}} by {{username}}\",\n    \"description\": \"blablablah\"\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/hw-template",
+              "raw": "{{root}}/user/{{username}}/hw-template",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "hw-template"
               ]
             },
@@ -573,6 +1089,30 @@
         {
           "name": "Edit",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [
               {
@@ -582,16 +1122,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Just one task\",\n    \t\t\"description\": \"Do smth\"\n    \t}\n    ]\n}"
+              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task #1\",\n    \t\t\"description\": \"Do thing-1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #2\",\n    \t\t\"description\": \"Do thing-2\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #3\",\n    \t\t\"description\": \"Do thing-3\"\n    \t}\n    ]\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/hw-template/{{templateId}}",
+              "raw": "{{root}}/user/{{username}}/hw-template/{{templateId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "hw-template",
                 "{{templateId}}"
               ]
@@ -603,6 +1143,30 @@
         {
           "name": "All",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -615,13 +1179,13 @@
               "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task1\",\n    \t\t\"description\": \"Do thing1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task2\",\n    \t\t\"description\": \"Do thing2\"\n    \t}\n    ]\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/hw-template",
+              "raw": "{{root}}/user/{{username}}/hw-template",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "hw-template"
               ]
             },
@@ -632,6 +1196,84 @@
         {
           "name": "One",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task1\",\n    \t\t\"description\": \"Do thing1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task2\",\n    \t\t\"description\": \"Do thing2\"\n    \t}\n    ]\n}"
+            },
+            "url": {
+              "raw": "{{root}}/user/{{username}}/hw-template/82",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{username}}",
+                "hw-template",
+                "82"
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "One",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "DELETE",
             "header": [
               {
@@ -644,13 +1286,13 @@
               "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task1\",\n    \t\t\"description\": \"Do thing1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task2\",\n    \t\t\"description\": \"Do thing2\"\n    \t}\n    ]\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}/hw-template/{{templateId}}",
+              "raw": "{{root}}/user/{{username}}/hw-template/{{templateId}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}",
+                "{{username}}",
                 "hw-template",
                 "{{templateId}}"
               ]
@@ -677,7 +1319,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"George\"\n}"
+              "raw": "{\n\t\"username\": \"{{username}}\",\n\t\"password\": \"{{password}}\",\n\t\"name\": \"Fedya\"\n}"
             },
             "url": {
               "raw": "{{root}}/user",
@@ -695,6 +1337,30 @@
         {
           "name": "Edit",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [
               {
@@ -704,16 +1370,16 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"Davy Johnes\"\n}"
+              "raw": "{\n\t\"password\": \"{{password}}\",\n\t\"name\": \"Mr Salmon\"\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}",
+              "raw": "{{root}}/user/{{username}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}"
+                "{{username}}"
               ]
             },
             "description": ""
@@ -723,6 +1389,30 @@
         {
           "name": "One",
           "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
             "method": "GET",
             "header": [
               {
@@ -735,13 +1425,13 @@
               "raw": "{\n\t\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{userId}}",
+              "raw": "{{root}}/user/{{username}}",
               "host": [
                 "{{root}}"
               ],
               "path": [
                 "user",
-                "{{userId}}"
+                "{{username}}"
               ]
             },
             "description": ""

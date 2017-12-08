@@ -9,12 +9,16 @@ import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.ClassroomRepository;
 import org.smirnowku.hwsc.core.repository.HomeworkRepository;
 import org.smirnowku.hwsc.dto.ClassroomDto;
+import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class ClassroomService {
 
     private interface MemberAdder {
@@ -31,14 +35,14 @@ public class ClassroomService {
     private HomeworkRepository homeworkRepository;
 
     public void create(String teacherUsername, ClassroomDto dto) {
-        User teacher = userService.get(teacherUsername);
+        User teacher = userService.getEntity(teacherUsername);
         Classroom classroom = new Classroom(teacher, dto.getName(), dto.getDescription());
         classroomRepository.save(classroom);
     }
 
     public void addMembers(String username, long id, List<String> studentsUsernames, List<String> teachersUsernames) {
-        Classroom classroom = get(username, id);
-        User user = userService.get(username);
+        Classroom classroom = getEntity(username, id);
+        User user = userService.getEntity(username);
         authorizeUpdate(classroom, user);
         addMembersToClassroom(classroom, studentsUsernames, this::addStudentToClassroom);
         addMembersToClassroom(classroom, teachersUsernames, this::addTeacherToClassroom);
@@ -46,35 +50,42 @@ public class ClassroomService {
     }
 
     public void edit(String username, long id, ClassroomDto dto) {
-        Classroom classroom = get(username, id);
-        User user = userService.get(username);
+        Classroom classroom = getEntity(username, id);
+        User user = userService.getEntity(username);
         authorizeUpdate(classroom, user);
         classroom.setName(dto.getName());
         classroom.setDescription(dto.getDescription());
         classroomRepository.save(classroom);
     }
 
-    public List<Classroom> getClassroomsAsStudent(String studentUsername) {
-        User student = userService.get(studentUsername);
-        return classroomRepository.findAllByStudents(student);
+    public ClassroomDto get(String username, long id) {
+        return getEntity(username, id).toDto();
     }
 
-    public List<Classroom> getClassroomsAsTeacher(String teacherUsername) {
-        User teacher = userService.get(teacherUsername);
-        return classroomRepository.findAllByTeachers(teacher);
+    public List<ClassroomDto> getClassroomsAsStudent(String studentUsername) {
+        User student = userService.getEntity(studentUsername);
+        return classroomRepository.findAllByStudents(student).stream()
+                .map(Classroom::toDto).collect(Collectors.toList());
     }
 
-    public Classroom get(String username, long id) {
+    public List<ClassroomDto> getClassroomsAsTeacher(String teacherUsername) {
+        User teacher = userService.getEntity(teacherUsername);
+        return classroomRepository.findAllByTeachers(teacher).stream()
+                .map(Classroom::toDto).collect(Collectors.toList());
+    }
+
+    public List<HomeworkDto> getHomeworks(String username, long id) {
+        Classroom classroom = getEntity(username, id);
+        return homeworkRepository.findAllByClassroom(classroom).stream()
+                .map(Homework::toDto).collect(Collectors.toList());
+    }
+
+    Classroom getEntity(String username, long id) {
         Classroom classroom = classroomRepository.findOne(id);
         if (classroom == null) throw new NotFoundException("Classroom not found");
-        User user = userService.get(username);
+        User user = userService.getEntity(username);
         authorizeRead(classroom, user);
         return classroom;
-    }
-
-    public List<Homework> getHomeworks(String username, long id) {
-        Classroom classroom = get(username, id);
-        return homeworkRepository.findAllByClassroom(classroom);
     }
 
     private void addMembersToClassroom(Classroom classroom, List<String> usernames, MemberAdder memberAdder) {
@@ -82,7 +93,7 @@ public class ClassroomService {
         usernames.forEach(username -> {
             User user;
             try {
-                user = userService.get(username);
+                user = userService.getEntity(username);
             } catch (BaseException e) {
                 return;
             }

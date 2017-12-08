@@ -1,8 +1,8 @@
 package org.smirnowku.hwsc.dto;
 
-import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import java.util.Date;
 
-public class TaskTemplateDto {
+public class TaskTemplateDto extends BaseDto {
 
     private String name;
     private String description;
@@ -10,15 +10,29 @@ public class TaskTemplateDto {
     public TaskTemplateDto() {
     }
 
+    public TaskTemplateDto(String name) {
+        this.name = name;
+    }
+
+    public TaskTemplateDto(long id, Date created, Date updated, String name, String description) {
+        super(id, created, updated);
+        this.name = name;
+        this.description = description;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public String getName() {
-        if (PropertyValidator.isEmpty(name))
-            throw new IllegalArgumentException("Name cannot be empty");
         return name;
     }
 
     public String getDescription() {
-        if (PropertyValidator.isEmpty(description))
-            throw new IllegalArgumentException("Description cannot be empty");
         return description;
     }
 

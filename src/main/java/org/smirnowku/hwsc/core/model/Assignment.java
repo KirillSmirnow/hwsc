@@ -1,5 +1,9 @@
 package org.smirnowku.hwsc.core.model;
 
+import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
+import org.smirnowku.hwsc.dto.AssignmentDto;
+import org.smirnowku.hwsc.util.PropertyValidator;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,15 +16,16 @@ public class Assignment extends BaseEntity {
         COMPLETED
     }
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private User student;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     private Homework homework;
 
-    @OneToOne
+    @OneToOne(optional = false)
     private HomeworkSolution homeworkSolution;
 
+    @Column(nullable = false, length = 10)
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -42,6 +47,7 @@ public class Assignment extends BaseEntity {
     }
 
     public void setScore(Integer score) {
+        validateScore(score);
         this.score = score;
     }
 
@@ -65,6 +71,11 @@ public class Assignment extends BaseEntity {
         return score;
     }
 
+    public AssignmentDto toDto() {
+        return new AssignmentDto(getId(), getCreated(), getUpdated(), student.toDto(),
+                homework.toDto(), homeworkSolution.toDto(), status, score);
+    }
+
     @Override
     public String toString() {
         return "Assignment{" +
@@ -74,5 +85,10 @@ public class Assignment extends BaseEntity {
                 ", status=" + status +
                 ", score=" + score +
                 '}';
+    }
+
+    private void validateScore(Integer score) {
+        if (PropertyValidator.isEmpty(score)) throw new IllegalArgumentException("Score cannot be empty");
+        if (score < 0) throw new IllegalArgumentException("Score cannot be negative");
     }
 }

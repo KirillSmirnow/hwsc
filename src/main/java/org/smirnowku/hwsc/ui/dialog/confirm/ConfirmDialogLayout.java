@@ -1,22 +1,28 @@
 package org.smirnowku.hwsc.ui.dialog.confirm;
 
 import com.vaadin.ui.*;
+import org.smirnowku.hwsc.ui.dialog.CloseDialogListener;
 
 public class ConfirmDialogLayout extends VerticalLayout {
 
-    private Label messageLabel;
-    private HorizontalLayout buttonsLayout;
-    private Button confirmButton;
-    private Button cancelButton;
+    private ConfirmListener confirmListener;
+    private CloseDialogListener closeDialogListener;
 
     public ConfirmDialogLayout(String message, String confirmButtonCaption, String cancelButtonCaption,
-                               Button.ClickListener confirmButtonListener, Button.ClickListener cancelButtonListener) {
-        messageLabel = new Label(message);
-        confirmButton = new Button(confirmButtonCaption, confirmButtonListener);
-        cancelButton = new Button(cancelButtonCaption, cancelButtonListener);
-        buttonsLayout = new HorizontalLayout(confirmButton, cancelButton);
+                               ConfirmListener confirmListener, CloseDialogListener closeDialogListener) {
+        this.confirmListener = confirmListener;
+        this.closeDialogListener = closeDialogListener;
+        Label messageLabel = new Label(message);
+        Button confirmButton = new Button(confirmButtonCaption, this::onConfirmButtonClick);
+        Button cancelButton = new Button(cancelButtonCaption, clickEvent -> closeDialogListener.onClose());
+        HorizontalLayout buttonsLayout = new HorizontalLayout(confirmButton, cancelButton);
         setSizeFull();
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         addComponents(messageLabel, buttonsLayout);
+    }
+
+    private void onConfirmButtonClick(Button.ClickEvent clickEvent) {
+        if (confirmListener.onConfirm())
+            closeDialogListener.onClose();
     }
 }

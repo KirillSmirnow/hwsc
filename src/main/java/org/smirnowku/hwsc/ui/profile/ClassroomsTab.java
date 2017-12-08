@@ -2,12 +2,13 @@ package org.smirnowku.hwsc.ui.profile;
 
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.VerticalLayout;
-import org.smirnowku.hwsc.core.model.Classroom;
+import com.vaadin.ui.*;
+import org.smirnowku.hwsc.core.exception.BaseException;
 import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.dto.ClassroomDto;
+import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
+import org.smirnowku.hwsc.ui.dialog.namedescription.NameDescriptionDialog;
 
 import javax.annotation.Resource;
 
@@ -21,28 +22,59 @@ public class ClassroomsTab extends VerticalLayout {
     @Resource
     private ClassroomService classroomService;
 
-    private Grid<Classroom> asStudentGrid;
-    private Grid<Classroom> asTeacherGrid;
+    private Button newClassroomButton;
+    private Grid<ClassroomDto> asStudentGrid;
+    private Grid<ClassroomDto> asTeacherGrid;
 
     public ClassroomsTab() {
+        newClassroomButton = new Button("New Classroom", clickEvent -> newClassroom());
+
         asStudentGrid = new Grid<>("As student");
-        asStudentGrid.addColumn(Classroom::getName).setCaption("Name");
-        asStudentGrid.addColumn(Classroom::getDescription).setCaption("Description");
+        asStudentGrid.addColumn(ClassroomDto::getName).setCaption("Name");
+        asStudentGrid.addColumn(ClassroomDto::getDescription).setCaption("Description");
+        asStudentGrid.addItemClickListener(this::navToClassroom);
 
         asTeacherGrid = new Grid<>("As teacher");
-        asTeacherGrid.addColumn(Classroom::getName).setCaption("Name");
-        asTeacherGrid.addColumn(Classroom::getDescription).setCaption("Description");
+        asTeacherGrid.addColumn(ClassroomDto::getName).setCaption("Name");
+        asTeacherGrid.addColumn(ClassroomDto::getDescription).setCaption("Description");
+        asTeacherGrid.addItemClickListener(this::navToClassroom);
 
         setSizeFull();
         setDefaultComponentAlignment(Alignment.MIDDLE_CENTER);
         asStudentGrid.setSizeFull();
         asTeacherGrid.setSizeFull();
 
-        addComponents(asStudentGrid, asTeacherGrid);
+        addComponents(asStudentGrid, asTeacherGrid, newClassroomButton);
+        setComponentAlignment(newClassroomButton, Alignment.BOTTOM_RIGHT);
     }
 
     public void refresh() {
-        asStudentGrid.setItems(classroomService.getClassroomsAsStudent(authenticationService.getUser().getUsername()));
-        asTeacherGrid.setItems(classroomService.getClassroomsAsTeacher(authenticationService.getUser().getUsername()));
+        asStudentGrid.setItems(classroomService.getClassroomsAsStudent(authenticationService.getUsername()));
+        asTeacherGrid.setItems(classroomService.getClassroomsAsTeacher(authenticationService.getUsername()));
+    }
+
+    private void navToClassroom(Grid.ItemClick<ClassroomDto> itemClick) {
+        if (itemClick.getMouseEventDetails().isDoubleClick()) {
+            ClassroomDto classroom = itemClick.getItem();
+            UI.getCurrent().getNavigator().navigateTo(Views.classroom(classroom.getId()));
+        }
+    }
+
+    private void newClassroom() {
+        NameDescriptionDialog dialog = new NameDescriptionDialog("New Classroom", null, null,
+                "Create", this::createClassroom);
+        dialog.showDialog();
+    }
+
+    private boolean createClassroom(String name, String description) {
+        ClassroomDto classroom = new ClassroomDto(name, description);
+        try {
+            classroomService.create(authenticationService.getUsername(), classroom);
+            refresh();
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            return false;
+        }
+        return true;
     }
 }
