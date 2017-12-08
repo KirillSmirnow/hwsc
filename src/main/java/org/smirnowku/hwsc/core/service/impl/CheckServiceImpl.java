@@ -11,6 +11,7 @@ import org.smirnowku.hwsc.core.repository.CheckRepository;
 import org.smirnowku.hwsc.core.service.CheckService;
 import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
+import org.smirnowku.hwsc.dto.BaseDto;
 import org.smirnowku.hwsc.dto.CheckDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
 
 @Service
 @Transactional
@@ -52,14 +55,18 @@ public class CheckServiceImpl implements CheckService {
     public List<CheckDto> getPending(String username) {
         User checker = userService.getEntity(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.PENDING).stream()
-                .map(Check::toDto).collect(Collectors.toList());
+                .map(Check::toDto)
+                .sorted(comparing(BaseDto::getUpdated))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<CheckDto> getChecked(String username) {
         User checker = userService.getEntity(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.CHECKED).stream()
-                .map(Check::toDto).collect(Collectors.toList());
+                .map(Check::toDto)
+                .sorted(comparing(BaseDto::getUpdated).reversed())
+                .collect(Collectors.toList());
     }
 
     private Check getEntity(String username, long id) {

@@ -38,7 +38,6 @@ public class Homework extends BaseEntity {
 
     public Homework(HomeworkTemplate template, Classroom classroom, List<Task> tasks,
                     LocalDateTime deadline, Integer subgroupSize) {
-        validateDeadline(deadline);
         validateSubgroupSize(subgroupSize, classroom);
         this.classroom = classroom;
         this.tasks = tasks;
@@ -86,11 +85,6 @@ public class Homework extends BaseEntity {
                 ", deadline=" + deadline +
                 ", subgroupSize=" + subgroupSize +
                 '}';
-    }
-
-    private void validateDeadline(LocalDateTime deadline) {
-        if (deadline != null && LocalDateTime.now().isAfter(deadline))
-            throw new IllegalArgumentException("Deadline must be later than right now");
     }
 
     private void validateSubgroupSize(Integer subgroupSize, Classroom classroom) {

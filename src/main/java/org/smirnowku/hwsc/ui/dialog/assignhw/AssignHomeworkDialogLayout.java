@@ -29,6 +29,7 @@ public class AssignHomeworkDialogLayout extends VerticalLayout {
         classroomComboBox.setItemCaptionGenerator(ClassroomDto::getName);
         classroomComboBox.setItems(classrooms);
         deadlineField = new DateTimeField("Deadline");
+        deadlineField.setRangeStart(TimeService.getClientNow());
         deadlineField.setValue(TimeService.getClientNow().plusDays(1));
         subgroupSizeComboBox = new ComboBox<>("Subgroup size");
         subgroupSizeComboBox.setEmptySelectionAllowed(false);

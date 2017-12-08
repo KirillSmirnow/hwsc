@@ -19,6 +19,8 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparing;
+
 @Service
 @Transactional
 public class ClassroomServiceImpl implements ClassroomService {
@@ -72,21 +74,27 @@ public class ClassroomServiceImpl implements ClassroomService {
     public List<ClassroomDto> getClassroomsAsStudent(String studentUsername) {
         User student = userService.getEntity(studentUsername);
         return classroomRepository.findAllByStudents(student).stream()
-                .map(Classroom::toDto).collect(Collectors.toList());
+                .map(Classroom::toDto)
+                .sorted(comparing(ClassroomDto::getName))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<ClassroomDto> getClassroomsAsTeacher(String teacherUsername) {
         User teacher = userService.getEntity(teacherUsername);
         return classroomRepository.findAllByTeachers(teacher).stream()
-                .map(Classroom::toDto).collect(Collectors.toList());
+                .map(Classroom::toDto)
+                .sorted(comparing(ClassroomDto::getName))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<HomeworkDto> getHomeworks(String username, long id) {
         Classroom classroom = getEntity(username, id);
         return homeworkRepository.findAllByClassroom(classroom).stream()
-                .map(Homework::toDto).collect(Collectors.toList());
+                .map(Homework::toDto)
+                .sorted(comparing(HomeworkDto::getDeadline).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override

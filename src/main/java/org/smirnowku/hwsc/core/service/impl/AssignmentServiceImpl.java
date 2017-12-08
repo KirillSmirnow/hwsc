@@ -11,6 +11,7 @@ import org.smirnowku.hwsc.core.repository.CheckRepository;
 import org.smirnowku.hwsc.core.service.AssignmentService;
 import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
+import org.smirnowku.hwsc.dto.BaseDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,8 @@ import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
 
 @Service
 @Transactional
@@ -44,22 +47,27 @@ public class AssignmentServiceImpl implements AssignmentService {
     public List<AssignmentDto> getToDo(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO).stream()
-                .map(Assignment::toDto).collect(Collectors.toList());
+                .map(Assignment::toDto)
+                .sorted(comparing(a -> a.getHomework().getDeadline()))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<AssignmentDto> getSubmitted(String username) {
         User user = userService.getEntity(username);
-        return assignmentRepository.findAllByStudentAndStatusIn(user,
-                Assignment.Status.SUBMITTED, Assignment.Status.CHECKING).stream()
-                .map(Assignment::toDto).collect(Collectors.toList());
+        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.SUBMITTED, Assignment.Status.CHECKING).stream()
+                .map(Assignment::toDto)
+                .sorted(comparing(BaseDto::getUpdated))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<AssignmentDto> getCompleted(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED).stream()
-                .map(Assignment::toDto).collect(Collectors.toList());
+                .map(Assignment::toDto)
+                .sorted(comparing(BaseDto::getUpdated).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override

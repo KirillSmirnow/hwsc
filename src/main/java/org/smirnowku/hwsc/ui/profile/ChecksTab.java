@@ -28,10 +28,12 @@ public class ChecksTab extends VerticalLayout {
 
     public ChecksTab() {
         pendingGrid = new Grid<>("Pending");
+        pendingGrid.addColumn(check -> check.getAssignment().getHomework().getClassroom().getName()).setCaption("Classroom");
         pendingGrid.addColumn(check -> check.getAssignment().getHomework().getName()).setCaption("Homework");
         pendingGrid.addItemClickListener(this::navToAssignment);
 
         checkedGrid = new Grid<>("Checked");
+        checkedGrid.addColumn(check -> check.getAssignment().getHomework().getClassroom().getName()).setCaption("Classroom");
         checkedGrid.addColumn(check -> check.getAssignment().getHomework().getName()).setCaption("Homework");
         checkedGrid.addColumn(check -> check.getAssignment().getScore()).setCaption("Score");
         checkedGrid.addItemClickListener(this::navToAssignment);

@@ -9,6 +9,7 @@ import org.smirnowku.hwsc.core.repository.HomeworkTemplateRepository;
 import org.smirnowku.hwsc.core.repository.TaskTemplateRepository;
 import org.smirnowku.hwsc.core.service.HomeworkTemplateService;
 import org.smirnowku.hwsc.core.service.UserService;
+import org.smirnowku.hwsc.dto.BaseDto;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.util.Comparator.comparing;
 
 @Service
 @Transactional
@@ -50,7 +53,9 @@ public class HomeworkTemplateServiceImpl implements HomeworkTemplateService {
     public List<HomeworkTemplateDto> get(String username) {
         User user = userService.getEntity(username);
         return homeworkTemplateRepository.findAllByCreator(user).stream()
-                .map(HomeworkTemplate::toDto).collect(Collectors.toList());
+                .map(HomeworkTemplate::toDto)
+                .sorted(comparing(BaseDto::getUpdated).reversed())
+                .collect(Collectors.toList());
     }
 
     @Override
