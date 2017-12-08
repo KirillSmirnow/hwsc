@@ -34,9 +34,9 @@ public class SolutionPanel extends HorizontalLayout {
         this.taskSolution = taskSolution;
         editButton.setVisible(solvable);
         if (PropertyValidator.isEmpty(taskSolution.getLink())) {
-            linkLabel.setValue("Provide link to solution here");
+            linkLabel.setValue(solvable ? "Provide link to solution here" : "No solution provided");
         } else {
-            linkLabel.setValue(String.format("<b><a href=\"%s\">Solution Link</a></b>", taskSolution.getLink()));
+            linkLabel.setValue(String.format("<b><a href=\"%s\" target=\"_blank\">Solution Link</a></b>", taskSolution.getLink()));
         }
     }
 

@@ -25,6 +25,10 @@ public class AssignmentDto extends BaseDto {
         this.score = score;
     }
 
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
     public UserDto getStudent() {
         return student;
     }

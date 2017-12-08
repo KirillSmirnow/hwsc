@@ -7,7 +7,6 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.smirnowku.hwsc.core.service.impl.CheckService;
-import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.dto.CheckDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -53,8 +52,7 @@ public class ChecksTab extends VerticalLayout {
     private void navToAssignment(Grid.ItemClick<CheckDto> itemClick) {
         if (itemClick.getMouseEventDetails().isDoubleClick()) {
             CheckDto check = itemClick.getItem();
-            AssignmentDto assignment = check.getAssignment();
-            UI.getCurrent().getNavigator().navigateTo(Views.assignment(assignment.getId(), check.getStatus()));
+            UI.getCurrent().getNavigator().navigateTo(Views.assignmentByCheck(check.getId()));
         }
     }
 }

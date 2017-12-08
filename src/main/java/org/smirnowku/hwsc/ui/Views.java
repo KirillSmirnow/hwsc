@@ -1,7 +1,5 @@
 package org.smirnowku.hwsc.ui;
 
-import org.smirnowku.hwsc.core.model.Check;
-
 public class Views {
 
     public static final String PROFILE = "";
@@ -19,11 +17,11 @@ public class Views {
         return HW_TEMPLATE + "/" + id;
     }
 
-    public static String assignment(long id) {
-        return ASSIGNMENT + "/" + id;
+    public static String assignment(long assignmentId) {
+        return ASSIGNMENT + "/asg/" + assignmentId;
     }
 
-    public static String assignment(long id, Check.Status status) {
-        return ASSIGNMENT + "/" + id;
+    public static String assignmentByCheck(long checkId) {
+        return ASSIGNMENT + "/check/" + checkId;
     }
 }

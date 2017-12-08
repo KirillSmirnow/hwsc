@@ -6,14 +6,15 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
+import org.smirnowku.hwsc.core.model.Assignment;
+import org.smirnowku.hwsc.core.model.Check;
 import org.smirnowku.hwsc.core.service.impl.AssignmentService;
+import org.smirnowku.hwsc.core.service.impl.CheckService;
 import org.smirnowku.hwsc.core.service.impl.HomeworkSolutionService;
-import org.smirnowku.hwsc.dto.AssignmentDto;
-import org.smirnowku.hwsc.dto.HomeworkDto;
-import org.smirnowku.hwsc.dto.HomeworkSolutionDto;
-import org.smirnowku.hwsc.dto.TaskSolutionDto;
+import org.smirnowku.hwsc.dto.*;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.assignment.actions.SaveSolutionListener;
+import org.smirnowku.hwsc.ui.assignment.actions.SubmitCheckListener;
 import org.smirnowku.hwsc.ui.assignment.actions.SubmitSolutionListener;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 import org.smirnowku.hwsc.util.PropertyValidator;
@@ -22,7 +23,8 @@ import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 @SpringView(name = Views.ASSIGNMENT)
-public class AssignmentView extends VerticalLayout implements View, SaveSolutionListener, SubmitSolutionListener {
+public class AssignmentView extends VerticalLayout implements View,
+        SaveSolutionListener, SubmitSolutionListener, SubmitCheckListener {
 
     @Resource
     private AuthenticationService authenticationService;
@@ -31,11 +33,15 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
     private AssignmentService assignmentService;
 
     @Resource
+    private CheckService checkService;
+
+    @Resource
     private HomeworkSolutionService homeworkSolutionService;
 
     @Resource
     private AssignmentTasksLayout assignmentTasksLayout;
 
+    private CheckDto check;
     private AssignmentDto assignment;
 
     private Label nameLabel;
@@ -52,14 +58,17 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
         setComponentAlignment(nameLabel, Alignment.TOP_CENTER);
         setComponentAlignment(descriptionLabel, Alignment.TOP_CENTER);
         setComponentAlignment(assignmentTasksLayout, Alignment.MIDDLE_CENTER);
-        assignmentTasksLayout.setListeners(this, this);
+        assignmentTasksLayout.setListeners(this, this, this);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         try {
-            refresh(Long.valueOf(viewChangeEvent.getParameters()));
-        } catch (NumberFormatException e) {
+            String[] params = viewChangeEvent.getParameters().split("/");
+            Long id = Long.valueOf(params[1]);
+            if (params[0].equals("check")) refreshByCheck(id);
+            else refresh(id);
+        } catch (Exception e) {
             UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
         }
     }
@@ -81,12 +90,25 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
     }
 
     @Override
-    public boolean onSubmit() {
+    public boolean onSubmitSolution() {
         try {
             assignmentService.submit(authenticationService.getUsername(), assignment.getId());
         } catch (BaseException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
             refresh(assignment.getId());
+            return false;
+        }
+        UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
+        return true;
+    }
+
+    @Override
+    public boolean onSubmitCheck(Integer score) {
+        try {
+            assignment.setScore(score);
+            checkService.submit(authenticationService.getUsername(), check.getId(), assignment);
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
             return false;
         }
         UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
@@ -103,10 +125,24 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
             return;
         }
         this.assignment = assignment;
-        refresh();
+        refresh(assignment.getStatus() == Assignment.Status.TODO, false);
     }
 
-    private void refresh() {
+    public void refreshByCheck(Long id) {
+        CheckDto check;
+        try {
+            check = checkService.get(authenticationService.getUsername(), id);
+        } catch (BaseException e) {
+            Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
+            UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);
+            return;
+        }
+        this.check = check;
+        this.assignment = check.getAssignment();
+        refresh(false, check.getStatus() == Check.Status.PENDING);
+    }
+
+    private void refresh(boolean solvable, boolean checkable) {
         HomeworkDto homework = assignment.getHomework();
         nameLabel.setValue(String.format("<h1>%s</h1>", homework.getName()));
         if (PropertyValidator.isEmpty(homework.getDescription())) {
@@ -115,12 +151,6 @@ public class AssignmentView extends VerticalLayout implements View, SaveSolution
             descriptionLabel.setVisible(true);
             descriptionLabel.setValue(String.format("<i>%s</i>", homework.getDescription()));
         }
-        assignmentTasksLayout.refresh(assignment, getViewMode(assignment));
-    }
-
-    private ViewMode getViewMode(AssignmentDto assignment) {
-        if (assignment.getStudent().equals(authenticationService.getUser()))
-            return ViewMode.ASSIGNEE;
-        return ViewMode.STRANGER;
+        assignmentTasksLayout.refresh(assignment, solvable, checkable);
     }
 }

@@ -3,9 +3,9 @@ package org.smirnowku.hwsc.ui.assignment;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.HorizontalSplitPanel;
-import org.smirnowku.hwsc.core.model.Assignment;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.ui.assignment.actions.SaveSolutionListener;
+import org.smirnowku.hwsc.ui.assignment.actions.SubmitCheckListener;
 import org.smirnowku.hwsc.ui.assignment.actions.SubmitSolutionListener;
 
 import javax.annotation.PostConstruct;
@@ -29,14 +29,14 @@ public class AssignmentTasksLayout extends HorizontalSplitPanel {
         addComponents(assignmentSidePanel, taskPanel);
     }
 
-    public void refresh(AssignmentDto assignment, ViewMode viewMode) {
-        boolean solvable = viewMode == ViewMode.ASSIGNEE && assignment.getStatus() == Assignment.Status.TODO;
-        assignmentSidePanel.refresh(assignment.getHomework(), assignment.getScore(), solvable);
+    public void refresh(AssignmentDto assignment, boolean solvable, boolean checkable) {
+        assignmentSidePanel.refresh(assignment.getHomework(), assignment.getScore(), solvable, checkable);
         taskPanel.refresh(assignment, solvable);
     }
 
-    public void setListeners(SaveSolutionListener saveSolutionListener, SubmitSolutionListener submitSolutionListener) {
-        assignmentSidePanel.setListeners(taskPanel, submitSolutionListener);
+    public void setListeners(SaveSolutionListener saveSolutionListener, SubmitSolutionListener submitSolutionListener,
+                             SubmitCheckListener submitCheckListener) {
+        assignmentSidePanel.setListeners(taskPanel, submitSolutionListener, submitCheckListener);
         taskPanel.setListeners(saveSolutionListener);
     }
 }
