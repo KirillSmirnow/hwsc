@@ -19,10 +19,10 @@ public class AssignmentSidePanel extends VerticalLayout {
     private SubmitSolutionListener submitSolutionListener;
     private SubmitCheckListener submitCheckListener;
 
-    private Label scoreLabel;
-    private Button submitSolutionButton;
-    private Button submitCheckButton;
-    private Grid<TaskDto> tasksGrid;
+    private final Label scoreLabel;
+    private final Button submitSolutionButton;
+    private final Button submitCheckButton;
+    private final Grid<TaskDto> tasksGrid;
 
     public AssignmentSidePanel() {
         scoreLabel = new Label("Score", ContentMode.HTML);

@@ -8,7 +8,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.core.service.ClassroomService;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -86,7 +86,9 @@ public class ClassroomView extends VerticalLayout implements View, AddMemberList
             classroomService.addMembers(authenticationService.getUsername(), classroom.getId(), studentsUsernames, teachersUsernames);
         } catch (BaseException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
-            refresh(classroom.getId());
+            return false;
+        } catch (Exception e) {
+            Notification.show("Member was not added", Notification.Type.WARNING_MESSAGE);
             return false;
         }
         Notification.show("Done");

@@ -8,6 +8,8 @@ import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.AssignmentRepository;
 import org.smirnowku.hwsc.core.repository.HomeworkSolutionRepository;
 import org.smirnowku.hwsc.core.repository.TaskSolutionRepository;
+import org.smirnowku.hwsc.core.service.HomeworkSolutionService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.HomeworkSolutionDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class HomeworkSolutionService {
+public class HomeworkSolutionServiceImpl implements HomeworkSolutionService {
 
     @Resource
     private UserService userService;
@@ -32,12 +34,14 @@ public class HomeworkSolutionService {
     @Resource
     private TaskSolutionRepository taskSolutionRepository;
 
+    @Override
     public void save(String username, long id, HomeworkSolutionDto dto) {
         HomeworkSolution homeworkSolution = getEntity(username, id);
         homeworkSolution.setTaskSolutions(createTaskSolutions(dto));
         homeworkSolutionRepository.save(homeworkSolution);
     }
 
+    @Override
     public HomeworkSolutionDto get(String username, long id) {
         return getEntity(username, id).toDto();
     }

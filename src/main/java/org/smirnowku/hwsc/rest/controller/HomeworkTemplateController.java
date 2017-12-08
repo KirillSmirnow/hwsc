@@ -1,6 +1,6 @@
 package org.smirnowku.hwsc.rest.controller;
 
-import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
+import org.smirnowku.hwsc.core.service.HomeworkTemplateService;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

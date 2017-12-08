@@ -6,7 +6,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import org.smirnowku.hwsc.core.service.impl.AssignmentService;
+import org.smirnowku.hwsc.core.service.AssignmentService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -24,9 +24,9 @@ public class HomeworksTab extends VerticalLayout {
     @Resource
     private AssignmentService assignmentService;
 
-    private Grid<AssignmentDto> toDoGrid;
-    private Grid<AssignmentDto> submittedGrid;
-    private Grid<AssignmentDto> completedGrid;
+    private final Grid<AssignmentDto> toDoGrid;
+    private final Grid<AssignmentDto> submittedGrid;
+    private final Grid<AssignmentDto> completedGrid;
 
     public HomeworksTab() {
         toDoGrid = new Grid<>("TO DO");

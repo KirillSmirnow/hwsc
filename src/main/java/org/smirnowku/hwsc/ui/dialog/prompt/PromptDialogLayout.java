@@ -5,10 +5,10 @@ import org.smirnowku.hwsc.ui.dialog.CloseDialogListener;
 
 public class PromptDialogLayout extends VerticalLayout {
 
-    private PromptListener promptListener;
-    private CloseDialogListener closeDialogListener;
+    private final PromptListener promptListener;
+    private final CloseDialogListener closeDialogListener;
 
-    private TextField valueField;
+    private final TextField valueField;
 
     public PromptDialogLayout(String valueCaption, String value, String confirmButtonCaption, String cancelButtonCaption,
                               PromptListener promptListener, CloseDialogListener closeDialogListener) {

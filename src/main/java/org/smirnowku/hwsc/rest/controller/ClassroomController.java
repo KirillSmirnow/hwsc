@@ -1,6 +1,6 @@
 package org.smirnowku.hwsc.rest.controller;
 
-import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.core.service.ClassroomService;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.http.HttpStatus;

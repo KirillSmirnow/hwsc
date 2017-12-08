@@ -11,7 +11,7 @@ import org.smirnowku.hwsc.dto.UserDto;
 @SpringComponent
 public class StudentsTab extends VerticalLayout {
 
-    private Grid<UserDto> studentsGrid;
+    private final Grid<UserDto> studentsGrid;
 
     public StudentsTab() {
         studentsGrid = new Grid<>();

@@ -4,7 +4,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
+import org.smirnowku.hwsc.core.service.HomeworkTemplateService;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -22,11 +22,10 @@ public class HwTemplatesTab extends VerticalLayout {
     @Resource
     private HomeworkTemplateService homeworkTemplateService;
 
-    private Button newTemplateButton;
-    private Grid<HomeworkTemplateDto> templatesGrid;
+    private final Grid<HomeworkTemplateDto> templatesGrid;
 
     public HwTemplatesTab() {
-        newTemplateButton = new Button("New Template", clickEvent -> newTemplate());
+        Button newTemplateButton = new Button("New Template", clickEvent -> newTemplate());
 
         templatesGrid = new Grid<>();
         templatesGrid.addColumn(HomeworkTemplateDto::getName).setCaption("Name");

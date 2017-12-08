@@ -8,15 +8,13 @@ import java.util.Arrays;
 
 public class AddMembersDialogLayout extends VerticalLayout {
 
-    private AddMemberListener addMemberListener;
-    private CloseDialogListener closeDialogListener;
+    private final AddMemberListener addMemberListener;
 
-    private TextField usernameField;
-    private RadioButtonGroup<String> radioButtonGroup;
+    private final TextField usernameField;
+    private final RadioButtonGroup<String> radioButtonGroup;
 
     public AddMembersDialogLayout(AddMemberListener addMemberListener, CloseDialogListener closeDialogListener) {
         this.addMemberListener = addMemberListener;
-        this.closeDialogListener = closeDialogListener;
         usernameField = new TextField("Enter username");
         usernameField.setWidth(300, Unit.PIXELS);
         radioButtonGroup = new RadioButtonGroup<>("Role", Arrays.asList(MemberRole.STUDENT.toString(), MemberRole.TEACHER.toString()));

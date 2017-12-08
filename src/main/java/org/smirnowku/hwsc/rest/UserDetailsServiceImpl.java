@@ -1,6 +1,6 @@
 package org.smirnowku.hwsc.rest;
 
-import org.smirnowku.hwsc.core.service.impl.AuthService;
+import org.smirnowku.hwsc.core.service.AuthService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

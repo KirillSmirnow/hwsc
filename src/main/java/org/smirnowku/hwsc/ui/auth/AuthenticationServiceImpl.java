@@ -2,8 +2,8 @@ package org.smirnowku.hwsc.ui.auth;
 
 import com.vaadin.server.VaadinSession;
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
-import org.smirnowku.hwsc.core.service.impl.AuthService;
-import org.smirnowku.hwsc.core.service.impl.UserService;
+import org.smirnowku.hwsc.core.service.AuthService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.UserDto;
 import org.springframework.stereotype.Service;
 

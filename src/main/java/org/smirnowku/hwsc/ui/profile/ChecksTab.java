@@ -6,7 +6,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import org.smirnowku.hwsc.core.service.impl.CheckService;
+import org.smirnowku.hwsc.core.service.CheckService;
 import org.smirnowku.hwsc.dto.CheckDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -23,8 +23,8 @@ public class ChecksTab extends VerticalLayout {
     @Resource
     private CheckService checkService;
 
-    private Grid<CheckDto> pendingGrid;
-    private Grid<CheckDto> checkedGrid;
+    private final Grid<CheckDto> pendingGrid;
+    private final Grid<CheckDto> checkedGrid;
 
     public ChecksTab() {
         pendingGrid = new Grid<>("Pending");

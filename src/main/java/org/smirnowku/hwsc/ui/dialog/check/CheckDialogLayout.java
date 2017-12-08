@@ -8,10 +8,10 @@ import java.util.Optional;
 
 public class CheckDialogLayout extends VerticalLayout {
 
-    private CheckListener checkListener;
-    private CloseDialogListener closeDialogListener;
+    private final CheckListener checkListener;
+    private final CloseDialogListener closeDialogListener;
 
-    private ComboBox<Integer> scoresComboBox;
+    private final ComboBox<Integer> scoresComboBox;
 
     public CheckDialogLayout(CheckListener checkListener, CloseDialogListener closeDialogListener) {
         this.checkListener = checkListener;

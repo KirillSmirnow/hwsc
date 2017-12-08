@@ -6,7 +6,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.service.impl.HomeworkTemplateService;
+import org.smirnowku.hwsc.core.service.HomeworkTemplateService;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.smirnowku.hwsc.dto.TaskTemplateDto;
 import org.smirnowku.hwsc.ui.Views;
@@ -32,8 +32,8 @@ public class HwTemplateView extends VerticalLayout implements View, AddTaskListe
 
     private HomeworkTemplateDto homeworkTemplate;
 
-    private Label nameLabel;
-    private Label descriptionLabel;
+    private final Label nameLabel;
+    private final Label descriptionLabel;
 
     public HwTemplateView() {
         nameLabel = new Label("Name", ContentMode.HTML);
@@ -101,7 +101,7 @@ public class HwTemplateView extends VerticalLayout implements View, AddTaskListe
         return true;
     }
 
-    public void refresh(Long id) {
+    private void refresh(Long id) {
         HomeworkTemplateDto homeworkTemplate;
         try {
             homeworkTemplate = homeworkTemplateService.get(authenticationService.getUsername(), id);

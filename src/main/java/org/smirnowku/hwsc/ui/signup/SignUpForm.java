@@ -4,7 +4,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.service.impl.UserService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.UserDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -21,18 +21,17 @@ public class SignUpForm extends VerticalLayout {
     @Resource
     private UserService userService;
 
-    private TextField usernameField;
-    private TextField nameField;
-    private PasswordField passwordField;
-    private PasswordField repeatPasswordField;
-    private Button signUpButton;
+    private final TextField usernameField;
+    private final TextField nameField;
+    private final PasswordField passwordField;
+    private final PasswordField repeatPasswordField;
 
     public SignUpForm() {
         usernameField = new TextField("Username");
         nameField = new TextField("Name");
         passwordField = new PasswordField("Password");
         repeatPasswordField = new PasswordField("Confirm password");
-        signUpButton = new Button("Sign Up", clickEvent -> signUp());
+        Button signUpButton = new Button("Sign Up", clickEvent -> signUp());
 
         usernameField.setWidth(300, Unit.PIXELS);
         nameField.setWidth(300, Unit.PIXELS);

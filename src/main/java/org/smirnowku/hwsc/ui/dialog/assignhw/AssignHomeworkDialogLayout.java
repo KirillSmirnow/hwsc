@@ -14,11 +14,11 @@ import java.util.stream.IntStream;
 
 public class AssignHomeworkDialogLayout extends VerticalLayout {
 
-    private AssignListener assignListener;
-    private CloseDialogListener closeDialogListener;
-    private ComboBox<ClassroomDto> classroomComboBox;
-    private DateTimeField deadlineField;
-    private ComboBox<Integer> subgroupSizeComboBox;
+    private final AssignListener assignListener;
+    private final CloseDialogListener closeDialogListener;
+    private final ComboBox<ClassroomDto> classroomComboBox;
+    private final DateTimeField deadlineField;
+    private final ComboBox<Integer> subgroupSizeComboBox;
 
     public AssignHomeworkDialogLayout(List<ClassroomDto> classrooms,
                                       AssignListener assignListener, CloseDialogListener closeDialogListener) {

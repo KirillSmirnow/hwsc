@@ -5,10 +5,10 @@ import org.smirnowku.hwsc.ui.dialog.CloseDialogListener;
 
 public class NameDescriptionDialogLayout extends VerticalLayout {
 
-    private ActionListener actionListener;
-    private CloseDialogListener closeListener;
-    private TextField nameField;
-    private TextArea descriptionArea;
+    private final ActionListener actionListener;
+    private final CloseDialogListener closeListener;
+    private final TextField nameField;
+    private final TextArea descriptionArea;
 
     public NameDescriptionDialogLayout(String name, String description, String actionButtonCaption,
                                        ActionListener actionListener, CloseDialogListener closeListener) {

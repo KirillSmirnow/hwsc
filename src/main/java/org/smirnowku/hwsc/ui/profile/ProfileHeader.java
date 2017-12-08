@@ -16,15 +16,13 @@ public class ProfileHeader extends HorizontalLayout {
     @Resource
     private AuthenticationService authenticationService;
 
-    private Label nameLabel;
-    private Button signOutButton;
+    private final Label nameLabel;
 
     public ProfileHeader() {
         nameLabel = new Label("name", ContentMode.HTML);
-        signOutButton = new Button("Sign Out", clickEvent -> signOut());
+        Button signOutButton = new Button("Sign Out", clickEvent -> signOut());
 
         setSizeFull();
-
         addComponents(nameLabel, signOutButton);
         setComponentAlignment(nameLabel, Alignment.MIDDLE_LEFT);
         setComponentAlignment(signOutButton, Alignment.MIDDLE_RIGHT);

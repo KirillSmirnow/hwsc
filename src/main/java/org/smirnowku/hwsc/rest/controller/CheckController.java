@@ -1,6 +1,6 @@
 package org.smirnowku.hwsc.rest.controller;
 
-import org.smirnowku.hwsc.core.service.impl.CheckService;
+import org.smirnowku.hwsc.core.service.CheckService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.dto.CheckDto;
 import org.springframework.http.HttpStatus;

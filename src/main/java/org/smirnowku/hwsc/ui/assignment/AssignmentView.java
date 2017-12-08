@@ -8,9 +8,9 @@ import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
 import org.smirnowku.hwsc.core.model.Assignment;
 import org.smirnowku.hwsc.core.model.Check;
-import org.smirnowku.hwsc.core.service.impl.AssignmentService;
-import org.smirnowku.hwsc.core.service.impl.CheckService;
-import org.smirnowku.hwsc.core.service.impl.HomeworkSolutionService;
+import org.smirnowku.hwsc.core.service.AssignmentService;
+import org.smirnowku.hwsc.core.service.CheckService;
+import org.smirnowku.hwsc.core.service.HomeworkSolutionService;
 import org.smirnowku.hwsc.dto.*;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.assignment.actions.SaveSolutionListener;
@@ -44,8 +44,8 @@ public class AssignmentView extends VerticalLayout implements View,
     private CheckDto check;
     private AssignmentDto assignment;
 
-    private Label nameLabel;
-    private Label descriptionLabel;
+    private final Label nameLabel;
+    private final Label descriptionLabel;
 
     public AssignmentView() {
         nameLabel = new Label("Name", ContentMode.HTML);
@@ -115,7 +115,7 @@ public class AssignmentView extends VerticalLayout implements View,
         return true;
     }
 
-    public void refresh(Long id) {
+    private void refresh(Long id) {
         AssignmentDto assignment;
         try {
             assignment = assignmentService.get(authenticationService.getUsername(), id);
@@ -128,7 +128,7 @@ public class AssignmentView extends VerticalLayout implements View,
         refresh(assignment.getStatus() == Assignment.Status.TODO, false);
     }
 
-    public void refreshByCheck(Long id) {
+    private void refreshByCheck(Long id) {
         CheckDto check;
         try {
             check = checkService.get(authenticationService.getUsername(), id);

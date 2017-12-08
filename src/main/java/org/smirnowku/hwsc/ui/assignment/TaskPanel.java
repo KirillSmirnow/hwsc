@@ -27,8 +27,8 @@ public class TaskPanel extends VerticalLayout implements SelectTaskListener {
     private AssignmentDto assignment;
     private boolean solvable;
 
-    private Label nameLabel;
-    private Label descriptionLabel;
+    private final Label nameLabel;
+    private final Label descriptionLabel;
 
     public TaskPanel() {
         nameLabel = new Label("", ContentMode.HTML);
@@ -53,18 +53,18 @@ public class TaskPanel extends VerticalLayout implements SelectTaskListener {
         this.solvable = solvable;
     }
 
-    public void refresh(TaskDto task) {
-        int taskIndex = assignment.getHomework().getTasks().indexOf(task);
-        TaskSolutionDto taskSolution = assignment.getHomeworkSolution().getTaskSolutions().get(taskIndex);
-        nameLabel.setValue(String.format("<b>%s</b><hr/>", task.getName()));
-        descriptionLabel.setValue(task.getDescription());
-        solutionPanel.refresh(taskSolution, solvable);
-    }
-
     @Override
     public void onSelect(SelectionEvent<TaskDto> selectionEvent) {
         Optional<TaskDto> task = selectionEvent.getFirstSelectedItem();
         setVisible(task.isPresent());
         task.ifPresent(this::refresh);
+    }
+
+    private void refresh(TaskDto task) {
+        int taskIndex = assignment.getHomework().getTasks().indexOf(task);
+        TaskSolutionDto taskSolution = assignment.getHomeworkSolution().getTaskSolutions().get(taskIndex);
+        nameLabel.setValue(String.format("<b>%s</b><hr/>", task.getName()));
+        descriptionLabel.setValue(task.getDescription());
+        solutionPanel.refresh(taskSolution, solvable);
     }
 }

@@ -1,7 +1,5 @@
 package org.smirnowku.hwsc.core.service.impl;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
 import org.smirnowku.hwsc.core.exception.NotFoundException;
 import org.smirnowku.hwsc.core.model.Assignment;
@@ -10,6 +8,8 @@ import org.smirnowku.hwsc.core.model.Homework;
 import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.AssignmentRepository;
 import org.smirnowku.hwsc.core.repository.CheckRepository;
+import org.smirnowku.hwsc.core.service.AssignmentService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class AssignmentService {
-
-    private static final Logger log = LoggerFactory.getLogger(AssignmentService.class);
+public class AssignmentServiceImpl implements AssignmentService {
 
     @Resource
     private UserService userService;
@@ -34,6 +32,7 @@ public class AssignmentService {
     @Resource
     private CheckRepository checkRepository;
 
+    @Override
     public void submit(String username, long id) {
         Assignment assignment = getEntity(username, id);
         assignment.setStatus(Assignment.Status.SUBMITTED);
@@ -41,12 +40,14 @@ public class AssignmentService {
         onAssignmentSubmitted(assignment.getHomework());
     }
 
+    @Override
     public List<AssignmentDto> getToDo(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO).stream()
                 .map(Assignment::toDto).collect(Collectors.toList());
     }
 
+    @Override
     public List<AssignmentDto> getSubmitted(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user,
@@ -54,12 +55,14 @@ public class AssignmentService {
                 .map(Assignment::toDto).collect(Collectors.toList());
     }
 
+    @Override
     public List<AssignmentDto> getCompleted(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED).stream()
                 .map(Assignment::toDto).collect(Collectors.toList());
     }
 
+    @Override
     public AssignmentDto get(String username, long id) {
         return getEntity(username, id).toDto();
     }
@@ -90,7 +93,6 @@ public class AssignmentService {
             checkRepository.save(check);
             assignment.setStatus(Assignment.Status.CHECKING);
             assignmentRepository.save(assignment);
-            log.info("Check assigned: " + check);
         }
     }
 

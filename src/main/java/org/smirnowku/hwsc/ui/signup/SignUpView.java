@@ -18,7 +18,7 @@ public class SignUpView extends VerticalLayout implements View {
     @Resource
     private SignUpForm signUpForm;
 
-    private Button signInButton;
+    private final Button signInButton;
 
     public SignUpView() {
         signInButton = new Button("Already have an account?");

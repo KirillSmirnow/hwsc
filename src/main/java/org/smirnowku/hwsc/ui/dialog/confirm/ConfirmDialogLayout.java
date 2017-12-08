@@ -5,8 +5,8 @@ import org.smirnowku.hwsc.ui.dialog.CloseDialogListener;
 
 public class ConfirmDialogLayout extends VerticalLayout {
 
-    private ConfirmListener confirmListener;
-    private CloseDialogListener closeDialogListener;
+    private final ConfirmListener confirmListener;
+    private final CloseDialogListener closeDialogListener;
 
     public ConfirmDialogLayout(String message, String confirmButtonCaption, String cancelButtonCaption,
                                ConfirmListener confirmListener, CloseDialogListener closeDialogListener) {

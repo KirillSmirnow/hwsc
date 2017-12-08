@@ -5,7 +5,7 @@ import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TabSheet;
-import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.core.service.ClassroomService;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
 
@@ -31,7 +31,7 @@ public class ClassroomCenterLayout extends HorizontalLayout {
     @Resource
     private HomeworksLayout homeworksLayout;
 
-    private TabSheet membersTabSheet;
+    private final TabSheet membersTabSheet;
 
     public ClassroomCenterLayout() {
         membersTabSheet = new TabSheet();

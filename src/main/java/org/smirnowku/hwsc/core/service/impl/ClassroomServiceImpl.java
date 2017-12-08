@@ -8,6 +8,8 @@ import org.smirnowku.hwsc.core.model.Homework;
 import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.ClassroomRepository;
 import org.smirnowku.hwsc.core.repository.HomeworkRepository;
+import org.smirnowku.hwsc.core.service.ClassroomService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class ClassroomService {
+public class ClassroomServiceImpl implements ClassroomService {
 
     private interface MemberAdder {
         void addMemberToClassroom(Classroom classroom, User user);
@@ -34,12 +36,14 @@ public class ClassroomService {
     @Resource
     private HomeworkRepository homeworkRepository;
 
+    @Override
     public void create(String teacherUsername, ClassroomDto dto) {
         User teacher = userService.getEntity(teacherUsername);
         Classroom classroom = new Classroom(teacher, dto.getName(), dto.getDescription());
         classroomRepository.save(classroom);
     }
 
+    @Override
     public void addMembers(String username, long id, List<String> studentsUsernames, List<String> teachersUsernames) {
         Classroom classroom = getEntity(username, id);
         User user = userService.getEntity(username);
@@ -49,6 +53,7 @@ public class ClassroomService {
         classroomRepository.save(classroom);
     }
 
+    @Override
     public void edit(String username, long id, ClassroomDto dto) {
         Classroom classroom = getEntity(username, id);
         User user = userService.getEntity(username);
@@ -58,29 +63,34 @@ public class ClassroomService {
         classroomRepository.save(classroom);
     }
 
+    @Override
     public ClassroomDto get(String username, long id) {
         return getEntity(username, id).toDto();
     }
 
+    @Override
     public List<ClassroomDto> getClassroomsAsStudent(String studentUsername) {
         User student = userService.getEntity(studentUsername);
         return classroomRepository.findAllByStudents(student).stream()
                 .map(Classroom::toDto).collect(Collectors.toList());
     }
 
+    @Override
     public List<ClassroomDto> getClassroomsAsTeacher(String teacherUsername) {
         User teacher = userService.getEntity(teacherUsername);
         return classroomRepository.findAllByTeachers(teacher).stream()
                 .map(Classroom::toDto).collect(Collectors.toList());
     }
 
+    @Override
     public List<HomeworkDto> getHomeworks(String username, long id) {
         Classroom classroom = getEntity(username, id);
         return homeworkRepository.findAllByClassroom(classroom).stream()
                 .map(Homework::toDto).collect(Collectors.toList());
     }
 
-    Classroom getEntity(String username, long id) {
+    @Override
+    public Classroom getEntity(String username, long id) {
         Classroom classroom = classroomRepository.findOne(id);
         if (classroom == null) throw new NotFoundException("Classroom not found");
         User user = userService.getEntity(username);

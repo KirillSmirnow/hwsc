@@ -8,6 +8,8 @@ import org.smirnowku.hwsc.core.model.Homework;
 import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.AssignmentRepository;
 import org.smirnowku.hwsc.core.repository.CheckRepository;
+import org.smirnowku.hwsc.core.service.CheckService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.smirnowku.hwsc.dto.CheckDto;
 import org.springframework.stereotype.Service;
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class CheckService {
+public class CheckServiceImpl implements CheckService {
 
     @Resource
     private UserService userService;
@@ -30,6 +32,7 @@ public class CheckService {
     @Resource
     private CheckRepository checkRepository;
 
+    @Override
     public void submit(String username, long id, AssignmentDto dto) {
         Check check = getEntity(username, id);
         check.setStatus(Check.Status.CHECKED);
@@ -40,16 +43,19 @@ public class CheckService {
         onCheckSubmitted(check.getChecker(), assignment.getStudent(), assignment.getHomework());
     }
 
+    @Override
     public CheckDto get(String username, long id) {
         return getEntity(username, id).toDto();
     }
 
+    @Override
     public List<CheckDto> getPending(String username) {
         User checker = userService.getEntity(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.PENDING).stream()
                 .map(Check::toDto).collect(Collectors.toList());
     }
 
+    @Override
     public List<CheckDto> getChecked(String username) {
         User checker = userService.getEntity(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.CHECKED).stream()

@@ -4,8 +4,8 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.service.impl.ClassroomService;
-import org.smirnowku.hwsc.core.service.impl.HomeworkService;
+import org.smirnowku.hwsc.core.service.ClassroomService;
+import org.smirnowku.hwsc.core.service.HomeworkService;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
@@ -44,7 +44,7 @@ public class HwTemplateSidePanel extends VerticalLayout implements AssignListene
 
     private HomeworkTemplateDto homeworkTemplate;
 
-    private Grid<TaskTemplateDto> tasksGrid;
+    private final Grid<TaskTemplateDto> tasksGrid;
 
     public HwTemplateSidePanel() {
         Button assignButton = new Button("Assign HW", clickEvent -> assignHw());

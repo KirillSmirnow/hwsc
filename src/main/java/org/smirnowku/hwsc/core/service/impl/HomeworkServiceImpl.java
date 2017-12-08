@@ -3,6 +3,10 @@ package org.smirnowku.hwsc.core.service.impl;
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
 import org.smirnowku.hwsc.core.model.*;
 import org.smirnowku.hwsc.core.repository.*;
+import org.smirnowku.hwsc.core.service.ClassroomService;
+import org.smirnowku.hwsc.core.service.HomeworkService;
+import org.smirnowku.hwsc.core.service.HomeworkTemplateService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class HomeworkService {
+public class HomeworkServiceImpl implements HomeworkService {
 
     @Resource
     private ClassroomService classroomService;
@@ -39,6 +43,7 @@ public class HomeworkService {
     @Resource
     private TaskSolutionRepository taskSolutionRepository;
 
+    @Override
     public void assign(String username, long homeworkTemplateId, long classroomId, HomeworkDto dto) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateService.getEntity(username, homeworkTemplateId);
         Classroom classroom = classroomService.getEntity(username, classroomId);

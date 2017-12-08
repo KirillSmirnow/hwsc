@@ -16,14 +16,13 @@ public class SignInForm extends VerticalLayout {
     @Resource
     private AuthenticationService authenticationService;
 
-    private TextField usernameField;
-    private PasswordField passwordField;
-    private Button signInButton;
+    private final TextField usernameField;
+    private final PasswordField passwordField;
 
     public SignInForm() {
         usernameField = new TextField("Username");
         passwordField = new PasswordField("Password");
-        signInButton = new Button("Sign In", clickEvent -> signIn());
+        Button signInButton = new Button("Sign In", clickEvent -> signIn());
 
         usernameField.setWidth(300, Unit.PIXELS);
         passwordField.setWidth(300, Unit.PIXELS);
@@ -34,8 +33,7 @@ public class SignInForm extends VerticalLayout {
     }
 
     public void refresh() {
-//        usernameField.clear();
-        usernameField.setValue("kirill");
+        usernameField.clear();
         passwordField.clear();
     }
 

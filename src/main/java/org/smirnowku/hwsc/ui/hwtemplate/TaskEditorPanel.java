@@ -20,8 +20,8 @@ public class TaskEditorPanel extends VerticalLayout implements SelectTaskListene
     private DeleteTaskListener deleteTaskListener;
     private TaskTemplateDto taskTemplate;
 
-    private TextField nameField;
-    private RichTextArea descriptionArea;
+    private final TextField nameField;
+    private final RichTextArea descriptionArea;
 
     public TaskEditorPanel() {
         nameField = new TextField("Name");
@@ -44,17 +44,17 @@ public class TaskEditorPanel extends VerticalLayout implements SelectTaskListene
         this.deleteTaskListener = deleteTaskListener;
     }
 
-    public void refresh(TaskTemplateDto taskTemplate) {
-        this.taskTemplate = taskTemplate;
-        nameField.setValue(taskTemplate.getName());
-        descriptionArea.setValue(taskTemplate.getDescription() == null ? "" : taskTemplate.getDescription());
-    }
-
     @Override
     public void onSelect(SelectionEvent<TaskTemplateDto> selectionEvent) {
         Optional<TaskTemplateDto> taskTemplate = selectionEvent.getFirstSelectedItem();
         setVisible(taskTemplate.isPresent());
         taskTemplate.ifPresent(this::refresh);
+    }
+
+    private void refresh(TaskTemplateDto taskTemplate) {
+        this.taskTemplate = taskTemplate;
+        nameField.setValue(taskTemplate.getName());
+        descriptionArea.setValue(taskTemplate.getDescription() == null ? "" : taskTemplate.getDescription());
     }
 
     private void saveTask(Button.ClickEvent clickEvent) {

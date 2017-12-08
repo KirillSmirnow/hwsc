@@ -28,7 +28,7 @@ public class ProfileView extends VerticalLayout implements View {
     @Resource
     private HwTemplatesTab hwTemplatesTab;
 
-    private TabSheet tabSheet;
+    private final TabSheet tabSheet;
 
     public ProfileView() {
         tabSheet = new TabSheet();

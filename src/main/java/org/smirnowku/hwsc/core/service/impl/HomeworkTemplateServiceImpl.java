@@ -7,6 +7,8 @@ import org.smirnowku.hwsc.core.model.TaskTemplate;
 import org.smirnowku.hwsc.core.model.User;
 import org.smirnowku.hwsc.core.repository.HomeworkTemplateRepository;
 import org.smirnowku.hwsc.core.repository.TaskTemplateRepository;
+import org.smirnowku.hwsc.core.service.HomeworkTemplateService;
+import org.smirnowku.hwsc.core.service.UserService;
 import org.smirnowku.hwsc.dto.HomeworkTemplateDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-public class HomeworkTemplateService {
+public class HomeworkTemplateServiceImpl implements HomeworkTemplateService {
 
     @Resource
     private UserService userService;
@@ -28,12 +30,14 @@ public class HomeworkTemplateService {
     @Resource
     private TaskTemplateRepository taskTemplateRepository;
 
+    @Override
     public void create(String username, HomeworkTemplateDto dto) {
         User creator = userService.getEntity(username);
         HomeworkTemplate homeworkTemplate = new HomeworkTemplate(creator, dto.getName(), dto.getDescription());
         homeworkTemplateRepository.save(homeworkTemplate);
     }
 
+    @Override
     public void edit(String username, long id, HomeworkTemplateDto dto) {
         HomeworkTemplate homeworkTemplate = getEntity(username, id);
         homeworkTemplate.setName(dto.getName());
@@ -42,22 +46,26 @@ public class HomeworkTemplateService {
         homeworkTemplateRepository.save(homeworkTemplate);
     }
 
+    @Override
     public List<HomeworkTemplateDto> get(String username) {
         User user = userService.getEntity(username);
         return homeworkTemplateRepository.findAllByCreator(user).stream()
                 .map(HomeworkTemplate::toDto).collect(Collectors.toList());
     }
 
+    @Override
     public void delete(String username, long id) {
         HomeworkTemplate homeworkTemplate = getEntity(username, id);
         homeworkTemplateRepository.delete(homeworkTemplate);
     }
 
+    @Override
     public HomeworkTemplateDto get(String username, long id) {
         return getEntity(username, id).toDto();
     }
 
-    HomeworkTemplate getEntity(String username, long id) {
+    @Override
+    public HomeworkTemplate getEntity(String username, long id) {
         HomeworkTemplate homeworkTemplate = homeworkTemplateRepository.findOne(id);
         if (homeworkTemplate == null) throw new NotFoundException("Homework template not found");
         User user = userService.getEntity(username);

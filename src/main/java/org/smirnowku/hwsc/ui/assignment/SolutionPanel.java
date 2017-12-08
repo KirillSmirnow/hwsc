@@ -19,8 +19,8 @@ public class SolutionPanel extends HorizontalLayout {
     private SaveSolutionListener saveSolutionListener;
 
     private TaskSolutionDto taskSolution;
-    private Label linkLabel;
-    private Button editButton;
+    private final Label linkLabel;
+    private final Button editButton;
 
     public SolutionPanel() {
         linkLabel = new Label("", ContentMode.HTML);

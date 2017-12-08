@@ -15,7 +15,7 @@ import java.util.List;
 @SpringComponent
 public class HomeworksLayout extends VerticalLayout {
 
-    private Grid<HomeworkDto> homeworkGrid;
+    private final Grid<HomeworkDto> homeworkGrid;
 
     public HomeworksLayout() {
         Label titleLabel = new Label("Homework");

@@ -4,7 +4,7 @@ import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
 import org.smirnowku.hwsc.core.exception.BaseException;
-import org.smirnowku.hwsc.core.service.impl.ClassroomService;
+import org.smirnowku.hwsc.core.service.ClassroomService;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.ui.Views;
 import org.smirnowku.hwsc.ui.auth.AuthenticationService;
@@ -22,12 +22,11 @@ public class ClassroomsTab extends VerticalLayout {
     @Resource
     private ClassroomService classroomService;
 
-    private Button newClassroomButton;
-    private Grid<ClassroomDto> asStudentGrid;
-    private Grid<ClassroomDto> asTeacherGrid;
+    private final Grid<ClassroomDto> asStudentGrid;
+    private final Grid<ClassroomDto> asTeacherGrid;
 
     public ClassroomsTab() {
-        newClassroomButton = new Button("New Classroom", clickEvent -> newClassroom());
+        Button newClassroomButton = new Button("New Classroom", clickEvent -> newClassroom());
 
         asStudentGrid = new Grid<>("As student");
         asStudentGrid.addColumn(ClassroomDto::getName).setCaption("Name");

@@ -20,8 +20,8 @@ public class ClassroomHeader extends HorizontalLayout {
 
     private ClassroomDto classroom;
 
-    private Label nameLabel;
-    private Label descriptionLabel;
+    private final Label nameLabel;
+    private final Label descriptionLabel;
 
     public ClassroomHeader() {
         nameLabel = new Label("Name", ContentMode.HTML);

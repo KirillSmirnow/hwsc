@@ -1,6 +1,6 @@
 package org.smirnowku.hwsc.rest.controller;
 
-import org.smirnowku.hwsc.core.service.impl.AssignmentService;
+import org.smirnowku.hwsc.core.service.AssignmentService;
 import org.smirnowku.hwsc.dto.AssignmentDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
