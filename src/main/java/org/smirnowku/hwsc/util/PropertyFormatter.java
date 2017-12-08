@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 public class PropertyFormatter {
 
-    public static String format(LocalDateTime localDateTime) {
+    public static String format(LocalDateTime utcDateTime) {
+        LocalDateTime localDateTime = TimeService.toLocal(utcDateTime);
         if (localDateTime == null) return "";
         return localDateTime.format(DateTimeFormatter.ofPattern("MMMM d, u HH:mm"));
     }

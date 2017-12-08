@@ -4,6 +4,7 @@ import com.vaadin.ui.*;
 import org.smirnowku.hwsc.dto.ClassroomDto;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.smirnowku.hwsc.ui.dialog.CloseDialogListener;
+import org.smirnowku.hwsc.util.TimeService;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -28,7 +29,7 @@ public class AssignHomeworkDialogLayout extends VerticalLayout {
         classroomComboBox.setItemCaptionGenerator(ClassroomDto::getName);
         classroomComboBox.setItems(classrooms);
         deadlineField = new DateTimeField("Deadline");
-        deadlineField.setValue(LocalDateTime.now().plusDays(1));
+        deadlineField.setValue(TimeService.getClientNow().plusDays(1));
         subgroupSizeComboBox = new ComboBox<>("Subgroup size");
         subgroupSizeComboBox.setEmptySelectionAllowed(false);
         classroomComboBox.addValueChangeListener(valueChangeEvent -> updateAvailableSubgroupSizes());
@@ -46,7 +47,8 @@ public class AssignHomeworkDialogLayout extends VerticalLayout {
     private void assign() {
         Optional<ClassroomDto> classroom = classroomComboBox.getSelectedItem();
         if (classroom.isPresent()) {
-            HomeworkDto homework = new HomeworkDto(deadlineField.getValue(), subgroupSizeComboBox.getValue());
+            LocalDateTime deadline = TimeService.toUtc(deadlineField.getValue());
+            HomeworkDto homework = new HomeworkDto(deadline, subgroupSizeComboBox.getValue());
             if (assignListener.onAssign(classroom.get().getId(), homework)) closeDialogListener.onClose();
         } else {
             Notification.show("You should choose classroom", Notification.Type.WARNING_MESSAGE);

@@ -7,6 +7,7 @@ public abstract class AbstractDialog extends Window implements CloseDialogListen
 
     public AbstractDialog(String caption) {
         super(caption);
+        setDraggable(false);
         setResizable(false);
         setModal(true);
         setWidth(500, Unit.PIXELS);
