@@ -42,7 +42,7 @@ public class TaskSolution extends BaseEntity {
     }
 
     private void validateLink(String link) {
-        if (link.length() > MAX_LINK_LENGTH)
+        if (link != null && link.length() > MAX_LINK_LENGTH)
             throw new IllegalArgumentException(String.format("Link is too long (max length is %d)", MAX_LINK_LENGTH),
                     String.format("Link is too long (max length is %d, current length is %d)", MAX_LINK_LENGTH, link.length()));
     }
