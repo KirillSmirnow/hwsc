@@ -38,6 +38,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public void submit(String username, long id) {
         Assignment assignment = getEntity(username, id);
+        authorizeSubmit(assignment);
         assignment.setStatus(Assignment.Status.SUBMITTED);
         assignmentRepository.save(assignment);
         onAssignmentSubmitted(assignment.getHomework());
@@ -79,7 +80,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         Assignment assignment = assignmentRepository.findOne(id);
         if (assignment == null) throw new NotFoundException("Assignment not found");
         User user = userService.getEntity(username);
-        authorizeAccess(assignment, user);
+        authorizeRead(assignment, user);
         return assignment;
     }
 
@@ -104,8 +105,13 @@ public class AssignmentServiceImpl implements AssignmentService {
         }
     }
 
-    private void authorizeAccess(Assignment assignment, User user) {
+    private void authorizeRead(Assignment assignment, User user) {
         if (!assignment.getStudent().equals(user))
             throw new ForbiddenException("You are not allowed to access this assignment");
+    }
+
+    private void authorizeSubmit(Assignment assignment) {
+        if (assignment.getStatus() != Assignment.Status.TODO)
+            throw new ForbiddenException("This assignment has already been submitted");
     }
 }

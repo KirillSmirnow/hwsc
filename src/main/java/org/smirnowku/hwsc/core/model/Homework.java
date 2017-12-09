@@ -38,6 +38,7 @@ public class Homework extends BaseEntity {
 
     public Homework(HomeworkTemplate template, Classroom classroom, List<Task> tasks,
                     LocalDateTime deadline, Integer subgroupSize) {
+        validateTasks(tasks);
         validateSubgroupSize(subgroupSize, classroom);
         this.classroom = classroom;
         this.tasks = tasks;
@@ -85,6 +86,11 @@ public class Homework extends BaseEntity {
                 ", deadline=" + deadline +
                 ", subgroupSize=" + subgroupSize +
                 '}';
+    }
+
+    private void validateTasks(List<Task> tasks) {
+        if (PropertyValidator.isEmpty(tasks))
+            throw new IllegalArgumentException("Homework must contain at least one task");
     }
 
     private void validateSubgroupSize(Integer subgroupSize, Classroom classroom) {

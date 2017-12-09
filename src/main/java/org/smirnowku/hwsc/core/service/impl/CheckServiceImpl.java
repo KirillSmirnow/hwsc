@@ -38,6 +38,7 @@ public class CheckServiceImpl implements CheckService {
     @Override
     public void submit(String username, long id, AssignmentDto dto) {
         Check check = getEntity(username, id);
+        authorizeSubmit(check);
         check.setStatus(Check.Status.CHECKED);
         checkRepository.save(check);
         Assignment assignment = check.getAssignment();
@@ -73,7 +74,7 @@ public class CheckServiceImpl implements CheckService {
         Check check = checkRepository.findOne(id);
         if (check == null) throw new NotFoundException("Check not found");
         User user = userService.getEntity(username);
-        authorizeAccess(check, user);
+        authorizeRead(check, user);
         return check;
     }
 
@@ -96,8 +97,13 @@ public class CheckServiceImpl implements CheckService {
                         .allMatch(check -> check.getStatus() == Check.Status.CHECKED);
     }
 
-    private void authorizeAccess(Check check, User user) {
+    private void authorizeRead(Check check, User user) {
         if (!check.getChecker().equals(user))
             throw new ForbiddenException("You are not allowed to access this check: you are not assigned to it");
+    }
+
+    private void authorizeSubmit(Check check) {
+        if (check.getStatus() != Check.Status.PENDING)
+            throw new ForbiddenException("This assignment has already been checked");
     }
 }

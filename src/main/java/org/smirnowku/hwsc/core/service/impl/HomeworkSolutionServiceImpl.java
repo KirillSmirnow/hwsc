@@ -2,6 +2,7 @@ package org.smirnowku.hwsc.core.service.impl;
 
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
 import org.smirnowku.hwsc.core.exception.NotFoundException;
+import org.smirnowku.hwsc.core.model.Assignment;
 import org.smirnowku.hwsc.core.model.HomeworkSolution;
 import org.smirnowku.hwsc.core.model.TaskSolution;
 import org.smirnowku.hwsc.core.model.User;
@@ -41,11 +42,6 @@ public class HomeworkSolutionServiceImpl implements HomeworkSolutionService {
         homeworkSolutionRepository.save(homeworkSolution);
     }
 
-    @Override
-    public HomeworkSolutionDto get(String username, long id) {
-        return getEntity(username, id).toDto();
-    }
-
     private HomeworkSolution getEntity(String username, long id) {
         HomeworkSolution homeworkSolution = homeworkSolutionRepository.findOne(id);
         if (homeworkSolution == null) throw new NotFoundException("Homework solution not found");
@@ -62,7 +58,10 @@ public class HomeworkSolutionServiceImpl implements HomeworkSolutionService {
     }
 
     private void authorizeAccess(HomeworkSolution homeworkSolution, User user) {
-        if (!assignmentRepository.findByHomeworkSolution(homeworkSolution).getStudent().equals(user))
+        Assignment assignment = assignmentRepository.findByHomeworkSolution(homeworkSolution);
+        if (!assignment.getStudent().equals(user))
             throw new ForbiddenException("You are not allowed to access this homework solution");
+        if (assignment.getStatus() != Assignment.Status.TODO)
+            throw new ForbiddenException("This solution has already been submitted");
     }
 }
