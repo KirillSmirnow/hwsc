@@ -1,6 +1,7 @@
 package org.smirnowku.hwsc.core.service.impl;
 
 import org.smirnowku.hwsc.core.exception.ForbiddenException;
+import org.smirnowku.hwsc.core.exception.NotFoundException;
 import org.smirnowku.hwsc.core.model.*;
 import org.smirnowku.hwsc.core.repository.*;
 import org.smirnowku.hwsc.core.service.ClassroomService;
@@ -53,6 +54,13 @@ public class HomeworkServiceImpl implements HomeworkService {
                 dto.getDeadline(), dto.getSubgroupSize());
         homeworkRepository.save(homework);
         assignHomeworkToStudents(homework, classroom);
+    }
+
+    @Override
+    public Homework getEntity(long homeworkId) {
+        Homework homework = homeworkRepository.findOne(homeworkId);
+        if (homework == null) throw new NotFoundException("Homework not found");
+        return homework;
     }
 
     private List<Task> createTasks(HomeworkTemplate homeworkTemplate) {

@@ -16,6 +16,8 @@ public interface AssignmentRepository extends JpaRepository<Assignment, Long> {
 
     Assignment findByHomeworkSolution(HomeworkSolution homeworkSolution);
 
+    List<Assignment> findAllByHomework(Homework homework);
+
     List<Assignment> findAllByStudentAndStatusIn(User student, Assignment.Status... statuses);
 
     List<Assignment> findAllByHomeworkAndStatusIn(Homework homework, Assignment.Status... statuses);

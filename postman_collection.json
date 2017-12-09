@@ -597,7 +597,7 @@
             ],
             "body": {},
             "url": {
-              "raw": "{{root}}/user/{{username}}/classroom/{{classroomId}}/add-members?studentsUsernames=Sasha,Alex,Masha,A,B,C,D,E,F,G&teachersUsernames=Tolya,Kolya",
+              "raw": "{{root}}/user/{{username}}/classroom/{{classroomId}}/add-members?studentsUsernames=Sasha,Alex,Masha,a,b,c,d,e,f,g&teachersUsernames=Tolya,Kolya",
               "host": [
                 "{{root}}"
               ],
@@ -611,7 +611,7 @@
               "query": [
                 {
                   "key": "studentsUsernames",
-                  "value": "Sasha,Alex,Masha,A,B,C,D,E,F,G",
+                  "value": "Sasha,Alex,Masha,a,b,c,d,e,f,g",
                   "equals": true
                 },
                 {
@@ -938,7 +938,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"deadline\": \"2017-12-15\",\n\t\"subgroupSize\": 3\n}"
+              "raw": "{\n\t\"deadline\": null,\n\t\"subgroupSize\": -3\n}"
             },
             "url": {
               "raw": "{{root}}/user/{{username}}/homework?homeworkTemplateId={{templateId}}&classroomId={{classroomId}}",
@@ -961,6 +961,58 @@
                   "value": "{{classroomId}}",
                   "equals": true
                 }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "hw-progress",
+      "description": "",
+      "item": [
+        {
+          "name": "By HW",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {},
+            "url": {
+              "raw": "{{root}}/user/{{username}}/hw-progress/{{homeworkId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{username}}",
+                "hw-progress",
+                "{{homeworkId}}"
               ]
             },
             "description": ""
@@ -1122,7 +1174,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task #1\",\n    \t\t\"description\": \"Do thing-1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #2\",\n    \t\t\"description\": \"Do thing-2\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #3\",\n    \t\t\"description\": \"Do thing-3\"\n    \t}\n    ]\n}"
+              "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task #1\",\n    \t\t\"description\": \"Do thing-1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #2\",\n    \t\t\"description\": \"Do thing-2\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #3\",\n    \t\t\"description\": \"Do thing-3\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #4\",\n    \t\t\"description\": \"Do thing-1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #5\",\n    \t\t\"description\": \"Do thing-2\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #6\",\n    \t\t\"description\": \"Do thing-3\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #7\",\n    \t\t\"description\": \"Do thing-1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #8\",\n    \t\t\"description\": \"Do thing-2\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task #9\",\n    \t\t\"description\": \"Do thing-3\"\n    \t}\n    ]\n}"
             },
             "url": {
               "raw": "{{root}}/user/{{username}}/hw-template/{{templateId}}",
@@ -1232,7 +1284,7 @@
               "raw": "{\n\t\"name\": \"My homework\",\n    \"description\": \"blablablah\",\n    \"taskTemplates\": [\n    \t{\n    \t\t\"name\": \"Task1\",\n    \t\t\"description\": \"Do thing1\"\n    \t},\n    \t{\n    \t\t\"name\": \"Task2\",\n    \t\t\"description\": \"Do thing2\"\n    \t}\n    ]\n}"
             },
             "url": {
-              "raw": "{{root}}/user/{{username}}/hw-template/82",
+              "raw": "{{root}}/user/{{username}}/hw-template/{{templateId}}",
               "host": [
                 "{{root}}"
               ],
@@ -1240,7 +1292,7 @@
                 "user",
                 "{{username}}",
                 "hw-template",
-                "82"
+                "{{templateId}}"
               ]
             },
             "description": ""
