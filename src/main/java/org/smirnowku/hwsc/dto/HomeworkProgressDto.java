@@ -1,44 +1,28 @@
 package org.smirnowku.hwsc.dto;
 
-import org.smirnowku.hwsc.core.model.Assignment;
-
 public class HomeworkProgressDto {
 
-    private UserDto student;
-    private Assignment.Status status;
+    private AssignmentDto assignment;
     private UserDto checker;
-    private Integer score;
 
-    public HomeworkProgressDto(UserDto student, Assignment.Status status, UserDto checker, Integer score) {
-        this.student = student;
-        this.status = status;
+    public HomeworkProgressDto(AssignmentDto assignment, UserDto checker) {
+        this.assignment = assignment;
         this.checker = checker;
-        this.score = score;
     }
 
-    public UserDto getStudent() {
-        return student;
-    }
-
-    public Assignment.Status getStatus() {
-        return status;
+    public AssignmentDto getAssignment() {
+        return assignment;
     }
 
     public UserDto getChecker() {
         return checker;
     }
 
-    public Integer getScore() {
-        return score;
-    }
-
     @Override
     public String toString() {
         return "HomeworkProgressDto{" +
-                "student=" + student +
-                ", status=" + status +
+                "assignment=" + assignment +
                 ", checker=" + checker +
-                ", score=" + score +
                 '}';
     }
 }

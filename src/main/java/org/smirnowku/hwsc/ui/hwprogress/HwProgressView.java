@@ -37,10 +37,10 @@ public class HwProgressView extends VerticalLayout implements View {
     public HwProgressView() {
         finishButton = new Button("Finish Homework", clickEvent -> onFinish());
         progressGrid = new Grid<>();
-        progressGrid.addColumn(hp -> hp.getStudent().getName()).setCaption("Student");
-        progressGrid.addColumn(HomeworkProgressDto::getStatus).setCaption("Status");
+        progressGrid.addColumn(hp -> hp.getAssignment().getStudent().getName()).setCaption("Student");
+        progressGrid.addColumn(hp -> hp.getAssignment().getStatus()).setCaption("Status");
         progressGrid.addColumn(hp -> hp.getChecker() == null ? "" : hp.getChecker().getName()).setCaption("Checker");
-        progressGrid.addColumn(hp -> hp.getScore() < 0 ? "" : hp.getScore()).setCaption("Score");
+        progressGrid.addColumn(hp -> hp.getAssignment().getScore() < 0 ? "" : hp.getAssignment().getScore()).setCaption("Score");
         progressGrid.setWidth(100, Unit.PERCENTAGE);
         addComponents(finishButton, progressGrid);
         setComponentAlignment(finishButton, Alignment.TOP_RIGHT);
@@ -69,6 +69,7 @@ public class HwProgressView extends VerticalLayout implements View {
         }
         progressGrid.setItems(homeworkProgress);
         progressGrid.setHeightByRows(homeworkProgress.size());
+        progressGrid.addItemClickListener(this::navToAssignment);
         finishButton.setVisible(homework.getStatus() != Homework.Status.INACTIVE);
     }
 
@@ -85,5 +86,12 @@ public class HwProgressView extends VerticalLayout implements View {
             return true;
         });
         dialog.showDialog();
+    }
+
+    private void navToAssignment(Grid.ItemClick<HomeworkProgressDto> itemClick) {
+        if (itemClick.getMouseEventDetails().isDoubleClick()) {
+            HomeworkProgressDto homeworkProgress = itemClick.getItem();
+            UI.getCurrent().getNavigator().navigateTo(Views.assignment(homeworkProgress.getAssignment().getId()));
+        }
     }
 }

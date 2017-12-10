@@ -37,10 +37,10 @@ public class HomeworkProgressServiceImpl implements HomeworkProgressService {
         return assignments.stream()
                 .map(assignment -> {
                     Check check = checkRepository.findByAssignment(assignment);
-                    return new HomeworkProgressDto(assignment.getStudent().toDto(), assignment.getStatus(),
-                            check == null ? null : check.getChecker().toDto(), assignment.getScore());
+                    return new HomeworkProgressDto(assignment.toDto(),
+                            check == null ? null : check.getChecker().toDto());
                 })
-                .sorted(comparing(hp -> hp.getStudent().getName()))
+                .sorted(comparing(hp -> hp.getAssignment().getStudent().getName()))
                 .collect(Collectors.toList());
     }
 }
