@@ -28,24 +28,16 @@ public class AppUI extends UI {
     }
 
     private boolean beforeViewChange(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        switch (viewChangeEvent.getViewName()) {
-            case Views.SIGN_IN:
-            case Views.SIGN_UP:
-                if (authenticationService.isAuthenticated()) {
-                    navigator.navigateTo(Views.PROFILE);
-                    return false;
-                }
-                break;
-
-            case Views.PROFILE:
-            case Views.CLASSROOM:
-            case Views.ASSIGNMENT:
-            case Views.HW_TEMPLATE:
-                if (!authenticationService.isAuthenticated()) {
-                    navigator.navigateTo(Views.SIGN_IN);
-                    return false;
-                }
-                break;
+        if (Views.PUBLIC_PAGES.contains(viewChangeEvent.getViewName())) {
+            if (authenticationService.isAuthenticated()) {
+                navigator.navigateTo(Views.PROFILE);
+                return false;
+            }
+        } else {
+            if (!authenticationService.isAuthenticated()) {
+                navigator.navigateTo(Views.SIGN_IN);
+                return false;
+            }
         }
         return true;
     }

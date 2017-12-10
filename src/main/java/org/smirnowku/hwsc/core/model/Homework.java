@@ -4,16 +4,18 @@ import org.smirnowku.hwsc.core.exception.IllegalArgumentException;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.smirnowku.hwsc.util.PropertyValidator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
 public class Homework extends BaseEntity {
+
+    public enum Status {
+        ACTIVE,
+        INACTIVE
+    }
 
     private static final int MAX_NAME_LENGTH = 50;
     private static final int MAX_DESCRIPTION_LENGTH = 500;
@@ -30,6 +32,10 @@ public class Homework extends BaseEntity {
     @Column(nullable = true, length = MAX_DESCRIPTION_LENGTH)
     private String description;
 
+    @Column(nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
     private LocalDateTime deadline;
     private Integer subgroupSize;
 
@@ -44,8 +50,13 @@ public class Homework extends BaseEntity {
         this.tasks = tasks;
         this.name = template.getName();
         this.description = template.getDescription();
+        this.status = Status.ACTIVE;
         this.deadline = deadline;
         this.subgroupSize = subgroupSize;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Classroom getClassroom() {
@@ -64,6 +75,10 @@ public class Homework extends BaseEntity {
         return description;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public LocalDateTime getDeadline() {
         return deadline;
     }
@@ -74,7 +89,8 @@ public class Homework extends BaseEntity {
 
     public HomeworkDto toDto() {
         return new HomeworkDto(getId(), getCreated(), getUpdated(), classroom.toDto(),
-                tasks.stream().map(Task::toDto).collect(Collectors.toList()), name, description, deadline, subgroupSize);
+                tasks.stream().map(Task::toDto).collect(Collectors.toList()),
+                name, description, status, deadline, subgroupSize);
     }
 
     @Override
@@ -83,6 +99,7 @@ public class Homework extends BaseEntity {
                 "classroom=" + classroom +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
+                ", status=" + status +
                 ", deadline=" + deadline +
                 ", subgroupSize=" + subgroupSize +
                 '}';

@@ -45,7 +45,7 @@ public class HomeworksTab extends VerticalLayout {
         completedGrid = new Grid<>("Completed");
         completedGrid.addColumn(assignment -> assignment.getHomework().getClassroom().getName()).setCaption("Classroom");
         completedGrid.addColumn(assignment -> assignment.getHomework().getName()).setCaption("Name");
-        completedGrid.addColumn(AssignmentDto::getScore).setCaption("Score");
+        completedGrid.addColumn(assignment -> assignment.getScore() < 0 ? "" : assignment.getScore()).setCaption("Score");
         completedGrid.addItemClickListener(this::navToAssignment);
 
         setSizeFull();

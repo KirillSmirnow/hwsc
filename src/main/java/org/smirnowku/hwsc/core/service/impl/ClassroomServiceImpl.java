@@ -93,7 +93,8 @@ public class ClassroomServiceImpl implements ClassroomService {
         Classroom classroom = getEntity(username, id);
         return homeworkRepository.findAllByClassroom(classroom).stream()
                 .map(Homework::toDto)
-                .sorted(comparing(HomeworkDto::getDeadline).reversed())
+                .sorted(comparing(HomeworkDto::getStatus)
+                        .thenComparing(comparing(HomeworkDto::getDeadline).reversed()))
                 .collect(Collectors.toList());
     }
 

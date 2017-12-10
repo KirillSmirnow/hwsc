@@ -38,7 +38,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public void submit(String username, long id) {
         Assignment assignment = getEntity(username, id);
-        authorizeSubmit(assignment);
+        User user = userService.getEntity(username);
+        authorizeSubmit(assignment, user);
         assignment.setStatus(Assignment.Status.SUBMITTED);
         assignmentRepository.save(assignment);
         onAssignmentSubmitted(assignment.getHomework());
@@ -76,20 +77,20 @@ public class AssignmentServiceImpl implements AssignmentService {
         return getEntity(username, id).toDto();
     }
 
+    @Override
+    public void onAssignmentSubmitted(Homework homework) {
+        int studentsSolving = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.TODO);
+        int studentsReady = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.SUBMITTED);
+        if (studentsSolving == 0 || studentsReady == homework.getSubgroupSize() && studentsSolving > 1)
+            assignP2PCheck(homework);
+    }
+
     private Assignment getEntity(String username, long id) {
         Assignment assignment = assignmentRepository.findOne(id);
         if (assignment == null) throw new NotFoundException("Assignment not found");
         User user = userService.getEntity(username);
         authorizeRead(assignment, user);
         return assignment;
-    }
-
-    private void onAssignmentSubmitted(Homework homework) {
-        int studentsSolving = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.TODO);
-        int studentsReady = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.SUBMITTED);
-        if (studentsSolving == 0 || studentsReady == homework.getSubgroupSize() && studentsSolving > 1) {
-            assignP2PCheck(homework);
-        }
     }
 
     private void assignP2PCheck(Homework homework) {
@@ -106,11 +107,13 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     private void authorizeRead(Assignment assignment, User user) {
-        if (!assignment.getStudent().equals(user))
+        if (!assignment.getStudent().equals(user) && !assignment.getHomework().getClassroom().getTeachers().contains(user))
             throw new ForbiddenException("You are not allowed to access this assignment");
     }
 
-    private void authorizeSubmit(Assignment assignment) {
+    private void authorizeSubmit(Assignment assignment, User user) {
+        if (!assignment.getStudent().equals(user))
+            throw new ForbiddenException("You are not allowed to submit this assignment");
         if (assignment.getStatus() != Assignment.Status.TODO)
             throw new ForbiddenException("This assignment has already been submitted");
     }
