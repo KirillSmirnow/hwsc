@@ -9,5 +9,7 @@ public interface HomeworkService {
 
     void finish(String username, long id);
 
+    HomeworkDto get(long id);
+
     Homework getEntity(long id);
 }

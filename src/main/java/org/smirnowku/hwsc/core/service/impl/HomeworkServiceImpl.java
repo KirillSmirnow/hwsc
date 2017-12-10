@@ -60,6 +60,11 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
+    public HomeworkDto get(long id) {
+        return getEntity(id).toDto();
+    }
+
+    @Override
     public Homework getEntity(long id) {
         Homework homework = homeworkRepository.findOne(id);
         if (homework == null) throw new NotFoundException("Homework not found");
