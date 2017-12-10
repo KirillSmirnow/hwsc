@@ -23,7 +23,7 @@ public class ClassroomController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}/add-members")
+    @PutMapping("/{id}/add-members")
     public ResponseEntity addMembers(@PathVariable String username, @PathVariable long id,
                                      @RequestParam(required = false) List<String> studentsUsernames,
                                      @RequestParam(required = false) List<String> teachersUsernames) {

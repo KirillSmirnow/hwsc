@@ -588,7 +588,7 @@
                 }
               ]
             },
-            "method": "POST",
+            "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
@@ -961,6 +961,60 @@
                   "value": "{{classroomId}}",
                   "equals": true
                 }
+              ]
+            },
+            "description": ""
+          },
+          "response": []
+        },
+        {
+          "name": "Finish",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "saveHelperData",
+                  "type": "any"
+                },
+                {
+                  "key": "showPassword",
+                  "value": false,
+                  "type": "boolean"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{root}}/user/{{username}}/homework/{{homeworkId}}",
+              "host": [
+                "{{root}}"
+              ],
+              "path": [
+                "user",
+                "{{username}}",
+                "homework",
+                "{{homeworkId}}"
               ]
             },
             "description": ""

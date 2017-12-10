@@ -76,20 +76,20 @@ public class AssignmentServiceImpl implements AssignmentService {
         return getEntity(username, id).toDto();
     }
 
+    @Override
+    public void onAssignmentSubmitted(Homework homework) {
+        int studentsSolving = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.TODO);
+        int studentsReady = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.SUBMITTED);
+        if (studentsSolving == 0 || studentsReady == homework.getSubgroupSize() && studentsSolving > 1)
+            assignP2PCheck(homework);
+    }
+
     private Assignment getEntity(String username, long id) {
         Assignment assignment = assignmentRepository.findOne(id);
         if (assignment == null) throw new NotFoundException("Assignment not found");
         User user = userService.getEntity(username);
         authorizeRead(assignment, user);
         return assignment;
-    }
-
-    private void onAssignmentSubmitted(Homework homework) {
-        int studentsSolving = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.TODO);
-        int studentsReady = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.SUBMITTED);
-        if (studentsSolving == 0 || studentsReady == homework.getSubgroupSize() && studentsSolving > 1) {
-            assignP2PCheck(homework);
-        }
     }
 
     private void assignP2PCheck(Homework homework) {

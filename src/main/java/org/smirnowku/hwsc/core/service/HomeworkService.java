@@ -7,5 +7,7 @@ public interface HomeworkService {
 
     void assign(String username, long homeworkTemplateId, long classroomId, HomeworkDto dto);
 
-    Homework getEntity(long homeworkId);
+    void finish(String username, long id);
+
+    Homework getEntity(long id);
 }

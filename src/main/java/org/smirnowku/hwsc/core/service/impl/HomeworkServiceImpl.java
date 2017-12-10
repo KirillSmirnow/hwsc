@@ -4,10 +4,7 @@ import org.smirnowku.hwsc.core.exception.ForbiddenException;
 import org.smirnowku.hwsc.core.exception.NotFoundException;
 import org.smirnowku.hwsc.core.model.*;
 import org.smirnowku.hwsc.core.repository.*;
-import org.smirnowku.hwsc.core.service.ClassroomService;
-import org.smirnowku.hwsc.core.service.HomeworkService;
-import org.smirnowku.hwsc.core.service.HomeworkTemplateService;
-import org.smirnowku.hwsc.core.service.UserService;
+import org.smirnowku.hwsc.core.service.*;
 import org.smirnowku.hwsc.dto.HomeworkDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,26 +18,21 @@ import java.util.stream.Collectors;
 public class HomeworkServiceImpl implements HomeworkService {
 
     @Resource
+    private AssignmentService assignmentService;
+    @Resource
     private ClassroomService classroomService;
-
     @Resource
     private HomeworkTemplateService homeworkTemplateService;
-
     @Resource
     private UserService userService;
-
     @Resource
     private AssignmentRepository assignmentRepository;
-
     @Resource
     private HomeworkRepository homeworkRepository;
-
     @Resource
     private HomeworkSolutionRepository homeworkSolutionRepository;
-
     @Resource
     private TaskRepository taskRepository;
-
     @Resource
     private TaskSolutionRepository taskSolutionRepository;
 
@@ -49,7 +41,7 @@ public class HomeworkServiceImpl implements HomeworkService {
         HomeworkTemplate homeworkTemplate = homeworkTemplateService.getEntity(username, homeworkTemplateId);
         Classroom classroom = classroomService.getEntity(username, classroomId);
         User user = userService.getEntity(username);
-        authorizeAssign(classroom, user);
+        authorizeUpdate(classroom, user);
         Homework homework = new Homework(homeworkTemplate, classroom, createTasks(homeworkTemplate),
                 dto.getDeadline(), dto.getSubgroupSize());
         homeworkRepository.save(homework);
@@ -57,8 +49,19 @@ public class HomeworkServiceImpl implements HomeworkService {
     }
 
     @Override
-    public Homework getEntity(long homeworkId) {
-        Homework homework = homeworkRepository.findOne(homeworkId);
+    public void finish(String username, long id) {
+        User user = userService.getEntity(username);
+        Homework homework = getEntity(id);
+        authorizeUpdate(homework.getClassroom(), user);
+        authorizeFinish(homework);
+        homework.setStatus(Homework.Status.INACTIVE);
+        homeworkRepository.save(homework);
+        onHomeworkFinish(homework);
+    }
+
+    @Override
+    public Homework getEntity(long id) {
+        Homework homework = homeworkRepository.findOne(id);
         if (homework == null) throw new NotFoundException("Homework not found");
         return homework;
     }
@@ -84,8 +87,22 @@ public class HomeworkServiceImpl implements HomeworkService {
         });
     }
 
-    private void authorizeAssign(Classroom classroom, User user) {
+    private void onHomeworkFinish(Homework homework) {
+        List<Assignment> assignments = assignmentRepository.findAllByHomework(homework);
+        assignments.stream()
+                .filter(a -> a.getStatus() == Assignment.Status.TODO)
+                .forEach(a -> a.setStatus(Assignment.Status.COMPLETED));
+        assignmentRepository.save(assignments);
+        assignmentService.onAssignmentSubmitted(homework);
+    }
+
+    private void authorizeUpdate(Classroom classroom, User user) {
         if (!classroom.getTeachers().contains(user))
-            throw new ForbiddenException("You are not allowed to assign homework in this classroom: you are not a teacher");
+            throw new ForbiddenException("You are not allowed to update homework in this classroom: you are not a teacher");
+    }
+
+    private void authorizeFinish(Homework homework) {
+        if (homework.getStatus() != Homework.Status.ACTIVE)
+            throw new ForbiddenException("This homework is already inactive");
     }
 }

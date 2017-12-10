@@ -21,4 +21,10 @@ public class HomeworkController {
         service.assign(username, homeworkTemplateId, classroomId, dto);
         return new ResponseEntity(HttpStatus.CREATED);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity finish(@PathVariable String username, @PathVariable long id) {
+        service.finish(username, id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
