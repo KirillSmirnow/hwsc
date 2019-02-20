@@ -1,0 +1,46 @@
+package hwsc.dto;
+
+import java.util.Date;
+
+public class TaskTemplateDto extends BaseDto {
+
+    private String name;
+    private String description;
+
+    public TaskTemplateDto() {
+    }
+
+    public TaskTemplateDto(String name) {
+        this.name = name;
+    }
+
+    public TaskTemplateDto(long id, Date created, Date updated, String name, String description) {
+        super(id, created, updated);
+        this.name = name;
+        this.description = description;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return "TaskTemplateDto{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
+}
