@@ -75,7 +75,8 @@ public class HwTemplateView extends VerticalLayout implements View, AddTaskListe
     @Override
     public boolean onEditHwTemplate(HomeworkTemplateDto homeworkTemplate) {
         try {
-            homeworkTemplateService.edit(authenticationService.getUsername(), homeworkTemplate.getId(), homeworkTemplate);
+            homeworkTemplateService.edit(authenticationService.getUsername(),
+                    homeworkTemplate.getId(), homeworkTemplate);
         } catch (HwscException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
             refresh(homeworkTemplate.getId());

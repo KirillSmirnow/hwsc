@@ -64,7 +64,8 @@ public class HwTemplateSidePanel extends VerticalLayout implements AssignListene
         tasksGrid.setItems(template.getTaskTemplates());
     }
 
-    public void setListeners(EditHwTemplateListener editHwTemplateListener, DeleteHwTemplateListener deleteHwTemplateListener,
+    public void setListeners(EditHwTemplateListener editHwTemplateListener,
+                             DeleteHwTemplateListener deleteHwTemplateListener,
                              AddTaskListener addTaskListener, SelectTaskListener selectTaskListener) {
         this.editHwTemplateListener = editHwTemplateListener;
         this.deleteHwTemplateListener = deleteHwTemplateListener;

@@ -19,6 +19,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static hwsc.model.Assignment.Status.*;
 import static java.util.Comparator.comparing;
 
 @Service
@@ -35,7 +36,7 @@ public class AssignmentServiceImpl implements AssignmentService {
         Assignment assignment = getEntity(username, id);
         User user = userService.getEntity(username);
         authorizeSubmit(assignment, user);
-        assignment.setStatus(Assignment.Status.SUBMITTED);
+        assignment.setStatus(SUBMITTED);
         assignmentRepository.save(assignment);
         onAssignmentSubmitted(assignment.getHomework());
     }
@@ -43,7 +44,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public List<AssignmentDto> getToDo(String username) {
         User user = userService.getEntity(username);
-        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO).stream()
+        return assignmentRepository.findAllByStudentAndStatusIn(user, TODO).stream()
                 .map(AssignmentDto::of)
                 .sorted(comparing(a -> a.getHomework().getDeadline()))
                 .collect(Collectors.toList());
@@ -52,7 +53,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public List<AssignmentDto> getSubmitted(String username) {
         User user = userService.getEntity(username);
-        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.SUBMITTED, Assignment.Status.CHECKING).stream()
+        return assignmentRepository.findAllByStudentAndStatusIn(user, SUBMITTED, CHECKING).stream()
                 .map(AssignmentDto::of)
                 .sorted(comparing(BaseDto::getUpdated))
                 .collect(Collectors.toList());
@@ -61,7 +62,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     @Override
     public List<AssignmentDto> getCompleted(String username) {
         User user = userService.getEntity(username);
-        return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED).stream()
+        return assignmentRepository.findAllByStudentAndStatusIn(user, COMPLETED).stream()
                 .map(AssignmentDto::of)
                 .sorted(comparing(BaseDto::getUpdated).reversed())
                 .collect(Collectors.toList());
@@ -74,8 +75,8 @@ public class AssignmentServiceImpl implements AssignmentService {
 
     @Override
     public void onAssignmentSubmitted(Homework homework) {
-        int studentsSolving = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.TODO);
-        int studentsReady = assignmentRepository.countByHomeworkAndStatusIn(homework, Assignment.Status.SUBMITTED);
+        int studentsSolving = assignmentRepository.countByHomeworkAndStatusIn(homework, TODO);
+        int studentsReady = assignmentRepository.countByHomeworkAndStatusIn(homework, SUBMITTED);
         if (studentsSolving == 0 || studentsReady == homework.getSubgroupSize() && studentsSolving > 1)
             assignP2PCheck(homework);
     }
@@ -89,27 +90,29 @@ public class AssignmentServiceImpl implements AssignmentService {
     }
 
     private void assignP2PCheck(Homework homework) {
-        List<Assignment> assignments = assignmentRepository.findAllByHomeworkAndStatusIn(homework, Assignment.Status.SUBMITTED);
+        List<Assignment> assignments = assignmentRepository.findAllByHomeworkAndStatusIn(homework, SUBMITTED);
         Collections.shuffle(assignments);
         for (int assignmentIndex = 0; assignmentIndex < assignments.size(); ++assignmentIndex) {
-            User checker = assignments.get(assignmentIndex < assignments.size() - 1 ? assignmentIndex + 1 : 0).getStudent();
+            User checker = assignments.get(assignmentIndex < assignments.size() - 1 ? assignmentIndex + 1 : 0)
+                    .getStudent();
             Assignment assignment = assignments.get(assignmentIndex);
             Check check = new Check(checker, assignment);
             checkRepository.save(check);
-            assignment.setStatus(Assignment.Status.CHECKING);
+            assignment.setStatus(CHECKING);
             assignmentRepository.save(assignment);
         }
     }
 
     private void authorizeRead(Assignment assignment, User user) {
-        if (!assignment.getStudent().equals(user) && !assignment.getHomework().getClassroom().getTeachers().contains(user))
+        if (!assignment.getStudent().equals(user) &&
+                !assignment.getHomework().getClassroom().getTeachers().contains(user))
             throw new HwscException("You are not allowed to access this assignment");
     }
 
     private void authorizeSubmit(Assignment assignment, User user) {
         if (!assignment.getStudent().equals(user))
             throw new HwscException("You are not allowed to submit this assignment");
-        if (assignment.getStatus() != Assignment.Status.TODO)
+        if (assignment.getStatus() != TODO)
             throw new HwscException("This assignment has already been submitted");
     }
 }

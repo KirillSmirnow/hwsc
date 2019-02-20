@@ -73,7 +73,8 @@ public class AssignmentView extends VerticalLayout implements View,
         int taskIndex = homeworkSolution.getTaskSolutions().indexOf(taskSolution);
         homeworkSolution.getTaskSolutions().set(taskIndex, taskSolution);
         try {
-            homeworkSolutionService.save(authenticationService.getUsername(), homeworkSolution.getId(), homeworkSolution);
+            homeworkSolutionService.save(authenticationService.getUsername(),
+                    homeworkSolution.getId(), homeworkSolution);
         } catch (HwscException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
             refresh(assignment.getId());

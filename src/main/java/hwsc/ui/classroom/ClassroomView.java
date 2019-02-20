@@ -83,7 +83,8 @@ public class ClassroomView extends VerticalLayout implements View, AddMemberList
         if (role == MemberRole.STUDENT) studentsUsernames.add(username);
         if (role == MemberRole.TEACHER) teachersUsernames.add(username);
         try {
-            classroomService.addMembers(authenticationService.getUsername(), classroom.getId(), studentsUsernames, teachersUsernames);
+            classroomService.addMembers(authenticationService.getUsername(), classroom.getId(),
+                    studentsUsernames, teachersUsernames);
         } catch (HwscException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
             return false;

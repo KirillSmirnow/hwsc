@@ -17,7 +17,8 @@ public class AddMembersDialogLayout extends VerticalLayout {
         this.addMemberListener = addMemberListener;
         usernameField = new TextField("Enter username");
         usernameField.setWidth(300, Unit.PIXELS);
-        radioButtonGroup = new RadioButtonGroup<>("Role", Arrays.asList(MemberRole.STUDENT.toString(), MemberRole.TEACHER.toString()));
+        radioButtonGroup = new RadioButtonGroup<>("Role", Arrays.asList(MemberRole.STUDENT.toString(),
+                MemberRole.TEACHER.toString()));
         radioButtonGroup.setSelectedItem(MemberRole.STUDENT.toString());
         Button addMemberButton = new Button("Add", this::onAddMemberButtonClick);
         Button closeButton = new Button("Close", clickEvent -> closeDialogListener.onClose());

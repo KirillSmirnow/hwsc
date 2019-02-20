@@ -31,19 +31,22 @@ public class HomeworksTab extends VerticalLayout {
         toDoGrid.addColumn(assignment -> assignment.getHomework().getClassroom().getName()).setCaption("Classroom");
         toDoGrid.addColumn(assignment -> assignment.getHomework().getName()).setCaption("Name");
         toDoGrid.addColumn(assignment -> assignment.getHomework().getDescription()).setCaption("Description");
-        toDoGrid.addColumn(assignment -> PropertyFormatter.format(assignment.getHomework().getDeadline())).setCaption("Deadline");
+        toDoGrid.addColumn(assignment -> PropertyFormatter.format(assignment.getHomework().getDeadline()))
+                .setCaption("Deadline");
         toDoGrid.addItemClickListener(this::navToAssignment);
 
         submittedGrid = new Grid<>("Submitted");
         submittedGrid.addColumn(assignment -> assignment.getHomework().getClassroom().getName()).setCaption("Classroom");
         submittedGrid.addColumn(assignment -> assignment.getHomework().getName()).setCaption("Name");
-        submittedGrid.addColumn(assignment -> assignment.getScore() < 0 ? "" : assignment.getScore()).setCaption("Score");
+        submittedGrid.addColumn(assignment -> assignment.getScore() < 0 ? "" : assignment.getScore())
+                .setCaption("Score");
         submittedGrid.addItemClickListener(this::navToAssignment);
 
         completedGrid = new Grid<>("Completed");
         completedGrid.addColumn(assignment -> assignment.getHomework().getClassroom().getName()).setCaption("Classroom");
         completedGrid.addColumn(assignment -> assignment.getHomework().getName()).setCaption("Name");
-        completedGrid.addColumn(assignment -> assignment.getScore() < 0 ? "" : assignment.getScore()).setCaption("Score");
+        completedGrid.addColumn(assignment -> assignment.getScore() < 0 ? "" : assignment.getScore())
+                .setCaption("Score");
         completedGrid.addItemClickListener(this::navToAssignment);
 
         setSizeFull();

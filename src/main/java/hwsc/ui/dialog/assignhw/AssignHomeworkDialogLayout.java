@@ -57,7 +57,7 @@ public class AssignHomeworkDialogLayout extends VerticalLayout {
     }
 
     private void updateAvailableSubgroupSizes() {
-        Integer studentsQty = 0;
+        int studentsQty = 0;
         Optional<ClassroomDto> classroom = classroomComboBox.getSelectedItem();
         if (classroom.isPresent()) studentsQty = classroom.get().getStudents().size();
         subgroupSizeComboBox.setCaption(String.format("Subgroup size (total: %d students)", studentsQty));

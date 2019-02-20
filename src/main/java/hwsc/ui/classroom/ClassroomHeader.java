@@ -47,8 +47,8 @@ public class ClassroomHeader extends HorizontalLayout {
     }
 
     private void edit(Button.ClickEvent clickEvent) {
-        NameDescriptionDialog dialog = new NameDescriptionDialog("Edit Info", classroom.getName(), classroom.getDescription(),
-                "Save", (name, description) -> {
+        NameDescriptionDialog dialog = new NameDescriptionDialog("Edit Info", classroom.getName(),
+                classroom.getDescription(), "Save", (name, description) -> {
             classroom.setName(name);
             classroom.setDescription(description);
             return editClassroomListener.onEditClassroom(classroom);

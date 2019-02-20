@@ -88,8 +88,8 @@ public class CheckServiceImpl implements CheckService {
 
     private boolean isAssignmentCompleted(Assignment assignment) {
         return checkRepository.findByAssignment(assignment).getStatus() == Check.Status.CHECKED &&
-                checkRepository.findByCheckerAndAssignment_Homework(assignment.getStudent(), assignment.getHomework()).stream()
-                        .allMatch(check -> check.getStatus() == Check.Status.CHECKED);
+                checkRepository.findByCheckerAndAssignment_Homework(assignment.getStudent(), assignment.getHomework())
+                        .stream().allMatch(check -> check.getStatus() == Check.Status.CHECKED);
     }
 
     private void authorizeRead(Check check, User user) {

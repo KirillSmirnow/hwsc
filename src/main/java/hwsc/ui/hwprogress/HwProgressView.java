@@ -40,7 +40,8 @@ public class HwProgressView extends VerticalLayout implements View {
         progressGrid.addColumn(hp -> hp.getAssignment().getStudent().getName()).setCaption("Student");
         progressGrid.addColumn(hp -> hp.getAssignment().getStatus()).setCaption("Status");
         progressGrid.addColumn(hp -> hp.getChecker() == null ? "" : hp.getChecker().getName()).setCaption("Checker");
-        progressGrid.addColumn(hp -> hp.getAssignment().getScore() < 0 ? "" : hp.getAssignment().getScore()).setCaption("Score");
+        progressGrid.addColumn(hp -> hp.getAssignment().getScore() < 0 ? "" :
+                hp.getAssignment().getScore()).setCaption("Score");
         progressGrid.setWidth(100, Unit.PERCENTAGE);
         addComponents(finishButton, progressGrid);
         setComponentAlignment(finishButton, Alignment.TOP_RIGHT);
