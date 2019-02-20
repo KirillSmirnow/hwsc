@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto get(String username) {
-        return getEntity(username).toDto();
+        return UserDto.of(getEntity(username));
     }
 
     @Override

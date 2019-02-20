@@ -1,14 +1,13 @@
 package hwsc.dto;
 
+import hwsc.model.User;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class UserDto extends BaseDto {
 
     private String username;
@@ -21,9 +20,16 @@ public class UserDto extends BaseDto {
         this.name = name;
     }
 
-    public UserDto(long id, Date created, Date updated, String username, String name) {
+    private UserDto(long id, LocalDateTime created, LocalDateTime updated,
+                    String username, String password, String name) {
         super(id, created, updated);
         this.username = username;
+        this.password = password;
         this.name = name;
+    }
+
+    public static UserDto of(User user) {
+        return new UserDto(user.getId(), user.getCreated(), user.getUpdated(),
+                user.getUsername(), user.getPassword(), user.getName());
     }
 }

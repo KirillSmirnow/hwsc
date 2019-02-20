@@ -1,48 +1,28 @@
 package hwsc.model;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import java.util.Date;
+import java.time.LocalDateTime;
 
+@Getter
+@EqualsAndHashCode(of = "id")
 @MappedSuperclass
 public abstract class BaseEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @CreationTimestamp
-    private Date created;
+    private LocalDateTime created;
 
     @UpdateTimestamp
-    private Date updated;
-
-    public long getId() {
-        return id;
-    }
-
-    public Date getCreated() {
-        return created;
-    }
-
-    public Date getUpdated() {
-        return updated;
-    }
-
-    @Override
-    public final boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        BaseEntity that = (BaseEntity) o;
-        return id == that.id;
-    }
-
-    @Override
-    public final int hashCode() {
-        return (int) (id ^ (id >>> 32));
-    }
+    private LocalDateTime updated;
 }

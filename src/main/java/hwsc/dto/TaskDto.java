@@ -1,22 +1,27 @@
 package hwsc.dto;
 
+import hwsc.model.Task;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class TaskDto extends BaseDto {
 
     private String name;
     private String description;
 
-    public TaskDto(long id, Date created, Date updated, String name, String description) {
+    private TaskDto(long id, LocalDateTime created, LocalDateTime updated,
+                    String name, String description) {
         super(id, created, updated);
         this.name = name;
         this.description = description;
+    }
+
+    public static TaskDto of(Task task) {
+        return new TaskDto(task.getId(), task.getCreated(), task.getUpdated(),
+                task.getName(), task.getDescription());
     }
 }

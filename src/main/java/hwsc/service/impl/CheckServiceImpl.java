@@ -44,14 +44,14 @@ public class CheckServiceImpl implements CheckService {
 
     @Override
     public CheckDto get(String username, long id) {
-        return getEntity(username, id).toDto();
+        return CheckDto.of(getEntity(username, id));
     }
 
     @Override
     public List<CheckDto> getPending(String username) {
         User checker = userService.getEntity(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.PENDING).stream()
-                .map(Check::toDto)
+                .map(CheckDto::of)
                 .sorted(comparing(BaseDto::getUpdated))
                 .collect(Collectors.toList());
     }
@@ -60,7 +60,7 @@ public class CheckServiceImpl implements CheckService {
     public List<CheckDto> getChecked(String username) {
         User checker = userService.getEntity(username);
         return checkRepository.findAllByCheckerAndStatusIn(checker, Check.Status.CHECKED).stream()
-                .map(Check::toDto)
+                .map(CheckDto::of)
                 .sorted(comparing(BaseDto::getUpdated).reversed())
                 .collect(Collectors.toList());
     }

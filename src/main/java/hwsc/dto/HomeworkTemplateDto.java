@@ -1,15 +1,15 @@
 package hwsc.dto;
 
+import hwsc.model.HomeworkTemplate;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class HomeworkTemplateDto extends BaseDto {
 
     private UserDto creator;
@@ -22,13 +22,20 @@ public class HomeworkTemplateDto extends BaseDto {
         this.description = description;
     }
 
-    public HomeworkTemplateDto(long id, Date created, Date updated,
-                               UserDto creator, List<TaskTemplateDto> taskTemplates,
-                               String name, String description) {
+    private HomeworkTemplateDto(long id, LocalDateTime created, LocalDateTime updated,
+                                UserDto creator, List<TaskTemplateDto> taskTemplates,
+                                String name, String description) {
         super(id, created, updated);
         this.creator = creator;
         this.taskTemplates = taskTemplates;
         this.name = name;
         this.description = description;
+    }
+
+    public static HomeworkTemplateDto of(HomeworkTemplate template) {
+        return new HomeworkTemplateDto(template.getId(), template.getCreated(),
+                template.getUpdated(), UserDto.of(template.getCreator()),
+                template.getTaskTemplates().stream().map(TaskTemplateDto::of).collect(Collectors.toList()),
+                template.getName(), template.getDescription());
     }
 }

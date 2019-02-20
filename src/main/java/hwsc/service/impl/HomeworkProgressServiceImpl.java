@@ -1,6 +1,8 @@
 package hwsc.service.impl;
 
+import hwsc.dto.AssignmentDto;
 import hwsc.dto.HomeworkProgressDto;
+import hwsc.dto.UserDto;
 import hwsc.model.Assignment;
 import hwsc.model.Check;
 import hwsc.model.Homework;
@@ -33,8 +35,8 @@ public class HomeworkProgressServiceImpl implements HomeworkProgressService {
         return assignments.stream()
                 .map(assignment -> {
                     Check check = checkRepository.findByAssignment(assignment);
-                    return new HomeworkProgressDto(assignment.toDto(),
-                            check == null ? null : check.getChecker().toDto());
+                    return new HomeworkProgressDto(AssignmentDto.of(assignment),
+                            check == null ? null : UserDto.of(check.getChecker()));
                 })
                 .sorted(comparing(hp -> hp.getAssignment().getStudent().getName()))
                 .collect(Collectors.toList());

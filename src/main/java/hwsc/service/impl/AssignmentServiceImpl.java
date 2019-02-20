@@ -44,7 +44,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     public List<AssignmentDto> getToDo(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.TODO).stream()
-                .map(Assignment::toDto)
+                .map(AssignmentDto::of)
                 .sorted(comparing(a -> a.getHomework().getDeadline()))
                 .collect(Collectors.toList());
     }
@@ -53,7 +53,7 @@ public class AssignmentServiceImpl implements AssignmentService {
     public List<AssignmentDto> getSubmitted(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.SUBMITTED, Assignment.Status.CHECKING).stream()
-                .map(Assignment::toDto)
+                .map(AssignmentDto::of)
                 .sorted(comparing(BaseDto::getUpdated))
                 .collect(Collectors.toList());
     }
@@ -62,14 +62,14 @@ public class AssignmentServiceImpl implements AssignmentService {
     public List<AssignmentDto> getCompleted(String username) {
         User user = userService.getEntity(username);
         return assignmentRepository.findAllByStudentAndStatusIn(user, Assignment.Status.COMPLETED).stream()
-                .map(Assignment::toDto)
+                .map(AssignmentDto::of)
                 .sorted(comparing(BaseDto::getUpdated).reversed())
                 .collect(Collectors.toList());
     }
 
     @Override
     public AssignmentDto get(String username, long id) {
-        return getEntity(username, id).toDto();
+        return AssignmentDto.of(getEntity(username, id));
     }
 
     @Override

@@ -1,14 +1,13 @@
 package hwsc.dto;
 
+import hwsc.model.TaskTemplate;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class TaskTemplateDto extends BaseDto {
 
     private String name;
@@ -18,9 +17,15 @@ public class TaskTemplateDto extends BaseDto {
         this.name = name;
     }
 
-    public TaskTemplateDto(long id, Date created, Date updated, String name, String description) {
+    private TaskTemplateDto(long id, LocalDateTime created, LocalDateTime updated,
+                            String name, String description) {
         super(id, created, updated);
         this.name = name;
         this.description = description;
+    }
+
+    public static TaskTemplateDto of(TaskTemplate taskTemplate) {
+        return new TaskTemplateDto(taskTemplate.getId(), taskTemplate.getCreated(), taskTemplate.getUpdated(),
+                taskTemplate.getName(), taskTemplate.getDescription());
     }
 }

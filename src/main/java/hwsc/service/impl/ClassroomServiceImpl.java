@@ -4,7 +4,6 @@ import hwsc.HwscException;
 import hwsc.dto.ClassroomDto;
 import hwsc.dto.HomeworkDto;
 import hwsc.model.Classroom;
-import hwsc.model.Homework;
 import hwsc.model.User;
 import hwsc.repository.ClassroomRepository;
 import hwsc.repository.HomeworkRepository;
@@ -57,14 +56,14 @@ public class ClassroomServiceImpl implements ClassroomService {
 
     @Override
     public ClassroomDto get(String username, long id) {
-        return getEntity(username, id).toDto();
+        return ClassroomDto.of(getEntity(username, id));
     }
 
     @Override
     public List<ClassroomDto> getClassroomsAsStudent(String studentUsername) {
         User student = userService.getEntity(studentUsername);
         return classroomRepository.findAllByStudents(student).stream()
-                .map(Classroom::toDto)
+                .map(ClassroomDto::of)
                 .sorted(comparing(ClassroomDto::getName))
                 .collect(Collectors.toList());
     }
@@ -73,7 +72,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     public List<ClassroomDto> getClassroomsAsTeacher(String teacherUsername) {
         User teacher = userService.getEntity(teacherUsername);
         return classroomRepository.findAllByTeachers(teacher).stream()
-                .map(Classroom::toDto)
+                .map(ClassroomDto::of)
                 .sorted(comparing(ClassroomDto::getName))
                 .collect(Collectors.toList());
     }
@@ -82,7 +81,7 @@ public class ClassroomServiceImpl implements ClassroomService {
     public List<HomeworkDto> getHomeworks(String username, long id) {
         Classroom classroom = getEntity(username, id);
         return homeworkRepository.findAllByClassroom(classroom).stream()
-                .map(Homework::toDto)
+                .map(HomeworkDto::of)
                 .sorted(comparing(HomeworkDto::getStatus)
                         .thenComparing(comparing(HomeworkDto::getDeadline).reversed()))
                 .collect(Collectors.toList());

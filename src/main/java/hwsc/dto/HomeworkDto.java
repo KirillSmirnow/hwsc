@@ -2,16 +2,14 @@ package hwsc.dto;
 
 import hwsc.model.Homework;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@NoArgsConstructor
 public class HomeworkDto extends BaseDto {
 
     private ClassroomDto classroom;
@@ -27,9 +25,9 @@ public class HomeworkDto extends BaseDto {
         this.subgroupSize = subgroupSize;
     }
 
-    public HomeworkDto(long id, Date created, Date updated, ClassroomDto classroom,
-                       List<TaskDto> tasks, String name, String description,
-                       Homework.Status status, LocalDateTime deadline, Integer subgroupSize) {
+    private HomeworkDto(long id, LocalDateTime created, LocalDateTime updated, ClassroomDto classroom,
+                        List<TaskDto> tasks, String name, String description, Homework.Status status,
+                        LocalDateTime deadline, Integer subgroupSize) {
         super(id, created, updated);
         this.classroom = classroom;
         this.tasks = tasks;
@@ -38,5 +36,13 @@ public class HomeworkDto extends BaseDto {
         this.status = status;
         this.deadline = deadline;
         this.subgroupSize = subgroupSize;
+    }
+
+    public static HomeworkDto of(Homework homework) {
+        return new HomeworkDto(homework.getId(), homework.getCreated(),
+                homework.getUpdated(), ClassroomDto.of(homework.getClassroom()),
+                homework.getTasks().stream().map(TaskDto::of).collect(Collectors.toList()),
+                homework.getName(), homework.getDescription(), homework.getStatus(),
+                homework.getDeadline(), homework.getSubgroupSize());
     }
 }

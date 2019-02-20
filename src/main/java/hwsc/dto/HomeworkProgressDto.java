@@ -1,19 +1,14 @@
 package hwsc.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
+@AllArgsConstructor
 public class HomeworkProgressDto {
 
     private AssignmentDto assignment;
     private UserDto checker;
-
-    public HomeworkProgressDto(AssignmentDto assignment, UserDto checker) {
-        this.assignment = assignment;
-        this.checker = checker;
-    }
 }

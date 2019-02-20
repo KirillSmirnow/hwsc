@@ -52,7 +52,7 @@ public class HomeworkServiceImpl implements HomeworkService {
 
     @Override
     public HomeworkDto get(long id) {
-        return getEntity(id).toDto();
+        return HomeworkDto.of(getEntity(id));
     }
 
     @Override

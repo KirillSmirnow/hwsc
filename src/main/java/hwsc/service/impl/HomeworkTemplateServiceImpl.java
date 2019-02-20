@@ -48,7 +48,7 @@ public class HomeworkTemplateServiceImpl implements HomeworkTemplateService {
     public List<HomeworkTemplateDto> get(String username) {
         User user = userService.getEntity(username);
         return homeworkTemplateRepository.findAllByCreator(user).stream()
-                .map(HomeworkTemplate::toDto)
+                .map(HomeworkTemplateDto::of)
                 .sorted(comparing(BaseDto::getUpdated).reversed())
                 .collect(Collectors.toList());
     }
@@ -61,7 +61,7 @@ public class HomeworkTemplateServiceImpl implements HomeworkTemplateService {
 
     @Override
     public HomeworkTemplateDto get(String username, long id) {
-        return getEntity(username, id).toDto();
+        return HomeworkTemplateDto.of(getEntity(username, id));
     }
 
     @Override

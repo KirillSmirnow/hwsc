@@ -1,13 +1,18 @@
 package hwsc.model;
 
 import hwsc.HwscException;
-import hwsc.dto.TaskDto;
 import hwsc.util.PropertyValidator;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "tasks")
+@Getter
+@NoArgsConstructor
 public class Task extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 50;
@@ -19,33 +24,10 @@ public class Task extends BaseEntity {
     @Column(nullable = false, length = MAX_DESCRIPTION_LENGTH)
     private String description;
 
-    public Task() {
-    }
-
     public Task(TaskTemplate template) {
         validateDescription(template.getDescription(), template.getName());
         this.name = template.getName();
         this.description = template.getDescription();
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public TaskDto toDto() {
-        return new TaskDto(getId(), getCreated(), getUpdated(), name, description);
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 
     private void validateDescription(String description, String name) {
@@ -53,6 +35,7 @@ public class Task extends BaseEntity {
             throw new HwscException(String.format("Task %s has no description", name));
         if (description.length() > MAX_DESCRIPTION_LENGTH)
             throw new HwscException(String.format("Description is too long (max length is %d)", MAX_DESCRIPTION_LENGTH),
-                    String.format("Description is too long (max length is %d, current length is %d)", MAX_DESCRIPTION_LENGTH, description.length()));
+                    String.format("Description is too long (max length is %d, current length is %d)",
+                            MAX_DESCRIPTION_LENGTH, description.length()));
     }
 }

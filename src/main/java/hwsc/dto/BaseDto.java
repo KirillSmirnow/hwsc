@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -14,6 +14,6 @@ import java.util.Date;
 public abstract class BaseDto {
 
     private long id;
-    private Date created;
-    private Date updated;
+    private LocalDateTime created;
+    private LocalDateTime updated;
 }
