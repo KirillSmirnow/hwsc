@@ -68,14 +68,14 @@ public class User extends BaseEntity {
     }
 
     private void validateUsername(String username) {
-        if (PropertyValidator.isEmpty(username)) throw new IllegalArgumentException("Username cannot be empty");
+        if (PropertyValidator.isEmpty(username)) throw new HwscException("Username cannot be empty");
         if (username.length() > MAX_USERNAME_LENGTH)
             throw new HwscException(String.format("Username is too long (max length is %d)", MAX_USERNAME_LENGTH),
                     String.format("Username is too long (max length is %d, current length is %d)", MAX_USERNAME_LENGTH, username.length()));
     }
 
     private void validateName(String name) {
-        if (PropertyValidator.isEmpty(name)) throw new IllegalArgumentException("Name cannot be empty");
+        if (PropertyValidator.isEmpty(name)) throw new HwscException("Name cannot be empty");
         if (name.length() > MAX_NAME_LENGTH)
             throw new HwscException(String.format("Name is too long (max length is %d)", MAX_NAME_LENGTH),
                     String.format("Name is too long (max length is %d, current length is %d)", MAX_NAME_LENGTH, name.length()));

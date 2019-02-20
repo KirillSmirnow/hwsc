@@ -1,14 +1,18 @@
 package hwsc.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class TaskTemplateDto extends BaseDto {
 
     private String name;
     private String description;
-
-    public TaskTemplateDto() {
-    }
 
     public TaskTemplateDto(String name) {
         this.name = name;
@@ -18,29 +22,5 @@ public class TaskTemplateDto extends BaseDto {
         super(id, created, updated);
         this.name = name;
         this.description = description;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return "TaskTemplateDto{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                '}';
     }
 }

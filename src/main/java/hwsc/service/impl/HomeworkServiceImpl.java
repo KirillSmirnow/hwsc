@@ -5,35 +5,27 @@ import hwsc.dto.HomeworkDto;
 import hwsc.model.*;
 import hwsc.repository.*;
 import hwsc.service.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class HomeworkServiceImpl implements HomeworkService {
 
-    @Resource
-    private AssignmentService assignmentService;
-    @Resource
-    private ClassroomService classroomService;
-    @Resource
-    private HomeworkTemplateService homeworkTemplateService;
-    @Resource
-    private UserService userService;
-    @Resource
-    private AssignmentRepository assignmentRepository;
-    @Resource
-    private HomeworkRepository homeworkRepository;
-    @Resource
-    private HomeworkSolutionRepository homeworkSolutionRepository;
-    @Resource
-    private TaskRepository taskRepository;
-    @Resource
-    private TaskSolutionRepository taskSolutionRepository;
+    private final AssignmentService assignmentService;
+    private final ClassroomService classroomService;
+    private final HomeworkTemplateService homeworkTemplateService;
+    private final UserService userService;
+    private final AssignmentRepository assignmentRepository;
+    private final HomeworkRepository homeworkRepository;
+    private final HomeworkSolutionRepository homeworkSolutionRepository;
+    private final TaskRepository taskRepository;
+    private final TaskSolutionRepository taskSolutionRepository;
 
     @Override
     public void assign(String username, long homeworkTemplateId, long classroomId, HomeworkDto dto) {

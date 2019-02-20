@@ -1,5 +1,12 @@
 package hwsc.dto;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class HomeworkProgressDto {
 
     private AssignmentDto assignment;
@@ -8,21 +15,5 @@ public class HomeworkProgressDto {
     public HomeworkProgressDto(AssignmentDto assignment, UserDto checker) {
         this.assignment = assignment;
         this.checker = checker;
-    }
-
-    public AssignmentDto getAssignment() {
-        return assignment;
-    }
-
-    public UserDto getChecker() {
-        return checker;
-    }
-
-    @Override
-    public String toString() {
-        return "HomeworkProgressDto{" +
-                "assignment=" + assignment +
-                ", checker=" + checker +
-                '}';
     }
 }

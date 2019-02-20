@@ -11,28 +11,22 @@ import hwsc.repository.HomeworkSolutionRepository;
 import hwsc.repository.TaskSolutionRepository;
 import hwsc.service.HomeworkSolutionService;
 import hwsc.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class HomeworkSolutionServiceImpl implements HomeworkSolutionService {
 
-    @Resource
-    private UserService userService;
-
-    @Resource
-    private AssignmentRepository assignmentRepository;
-
-    @Resource
-    private HomeworkSolutionRepository homeworkSolutionRepository;
-
-    @Resource
-    private TaskSolutionRepository taskSolutionRepository;
+    private final UserService userService;
+    private final AssignmentRepository assignmentRepository;
+    private final HomeworkSolutionRepository homeworkSolutionRepository;
+    private final TaskSolutionRepository taskSolutionRepository;
 
     @Override
     public void save(String username, long id, HomeworkSolutionDto dto) {

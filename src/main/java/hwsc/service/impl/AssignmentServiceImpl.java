@@ -11,10 +11,10 @@ import hwsc.repository.AssignmentRepository;
 import hwsc.repository.CheckRepository;
 import hwsc.service.AssignmentService;
 import hwsc.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,16 +23,12 @@ import static java.util.Comparator.comparing;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AssignmentServiceImpl implements AssignmentService {
 
-    @Resource
-    private UserService userService;
-
-    @Resource
-    private AssignmentRepository assignmentRepository;
-
-    @Resource
-    private CheckRepository checkRepository;
+    private final UserService userService;
+    private final AssignmentRepository assignmentRepository;
+    private final CheckRepository checkRepository;
 
     @Override
     public void submit(String username, long id) {

@@ -10,10 +10,10 @@ import hwsc.repository.HomeworkTemplateRepository;
 import hwsc.repository.TaskTemplateRepository;
 import hwsc.service.HomeworkTemplateService;
 import hwsc.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,16 +21,12 @@ import static java.util.Comparator.comparing;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class HomeworkTemplateServiceImpl implements HomeworkTemplateService {
 
-    @Resource
-    private UserService userService;
-
-    @Resource
-    private HomeworkTemplateRepository homeworkTemplateRepository;
-
-    @Resource
-    private TaskTemplateRepository taskTemplateRepository;
+    private final UserService userService;
+    private final HomeworkTemplateRepository homeworkTemplateRepository;
+    private final TaskTemplateRepository taskTemplateRepository;
 
     @Override
     public void create(String username, HomeworkTemplateDto dto) {

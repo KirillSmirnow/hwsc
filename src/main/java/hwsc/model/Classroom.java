@@ -82,7 +82,7 @@ public class Classroom extends BaseEntity {
     }
 
     private void validateName(String name) {
-        if (PropertyValidator.isEmpty(name)) throw new IllegalArgumentException("Name cannot be empty");
+        if (PropertyValidator.isEmpty(name)) throw new HwscException("Name cannot be empty");
         if (name.length() > MAX_NAME_LENGTH)
             throw new HwscException(String.format("Name is too long (max length is %d)", MAX_NAME_LENGTH),
                     String.format("Name is too long (max length is %d, current length is %d)", MAX_NAME_LENGTH, name.length()));

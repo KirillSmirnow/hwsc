@@ -5,27 +5,24 @@ import hwsc.dto.UserDto;
 import hwsc.model.User;
 import hwsc.repository.UserRepository;
 import hwsc.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Resource
-    private UserRepository userRepository;
-
-    @Resource
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void signUp(UserDto dto) {
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new HwscException(String.format("Username %s occupied", dto.getUsername()));
-        String password = passwordEncoder.encode(dto.password());
+        String password = passwordEncoder.encode(dto.getPassword());
         User user = new User(dto.getUsername(), password, dto.getName());
         userRepository.save(user);
     }
@@ -33,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void edit(String username, UserDto dto) {
         User user = getEntity(username);
-        String password = passwordEncoder.encode(dto.password());
+        String password = passwordEncoder.encode(dto.getPassword());
         user.setPassword(password);
         user.setName(dto.getName());
         userRepository.save(user);

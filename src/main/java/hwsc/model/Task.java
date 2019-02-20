@@ -50,7 +50,7 @@ public class Task extends BaseEntity {
 
     private void validateDescription(String description, String name) {
         if (PropertyValidator.isEmpty(description))
-            throw new IllegalArgumentException(String.format("Task %s has no description", name));
+            throw new HwscException(String.format("Task %s has no description", name));
         if (description.length() > MAX_DESCRIPTION_LENGTH)
             throw new HwscException(String.format("Description is too long (max length is %d)", MAX_DESCRIPTION_LENGTH),
                     String.format("Description is too long (max length is %d, current length is %d)", MAX_DESCRIPTION_LENGTH, description.length()));

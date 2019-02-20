@@ -96,12 +96,12 @@ public class Homework extends BaseEntity {
 
     private void validateTasks(List<Task> tasks) {
         if (PropertyValidator.isEmpty(tasks))
-            throw new IllegalArgumentException("Homework must contain at least one task");
+            throw new HwscException("Homework must contain at least one task");
     }
 
     private void validateSubgroupSize(Integer subgroupSize, Classroom classroom) {
         if (PropertyValidator.isEmpty(subgroupSize))
-            throw new IllegalArgumentException("Subgroup size cannot be empty");
+            throw new HwscException("Subgroup size cannot be empty");
         int studentsQty = classroom.getStudents().size();
         if (subgroupSize < 2 || subgroupSize > studentsQty)
             throw new HwscException(String.format("Subgroup size must be between 2 and %d", studentsQty),

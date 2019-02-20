@@ -1,5 +1,6 @@
 package hwsc.model;
 
+import hwsc.HwscException;
 import hwsc.dto.AssignmentDto;
 import hwsc.util.PropertyValidator;
 
@@ -76,8 +77,8 @@ public class Assignment extends BaseEntity {
     }
 
     private void validateScore(Integer score) {
-        if (PropertyValidator.isEmpty(score)) throw new IllegalArgumentException("Score cannot be empty");
-        if (score < 0) throw new IllegalArgumentException("Score cannot be negative");
+        if (PropertyValidator.isEmpty(score)) throw new HwscException("Score cannot be empty");
+        if (score < 0) throw new HwscException("Score cannot be negative");
     }
 
     public enum Status {

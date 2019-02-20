@@ -10,10 +10,10 @@ import hwsc.repository.ClassroomRepository;
 import hwsc.repository.HomeworkRepository;
 import hwsc.service.ClassroomService;
 import hwsc.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,14 +21,12 @@ import static java.util.Comparator.comparing;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ClassroomServiceImpl implements ClassroomService {
 
-    @Resource
-    private UserService userService;
-    @Resource
-    private ClassroomRepository classroomRepository;
-    @Resource
-    private HomeworkRepository homeworkRepository;
+    private final UserService userService;
+    private final ClassroomRepository classroomRepository;
+    private final HomeworkRepository homeworkRepository;
 
     @Override
     public void create(String teacherUsername, ClassroomDto dto) {

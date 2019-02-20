@@ -8,10 +8,10 @@ import hwsc.repository.AssignmentRepository;
 import hwsc.repository.CheckRepository;
 import hwsc.service.HomeworkProgressService;
 import hwsc.service.HomeworkService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,16 +19,12 @@ import static java.util.Comparator.comparing;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class HomeworkProgressServiceImpl implements HomeworkProgressService {
 
-    @Resource
-    private HomeworkService homeworkService;
-
-    @Resource
-    private AssignmentRepository assignmentRepository;
-
-    @Resource
-    private CheckRepository checkRepository;
+    private final HomeworkService homeworkService;
+    private final AssignmentRepository assignmentRepository;
+    private final CheckRepository checkRepository;
 
     @Override
     public List<HomeworkProgressDto> get(long homeworkId) {

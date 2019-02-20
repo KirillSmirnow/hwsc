@@ -3,21 +3,18 @@ package hwsc.service.impl;
 import hwsc.model.User;
 import hwsc.repository.UserRepository;
 import hwsc.service.AuthService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
 
-    @Resource
-    private UserRepository userRepository;
-
-    @Resource
-    private PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public boolean areCredentialsCorrect(String username, String password) {

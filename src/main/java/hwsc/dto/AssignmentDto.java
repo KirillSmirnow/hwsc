@@ -1,9 +1,15 @@
 package hwsc.dto;
 
 import hwsc.model.Assignment;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class AssignmentDto extends BaseDto {
 
     private UserDto student;
@@ -12,51 +18,14 @@ public class AssignmentDto extends BaseDto {
     private Assignment.Status status;
     private Integer score;
 
-    public AssignmentDto() {
-    }
-
-    public AssignmentDto(long id, Date created, Date updated, UserDto student, HomeworkDto homework,
-                         HomeworkSolutionDto homeworkSolution, Assignment.Status status, Integer score) {
+    public AssignmentDto(long id, Date created, Date updated, UserDto student,
+                         HomeworkDto homework, HomeworkSolutionDto homeworkSolution,
+                         Assignment.Status status, Integer score) {
         super(id, created, updated);
         this.student = student;
         this.homework = homework;
         this.homeworkSolution = homeworkSolution;
         this.status = status;
         this.score = score;
-    }
-
-    public UserDto getStudent() {
-        return student;
-    }
-
-    public HomeworkDto getHomework() {
-        return homework;
-    }
-
-    public HomeworkSolutionDto getHomeworkSolution() {
-        return homeworkSolution;
-    }
-
-    public Assignment.Status getStatus() {
-        return status;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    @Override
-    public String toString() {
-        return "AssignmentDto{" +
-                "student=" + student +
-                ", homework=" + homework +
-                ", homeworkSolution=" + homeworkSolution +
-                ", status=" + status +
-                ", score=" + score +
-                '}';
     }
 }
