@@ -1,5 +1,6 @@
 package hwsc.ui.signin;
 
+import com.vaadin.event.ShortcutAction;
 import com.vaadin.spring.annotation.SpringComponent;
 import com.vaadin.spring.annotation.UIScope;
 import com.vaadin.ui.*;
@@ -22,6 +23,7 @@ public class SignInForm extends VerticalLayout {
         usernameField = new TextField("Username");
         passwordField = new PasswordField("Password");
         Button signInButton = new Button("Sign In", clickEvent -> signIn());
+        signInButton.setClickShortcut(ShortcutAction.KeyCode.ENTER);
 
         usernameField.setWidth(300, Unit.PIXELS);
         passwordField.setWidth(300, Unit.PIXELS);
@@ -34,6 +36,7 @@ public class SignInForm extends VerticalLayout {
     public void refresh() {
         usernameField.clear();
         passwordField.clear();
+        usernameField.focus();
     }
 
     private void signIn() {

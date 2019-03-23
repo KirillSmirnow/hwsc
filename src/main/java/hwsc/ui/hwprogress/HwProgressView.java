@@ -62,7 +62,7 @@ public class HwProgressView extends VerticalLayout implements View {
         List<HomeworkProgressDto> homeworkProgress;
         try {
             homework = homeworkService.get(id);
-            homeworkProgress = homeworkProgressService.get(id);
+            homeworkProgress = homeworkProgressService.get(authenticationService.getUsername(), id);
         } catch (HwscException e) {
             Notification.show(e.getMessage(), Notification.Type.WARNING_MESSAGE);
             UI.getCurrent().getNavigator().navigateTo(Views.PROFILE);

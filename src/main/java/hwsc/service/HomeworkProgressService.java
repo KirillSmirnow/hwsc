@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface HomeworkProgressService {
 
-    List<HomeworkProgressDto> get(long homeworkId);
+    List<HomeworkProgressDto> get(String username, long homeworkId);
 }
