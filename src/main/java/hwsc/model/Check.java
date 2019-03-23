@@ -2,6 +2,7 @@ package hwsc.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -9,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "checks")
 @Getter
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class Check extends BaseEntity {
 
     @ManyToOne(optional = false)

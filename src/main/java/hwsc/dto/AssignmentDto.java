@@ -3,11 +3,13 @@ package hwsc.dto;
 import hwsc.model.Assignment;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class AssignmentDto extends BaseDto {
 
     private UserDto student;

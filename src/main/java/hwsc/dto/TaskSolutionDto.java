@@ -3,11 +3,13 @@ package hwsc.dto;
 import hwsc.model.TaskSolution;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class TaskSolutionDto extends BaseDto {
 
     private String link;

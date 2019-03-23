@@ -3,11 +3,13 @@ package hwsc.dto;
 import hwsc.model.Check;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class CheckDto extends BaseDto {
 
     private UserDto checker;

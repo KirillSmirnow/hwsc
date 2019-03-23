@@ -4,6 +4,7 @@ import hwsc.HwscException;
 import hwsc.util.PropertyValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 @Table(name = "homework_templates")
 @Getter
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class HomeworkTemplate extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 50;

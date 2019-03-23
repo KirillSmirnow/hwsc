@@ -3,6 +3,7 @@ package hwsc.dto;
 import hwsc.model.Classroom;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -10,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class ClassroomDto extends BaseDto {
 
     private Set<UserDto> teachers;

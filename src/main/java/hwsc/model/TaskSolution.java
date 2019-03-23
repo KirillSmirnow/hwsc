@@ -3,6 +3,7 @@ package hwsc.model;
 import hwsc.HwscException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 @Table(name = "task_solutions")
 @Getter
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class TaskSolution extends BaseEntity {
 
     private static final int MAX_LINK_LENGTH = 200;

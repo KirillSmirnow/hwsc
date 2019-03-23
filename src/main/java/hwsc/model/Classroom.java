@@ -4,6 +4,7 @@ import hwsc.HwscException;
 import hwsc.util.PropertyValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,7 @@ import java.util.Set;
 @Table(name = "classrooms")
 @Getter
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class Classroom extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 50;

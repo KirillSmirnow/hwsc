@@ -4,6 +4,7 @@ import hwsc.HwscException;
 import hwsc.util.PropertyValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 
@@ -11,6 +12,7 @@ import javax.persistence.*;
 @Table(name = "assignments")
 @Getter
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class Assignment extends BaseEntity {
 
     @ManyToOne(optional = false)

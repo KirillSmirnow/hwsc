@@ -4,6 +4,7 @@ import hwsc.HwscException;
 import hwsc.util.PropertyValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,6 +14,7 @@ import java.util.List;
 @Table(name = "homeworks")
 @Getter
 @NoArgsConstructor
+@ToString(callSuper = true)
 public class Homework extends BaseEntity {
 
     private static final int MAX_NAME_LENGTH = 50;
