@@ -3,6 +3,9 @@ spring:
     open-in-view: false
     hibernate:
       ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/hwsc
+    username: postgres
 vaadin:
   servlet:
     production-mode: true
