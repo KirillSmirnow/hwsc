@@ -36,8 +36,8 @@ public class HomeworkProgressServiceImpl implements HomeworkProgressService {
     public List<HomeworkProgressDto> get(String username, long homeworkId) {
         Homework homework = homeworkService.getEntity(homeworkId);
         User user = userService.getEntity(username);
+        authorizeView(homework, user);
         List<Assignment> assignments = assignmentRepository.findAllByHomework(homework);
-        authorizeView(homework, assignments, user);
         return assignments.stream()
                 .map(assignment -> {
                     Check check = checkRepository.findByAssignment(assignment);
@@ -48,14 +48,9 @@ public class HomeworkProgressServiceImpl implements HomeworkProgressService {
                 .collect(Collectors.toList());
     }
 
-    private void authorizeView(Homework homework, List<Assignment> assignments, User user) {
+    private void authorizeView(Homework homework, User user) {
         if (!homework.getClassroom().getTeachers().contains(user)) {
-            boolean anyAssignmentNotCompleted = assignments.stream()
-                    .map(Assignment::getStatus)
-                    .anyMatch(status -> status != Assignment.Status.COMPLETED);
-            if (anyAssignmentNotCompleted) {
-                throw new HwscException("You are not allowed to view homework statistics yet");
-            }
+            throw new HwscException("You are not allowed to view homework progress");
         }
     }
 }
